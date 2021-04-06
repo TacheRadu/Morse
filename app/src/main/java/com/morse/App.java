@@ -81,7 +81,7 @@ public class App {
         String url = "jdbc:sqlite:app/src/main/database.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             Statement statement = conn.createStatement();
-            statement.execute("INSERT INTO accounts(id, username, password) VALUES(" +
+            statement.execute("INSERT INTO accounts(channel, username, password) VALUES(" +
                     "\"" + channel + "\"" + ", " +
                     "\"" + userName + "\"" + ", " +
                     "\"" + hashedPassword + "\"" +");");
