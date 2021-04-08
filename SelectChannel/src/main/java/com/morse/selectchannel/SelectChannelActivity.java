@@ -28,9 +28,9 @@ import android.widget.Toast;
 
 public class SelectChannelActivity extends AppCompatActivity {
     ListView listView;
-    String mTitle[] = {"Messenger", "Whatsapp", "Twitter", "Instagram"};
-    String mDescription[] = {"Canalul pentru Messenger", "Canalul pentru Whatsapp", "Canalul pentru Twitter", "Canalul pentru Instagram"};
-    int images[] = {R.drawable.facebook, R.drawable.whatsapp, R.drawable.twitter, R.drawable.instagram};
+    String mTitle[] = {"Messenger", "Signal", "Twitter", "Instagram"};
+    String mDescription[] = {"Channel for Messenger", "Channel for Signal", "Channel for Twitter", "Channel for Instagram"};
+    int images[] = {R.drawable.facebook, R.drawable.signal, R.drawable.twitter, R.drawable.instagram};
     // so our images and other things are set in array
 
     // now paste some images in drawable
@@ -53,53 +53,22 @@ public class SelectChannelActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position ==  0) {
-                    Toast.makeText(SelectChannelActivity.this, "Canalul pentru Messenger", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[0], Toast.LENGTH_SHORT).show();
                 }
-                if (position ==  0) {
-                    Toast.makeText(SelectChannelActivity.this, "Canalul pentru Whatsapp", Toast.LENGTH_SHORT).show();
+                if (position ==  1) {
+                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " +  mTitle[1] , Toast.LENGTH_SHORT).show();
                 }
-                if (position ==  0) {
-                    Toast.makeText(SelectChannelActivity.this, "Canalul pentru Twitter", Toast.LENGTH_SHORT).show();
+                if (position ==  2) {
+                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[2], Toast.LENGTH_SHORT).show();
                 }
-                if (position ==  0) {
-                    Toast.makeText(SelectChannelActivity.this, "Canalul pentru Instagram", Toast.LENGTH_SHORT).show();
+                if (position ==  3) {
+                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[3], Toast.LENGTH_SHORT).show();
                 }
             }
         });
         // so item click is done now check list view
     }
 
-    class MyAdapter extends ArrayAdapter<String> {
 
-        Context context;
-        String rTitle[];
-        String rDescription[];
-        int rImgs[];
-
-        MyAdapter (Context c, String title[], String description[], int imgs[]) {
-            super(c, R.layout.content_scrolling, R.id.textView1, title);
-            this.context = c;
-            this.rTitle = title;
-            this.rDescription = description;
-            this.rImgs = imgs;
-
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = layoutInflater.inflate(R.layout.content_scrolling, parent, false);
-            ImageView images = row.findViewById(R.id.image);
-            TextView myTitle = row.findViewById(R.id.textView1);
-            TextView myDescription = row.findViewById(R.id.textView2);
-
-            // now set our resources on views
-            images.setImageResource(rImgs[position]);
-            myTitle.setText(rTitle[position]);
-            myDescription.setText(rDescription[position]);
-            return row;
-        }
-    }
 
 }
