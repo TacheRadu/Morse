@@ -92,4 +92,21 @@ public class App {
         }
     }
 
+    private void queryChannel(String channel){
+        String url = "jdbc:sqlite:app/src/main/database.db";
+        String select = "SELECT username, password from accounts WHERE channel = ?";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement preparedStatement = conn.prepareStatement(select);
+            preparedStatement.setString(1, channel);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("username") +
+                        " " + resultSet.getString("password"));
+
+            }
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
 }
