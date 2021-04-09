@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,6 +91,26 @@ public class App {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private List<String> queryChannel(String channel){
+        List<String> userData = new ArrayList<>(2);
+        String url = "jdbc:sqlite:app/src/main/database.db";
+        String select = "SELECT username, password from accounts WHERE channel = ?";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement preparedStatement = conn.prepareStatement(select);
+            preparedStatement.setString(1, channel);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                userData.add(resultSet.getString("username"));
+                userData.add(resultSet.getString("password"));
+            }
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return userData;
     }
 
 }
