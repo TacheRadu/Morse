@@ -1,5 +1,18 @@
 package com.morse;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -8,12 +21,55 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  *
  */
-public class App {
+public class App extends AppCompatActivity {
+    private static final String EMAIL = "email";
+    CallbackManager callbackManager;
+    public App(){
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        callbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions(Arrays.asList(EMAIL));
+        // If you are using in a fragment, call loginButton.setFragment(this);
+        System.out.println("loginButton");
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                System.out.println("such success");
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+                System.out.println("many success");
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                System.out.println("much success");
+
+            }
+        });
+    }
 
     /**
      *
@@ -27,8 +83,7 @@ public class App {
     /**
      * Default constructor
      */
-    public App() {
-    }
+
 
     /**
      *

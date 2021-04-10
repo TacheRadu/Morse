@@ -1,3 +1,2 @@
-include ':SelectChannel'
 include ':app'
 rootProject.name = "Morse"
