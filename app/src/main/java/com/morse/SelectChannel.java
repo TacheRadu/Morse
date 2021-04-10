@@ -1,4 +1,4 @@
-package com.morse.selectchannel;
+package com.morse;
 
 import android.os.Bundle;
 
@@ -26,7 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SelectChannelActivity extends AppCompatActivity {
+public class SelectChannel extends AppCompatActivity {
     ListView listView;
     String mTitle[] = {"Messenger", "Signal", "Twitter", "Instagram"};
     String mDescription[] = {"Channel for Messenger", "Channel for Signal", "Channel for Twitter", "Channel for Instagram"};
@@ -53,16 +53,16 @@ public class SelectChannelActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position ==  0) {
-                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[0], Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectChannel.this, "You selected a channel. " + mTitle[0], Toast.LENGTH_SHORT).show();
                 }
                 if (position ==  1) {
-                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " +  mTitle[1] , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectChannel.this, "You selected a channel. " +  mTitle[1] , Toast.LENGTH_SHORT).show();
                 }
                 if (position ==  2) {
-                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[2], Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectChannel.this, "You selected a channel. " + mTitle[2], Toast.LENGTH_SHORT).show();
                 }
                 if (position ==  3) {
-                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[3], Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectChannel.this, "You selected a channel. " + mTitle[3], Toast.LENGTH_SHORT).show();
                 }
             }
         });
