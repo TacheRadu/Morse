@@ -1,8 +1,8 @@
-package com.messenger;
+package com.signal;
 
 import com.morse.Message;
 
-public class MessengerMessage implements Message {
+public class SignalMessage implements Message {
 
     private String messageText;
 

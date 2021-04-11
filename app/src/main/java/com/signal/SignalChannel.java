@@ -1,4 +1,4 @@
-package com.messenger;
+package com.signal;
 
 import com.morse.Channel;
 import com.morse.Contact;
@@ -6,7 +6,7 @@ import com.morse.Message;
 
 import java.util.List;
 
-public class MessengerChannel implements Channel {
+public class SignalChannel implements Channel {
     @Override
     public void login() {
 
