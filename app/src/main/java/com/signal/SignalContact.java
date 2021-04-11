@@ -1,9 +1,9 @@
-package com.messenger;
+package com.signal;
 
 import com.morse.Contact;
 import com.morse.Message;
 
-public class MessengerContact implements Contact {
+public class SignalContact implements Contact {
     @Override
     public void getMessages(int messageNumber) {
 
