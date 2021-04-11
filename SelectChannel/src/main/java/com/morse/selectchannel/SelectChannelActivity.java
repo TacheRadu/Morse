@@ -1,4 +1,4 @@
-package com.morse;
+package com.morse.selectchannel;
 
 import android.os.Bundle;
 
@@ -26,11 +26,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SelectChannel extends AppCompatActivity {
+public class SelectChannelActivity extends AppCompatActivity {
     ListView listView;
-    String mTitle[] = { "Signal", "Twitter", "Reddit"};
-    String mDescription[] = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
-    int images[] = { R.drawable.signal, R.drawable.twitter, R.drawable.reddit};
+    String mTitle[] = {"Messenger", "Signal", "Twitter", "Instagram"};
+    String mDescription[] = {"Channel for Messenger", "Channel for Signal", "Channel for Twitter", "Channel for Instagram"};
+    int images[] = {R.drawable.facebook, R.drawable.signal, R.drawable.twitter, R.drawable.instagram};
     // so our images and other things are set in array
 
     // now paste some images in drawable
@@ -53,13 +53,16 @@ public class SelectChannel extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position ==  0) {
-                    Toast.makeText(SelectChannel.this, "You selected a channel. " +  mTitle[0] , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[0], Toast.LENGTH_SHORT).show();
                 }
                 if (position ==  1) {
-                    Toast.makeText(SelectChannel.this, "You selected a channel. " + mTitle[1], Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " +  mTitle[1] , Toast.LENGTH_SHORT).show();
                 }
                 if (position ==  2) {
-                    Toast.makeText(SelectChannel.this, "You selected a channel. " + mTitle[2], Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[2], Toast.LENGTH_SHORT).show();
+                }
+                if (position ==  3) {
+                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[3], Toast.LENGTH_SHORT).show();
                 }
             }
         });
