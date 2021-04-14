@@ -1,9 +1,9 @@
-package com.signal;
+package com.androidsms;
 
 import com.morse.Contact;
 import com.morse.Message;
 
-public class SignalContact implements Contact {
+public class SmsContact implements Contact {
     @Override
     public void getMessages(int messageNumber) {
 

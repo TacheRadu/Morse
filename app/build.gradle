@@ -51,7 +51,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'org.twitter4j:twitter4j-core:4.0.3'
-    implementation 'org.whispersystems:signal-service-android:2.13.9'
     implementation ('com.github.jreddit:jreddit:1.0.3'){
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
         exclude module: 'junit'
