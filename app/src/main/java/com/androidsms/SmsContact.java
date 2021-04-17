@@ -20,8 +20,8 @@ public class SmsContact extends AppCompatActivity implements Contact {
         return phNumber;
     }
 
-    public void setPhNumber(String phNumber) {
-        this.phNumber = phNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phNumber = phoneNumber;
     }
 
     @Override
