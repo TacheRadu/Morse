@@ -1,65 +1,144 @@
 package com.androidsms;
 
-import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.morse.Contact;
 import com.morse.Message;
-import com.morse.R;
+import com.R;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SmsContact extends Fragment implements Contact, LoaderManager.LoaderCallbacks<Cursor>,
-        AdapterView.OnItemClickListener {
+public class SmsContact extends AppCompatActivity implements Contact {
+    public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    MyCustomAdapter dataAdapter = null;
+    ListView listView;
+    Button btnGetContacts;
+    List<ContactsInfo> contactsInfoList;
 
-    @SuppressLint("InlinedApi")
-    private final static String[] FROM_COLUMNS = {
-            ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
-    };
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.contacts_activity_main);
 
-    private final static int[] TO_IDS = {
-            android.R.id.text1
-    };
+        btnGetContacts = (Button) findViewById(R.id.btnGetContacts);
+        listView = (ListView) findViewById(R.id.lstContacts);
+        listView.setAdapter(dataAdapter);
 
-    ListView contactsList;
-    long contactId;
-    String contactKey;
-    Uri contactUri;
-    private SimpleCursorAdapter cursorAdapter;
-
-    public SmsContact() {}
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.contact_list_fragment,
-                container, false);
+        btnGetContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestContactPermission();
+            }
+        });
     }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        contactsList = (ListView) getActivity().findViewById(android.R.id.list);
-        cursorAdapter = new SimpleCursorAdapter(
-                getActivity(),
-                R.layout.contacts_list_item,
-                null,
-                FROM_COLUMNS, TO_IDS,
-                0);
-        //contactsList.setAdapter(cursorAdapter);
+    private void getContacts(){
+        ContentResolver contentResolver = getContentResolver();
+        String contactId = null;
+        String displayName = null;
+        contactsInfoList = new ArrayList<ContactsInfo>();
+        Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
+                if (hasPhoneNumber > 0) {
+
+                    ContactsInfo contactsInfo = new ContactsInfo();
+                    contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                    displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+                    contactsInfo.setContactId(contactId);
+                    contactsInfo.setDisplayName(displayName);
+
+                    Cursor phoneCursor = getContentResolver().query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{contactId},
+                            null);
+
+                    if (phoneCursor.moveToNext()) {
+                        String phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+                        contactsInfo.setPhoneNumber(phoneNumber);
+                    }
+
+                    phoneCursor.close();
+
+                    contactsInfoList.add(contactsInfo);
+                }
+            }
+        }
+        cursor.close();
+
+        dataAdapter = new MyCustomAdapter(SmsContact.this, R.layout.contact_info, contactsInfoList);
+        listView.setAdapter(dataAdapter);
+    }
+
+
+    public void requestContactPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        android.Manifest.permission.READ_CONTACTS)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Read contacts access needed");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setMessage("Please enable access to contacts.");
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @TargetApi(Build.VERSION_CODES.M)
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            requestPermissions(
+                                    new String[]
+                                            {android.Manifest.permission.READ_CONTACTS}
+                                    , PERMISSIONS_REQUEST_READ_CONTACTS);
+                        }
+                    });
+                    builder.show();
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{android.Manifest.permission.READ_CONTACTS},
+                            PERMISSIONS_REQUEST_READ_CONTACTS);
+                }
+            } else {
+                getContacts();
+            }
+        } else {
+            getContacts();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_READ_CONTACTS: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getContacts();
+                } else {
+                    Toast.makeText(this, "You have disabled a contacts permission", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
     }
 
     @Override
@@ -74,27 +153,6 @@ public class SmsContact extends Fragment implements Contact, LoaderManager.Loade
 
     @Override
     public void refreshMessageList() {
-
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @NonNull
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
 
     }
 }
