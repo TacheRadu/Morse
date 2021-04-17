@@ -1,6 +1,7 @@
 package com.androidsms;
 
 import android.content.Context;
+import android.os.Handler;
 import android.telephony.SmsManager;
 import android.widget.Toast;
 
@@ -29,10 +30,23 @@ public class SmsMessage extends AppCompatActivity implements Message {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNumber, null, messageText, null, null);
             Toast.makeText(context, "Message sent", Toast.LENGTH_SHORT).show();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(context, "Unable to send SMS message.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * @author Peiu Iulian
+     * Sends the smsMessage with delayedMinutes minutes by calling: ``this.send();`` after
+     * the delayedMinutes minutes. See ``this.send()``
+     */
+    @Override
+    public void sendDelayed(long delayedMinutes) {
+        long delayedMilliSeconds = delayedMinutes * 60 * 1000;
+        (new Handler()).postDelayed(() -> {
+            send();
+        }, delayedMilliSeconds);
+    }
+
 }
