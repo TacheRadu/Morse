@@ -1,5 +1,7 @@
 package com.morse;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -53,13 +55,30 @@ public class SelectChannel extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position ==  0) {
-                    Toast.makeText(SelectChannel.this, "You selected a channel. " +  mTitle[0] , Toast.LENGTH_SHORT).show();
+
+                    //we receive from this page a number so that we will know what to show back on our AddChannel page
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("Channel", 0);
+                    Intent intent =  new Intent(SelectChannel.this, AddChannel.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    //Toast.makeText(SelectChannel.this, "You selected " +  mTitle[0] , Toast.LENGTH_SHORT).show();
                 }
                 if (position ==  1) {
-                    Toast.makeText(SelectChannel.this, "You selected a channel. " + mTitle[1], Toast.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("Channel", 1);
+                    Intent intent =  new Intent(SelectChannel.this, AddChannel.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    Toast.makeText(SelectChannel.this, "You selected " + mTitle[1], Toast.LENGTH_SHORT).show();
                 }
                 if (position ==  2) {
-                    Toast.makeText(SelectChannel.this, "You selected a channel. " + mTitle[2], Toast.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("Channel", 2);
+                    Intent intent =  new Intent(SelectChannel.this, AddChannel.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    Toast.makeText(SelectChannel.this, "You selected " + mTitle[2], Toast.LENGTH_SHORT).show();
                 }
             }
         });
