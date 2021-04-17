@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Morse</string>
     <string name="facebook_app_id">292575252317805</string>
+    <string name="phone_number">Phone number</string>
+    <string name="type_message">Type Message</string>
+    <string name="send">Send</string>
 </resources>
