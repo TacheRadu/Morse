@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morse">
 
-        <activity android:name=".androidsms.SmsContact">
+        <activity android:name=".androidsms.SmsChannel">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
