@@ -1,42 +1,44 @@
 package com.androidsms;
 
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.content.ContentResolver;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.os.Build;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
+import android.telephony.SmsManager;
 import android.widget.Toast;
-
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import com.morse.Contact;
 import com.morse.Message;
 import com.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmsContact implements Contact {
-
-
+public class SmsContact extends AppCompatActivity implements Contact {
     @Override
     public void getMessages(int messageNumber) {
 
     }
 
+    private String phNumber;
+
+    public String getPhNumber() {
+        return phNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phNumber = phoneNumber;
+    }
+
     @Override
     public void sendMessage(Message message) {
-
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phNumber, null, message.toString(), null, null);
+            //in the class Message, toString will need to be overridden to return a string of the phone number
+            Toast.makeText(this, "Message sent", Toast.LENGTH_SHORT).show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Message failed", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     @Override
     public void refreshMessageList() {
