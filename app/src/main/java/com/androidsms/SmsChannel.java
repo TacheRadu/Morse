@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
@@ -19,8 +20,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.R;
+import com.morse.App;
 import com.morse.Channel;
 import com.morse.Contact;
+import com.morse.LoginActivity;
 import com.morse.Message;
 
 import java.util.ArrayList;
@@ -31,23 +34,17 @@ public class SmsChannel extends AppCompatActivity implements Channel {
     public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     MyCustomAdapter dataAdapter = null;
     ListView listView;
-    Button btnGetContacts;
     List<ContactsInfo> contactsInfoList;
+    AppCompatActivity parentActivity;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contacts_activity_main);
 
-        btnGetContacts = (Button) findViewById(R.id.btnGetContacts);
+
         listView = (ListView) findViewById(R.id.lstContacts);
         listView.setAdapter(dataAdapter);
-
-        btnGetContacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestContactPermission();
-            }
-        });
+        requestContactPermission();
     }
 
     private void getContacts(){
@@ -144,6 +141,19 @@ public class SmsChannel extends AppCompatActivity implements Channel {
     }
     @Override
     public void login() {
+
+    }
+
+    @Override
+    public Intent getIntent(){
+        return new Intent(parentActivity, SmsChannel.class);
+    }
+
+    public SmsChannel(AppCompatActivity activity){
+        parentActivity = activity;
+    }
+
+    public SmsChannel(){
 
     }
 

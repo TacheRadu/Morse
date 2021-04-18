@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -38,6 +39,13 @@ public class SelectChannel extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, channelList);
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(channelList.get(position).getIntent());
+            }
+        });
+
         //tried to get the value from the SelectChannel button
         //update : we receive the value from the SelectChannel but can't print the button on our AddChannel page
         Bundle extras = getIntent().getExtras();
@@ -60,7 +68,7 @@ public class SelectChannel extends AppCompatActivity {
         }
 
         //this button will redirect you to the SelectChannel Page
-        button= (Button) findViewById(R.id.addchannelbtn);
+        button = (Button) findViewById(R.id.addchannelbtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +91,7 @@ public class SelectChannel extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 int result = data.getIntExtra("Channel", 0);
                 //Add this value to your adapter and call notifyDataSetChanged();
-                channelList.add(new SmsChannel());
+                channelList.add(new SmsChannel(this));
                 adapter.notifyDataSetChanged();
             }
 
