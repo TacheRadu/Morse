@@ -1,19 +1,19 @@
 package com.morse;
 
+import com.androidsms.MessageInfo;
+
+import java.util.List;
+
 /**
  *
  */
 public interface Contact {
 
     /**
-     * @param messageNumber
+     * @param from
+     * @return
      */
-    void getMessages(int messageNumber);
-
-    /**
-     * @param message
-     */
-    void sendMessage(Message message);
+    List<MessageInfo> getMessages(String from);
 
     /**
      *
