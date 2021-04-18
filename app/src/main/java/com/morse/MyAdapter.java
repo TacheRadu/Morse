@@ -25,7 +25,6 @@ class MyAdapter extends ArrayAdapter<String> {
         this.rTitle = title;
         this.rDescription = description;
         this.rImgs = imgs;
-
     }
 
     @NonNull
