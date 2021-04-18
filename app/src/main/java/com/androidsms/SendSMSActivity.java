@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.morse.R;
+import com.R;
 
 /**
  * @author  Ionuț Roșca

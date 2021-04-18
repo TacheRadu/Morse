@@ -13,14 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morse">
 
-        <activity android:name=".androidsms.SmsChannel">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-
         <activity android:name="com.androidsms.SendSMSActivity">
            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
