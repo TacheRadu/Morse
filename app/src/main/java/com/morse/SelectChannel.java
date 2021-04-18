@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import com.R;
 import com.androidsms.SmsChannel;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class SelectChannel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_channel);
+        setContentView(R.layout.activity_select_channel);
         listView = findViewById(R.id.listView);
         channelList = new ArrayList<>();
         adapter = new ArrayAdapter<Channel>(this,
