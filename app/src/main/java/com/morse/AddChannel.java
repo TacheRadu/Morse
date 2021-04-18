@@ -1,83 +1,72 @@
 package com.morse;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddChannel extends AppCompatActivity {
     ListView listView;
-    private Button button;
-    String[] mTitle = { "Signal", "Twitter", "Reddit"};
-    String[] mDescription = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
-    int[] images = { R.drawable.signal, R.drawable.twitter, R.drawable.reddit};
-    String[] final_title;
-    String[] final_description;
-    int[] final_images;
-    int contor = 0;
+    String mTitle[] = { "Signal", "Twitter", "Reddit"};
+    String mDescription[] = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
+    int images[] = { R.drawable.signal, R.drawable.twitter, R.drawable.reddit};
+    // so our images and other things are set in array
+
+    // now paste some images in drawable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_channel);
+        setContentView(R.layout.activity_select_channel);
 
-        //tried to get the value from the SelectChannel button
-        //update : we receive the value from the SelectChannel but can't print the button on our AddChannel page
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            //in final_value we store what we receive back from SelectChannel
-            int final_value = extras.getInt("Channel");
+        listView = findViewById(R.id.listView);
+        // now create an adapter class
 
-//            final_title[contor] = mTitle[final_value];
-//            final_description[contor] = mDescription[final_value];
-//            final_images[contor] = images[final_value];
-//            contor++;
-//
-//            listView = findViewById(R.id.listView);
-//            MyAdapter adapter = new MyAdapter(this, final_title, final_description, final_images);
-//            listView.setAdapter(adapter);
+        MyAdapter adapter = new MyAdapter(this, mTitle, mDescription, images);
+        listView.setAdapter(adapter);
+        // there is my mistake...
+        // now again check this..
 
-            Toast.makeText(AddChannel.this, "You selected " +  mTitle[final_value] , Toast.LENGTH_SHORT).show();
-
-            //The key argument here must match that used in the other activity
-        }
-
-        //this button will redirect you to the SelectChannel Page
-        button= (Button) findViewById(R.id.addchannelbtn);
-        button.setOnClickListener(new View.OnClickListener() {
+        // now set item click on list view
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                openSelectChannel();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //we receive from this page a number so that we will know what to show back on our AddChannel page
+                    Intent intent = new Intent();
+                    intent.putExtra("Channel", position);
+
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    //Toast.makeText(SelectChannel.this, "You selected " +  mTitle[0] , Toast.LENGTH_SHORT).show();
+
             }
-
         });
-    }
-    public void openSelectChannel(){
-        Intent intent =  new Intent(this, SelectChannel.class);
-        startActivity(intent);
+        // so item click is done now check list view
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                String result = data.getStringExtra("Channel");
-//                //Add this value to your adapter and call notifyDataSetChanged();
-//                Toast.makeText(AddChannel.this, "You selected " +  result , Toast.LENGTH_SHORT).show();
-//            }
-//
-//        }
-//
-//    }
+
+
 }

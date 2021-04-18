@@ -1,90 +1,94 @@
 package com.morse;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.content.Context;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.androidsms.SmsChannel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectChannel extends AppCompatActivity {
     ListView listView;
-    String mTitle[] = { "Signal", "Twitter", "Reddit"};
-    String mDescription[] = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
-    int images[] = { R.drawable.signal, R.drawable.twitter, R.drawable.reddit};
-    // so our images and other things are set in array
-
-    // now paste some images in drawable
+    private Button button;
+    List<Channel> channelList;
+    ArrayAdapter<Channel> adapter;
+    String[] mTitle = { "Signal", "Twitter", "Reddit"};
+    String[] mDescription = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
+    int[] images = { R.drawable.signal, R.drawable.twitter, R.drawable.reddit};
+    String[] final_title;
+    String[] final_description;
+    int[] final_images;
+    int contor = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_channel);
-
+        setContentView(R.layout.activity_add_channel);
         listView = findViewById(R.id.listView);
-        // now create an adapter class
-
-        MyAdapter adapter = new MyAdapter(this, mTitle, mDescription, images);
+        channelList = new ArrayList<>();
+        adapter = new ArrayAdapter<Channel>(this,
+                android.R.layout.simple_list_item_1, channelList);
         listView.setAdapter(adapter);
-        // there is my mistake...
-        // now again check this..
 
-        // now set item click on list view
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //tried to get the value from the SelectChannel button
+        //update : we receive the value from the SelectChannel but can't print the button on our AddChannel page
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            //in final_value we store what we receive back from SelectChannel
+            int final_value = extras.getInt("Channel");
+            System.out.println(final_value);
+//            final_title[contor] = mTitle[final_value];
+//            final_description[contor] = mDescription[final_value];
+//            final_images[contor] = images[final_value];
+//            contor++;
+//
+//            listView = findViewById(R.id.listView);
+//            MyAdapter adapter = new MyAdapter(this, final_title, final_description, final_images);
+//            listView.setAdapter(adapter);
+
+            Toast.makeText(SelectChannel.this, "You selected " +  mTitle[final_value] , Toast.LENGTH_SHORT).show();
+
+            //The key argument here must match that used in the other activity
+        }
+
+        //this button will redirect you to the SelectChannel Page
+        button= (Button) findViewById(R.id.addchannelbtn);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position ==  0) {
-
-                    //we receive from this page a number so that we will know what to show back on our AddChannel page
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("Channel", 0);
-                    Intent intent =  new Intent(SelectChannel.this, AddChannel.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    //Toast.makeText(SelectChannel.this, "You selected " +  mTitle[0] , Toast.LENGTH_SHORT).show();
-                }
-                if (position ==  1) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("Channel", 1);
-                    Intent intent =  new Intent(SelectChannel.this, AddChannel.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    Toast.makeText(SelectChannel.this, "You selected " + mTitle[1], Toast.LENGTH_SHORT).show();
-                }
-                if (position ==  2) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("Channel", 2);
-                    Intent intent =  new Intent(SelectChannel.this, AddChannel.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    Toast.makeText(SelectChannel.this, "You selected " + mTitle[2], Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View v) {
+                openSelectChannel();
             }
+
         });
-        // so item click is done now check list view
+    }
+    public void openSelectChannel(){
+        Intent intent =  new Intent(this, AddChannel.class);
+        startActivityForResult(intent, 0);
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
+                int result = data.getIntExtra("Channel", 0);
+                //Add this value to your adapter and call notifyDataSetChanged();
+                channelList.add(new SmsChannel());
+                adapter.notifyDataSetChanged();
+            }
+
+        }
+
+    }
 }

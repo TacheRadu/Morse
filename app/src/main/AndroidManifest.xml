@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Morse">
-        <activity android:name=".AddChannel">
+        <activity android:name=".SelectChannel">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".SelectChannel">
+        <activity android:name=".AddChannel">
 
         </activity>
     </application>

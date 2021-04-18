@@ -2,10 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.morse.AddChannel"
-    tools:ignore="HardcodedText" >
+    tools:context="com.morse.SelectChannel"
+    tools:ignore="HardcodedText"
+    android:orientation="vertical">
 
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="430dp">
 
+    </ListView>
 
     <TableRow
         android:id="@+id/tableRow1"
