@@ -2,11 +2,12 @@ package com.androidsms;
 
 import android.telephony.SmsManager;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.morse.Contact;
 import com.morse.Message;
+import com.R;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SmsContact extends AppCompatActivity implements Contact {
     @Override
