@@ -21,7 +21,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".morse.AddChannel">
-            
+
+        </activity>
+        <activity android:name=".morse.LoginActivity">
+
+        </activity>
+        <activity android:name=".androidsms.SmsChannel">
+
         </activity>
 
     </application>

@@ -1,5 +1,7 @@
 package com.morse;
 
+import android.content.Intent;
+
 import java.util.List;
 
 /**
@@ -32,5 +34,7 @@ public interface Channel {
      * @param contact
      */
     void sendDelayedMessage(Message message, List<Contact> contact);
+
+    public Intent getIntent();
 
 }
