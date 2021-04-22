@@ -21,6 +21,7 @@ public class SelectChannel extends AppCompatActivity {
     private Button button;
     List<Channel> channelList;
     ArrayAdapter<Channel> adapter;
+    ArrayAdapter<Channel> adapter2;
     String[] mTitle = { "Signal", "Twitter", "Reddit"};
     String[] mDescription = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
     int[] images = { R.drawable.signal, R.drawable.twitter, R.drawable.reddit};
@@ -35,13 +36,19 @@ public class SelectChannel extends AppCompatActivity {
         setContentView(R.layout.activity_select_channel);
         listView = findViewById(R.id.listView);
         channelList = new ArrayList<>();
+
         adapter = new ArrayAdapter<Channel>(this,
                 android.R.layout.simple_list_item_1, channelList);
+
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position == listView.getCount() - 1){
+                    openSelectChannel();
+                }
+                else
                 startActivity(channelList.get(position).getIntent());
             }
         });
