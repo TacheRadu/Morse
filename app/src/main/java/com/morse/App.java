@@ -77,12 +77,12 @@ public class App extends AppCompatActivity {
         }
     }
 
-    private void createTable() {
+
+    private void createTableChannels(){
         String url = "jdbc:sqlite:app/src/main/database.db";
-        String sqlCommand = "CREATE TABLE IF NOT EXISTS accounts (\n"
-                + "	channel text PRIMARY KEY,\n"
-                + "	username text NOT NULL,\n"
-                + "	password text NOT NULL\n"
+        String sqlCommand = "CREATE TABLE IF NOT EXISTS channels (\n"
+                + "	id int PRIMARY KEY,\n"
+                + "	name text NOT NULL\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url)) {
             Statement statement = conn.createStatement();
@@ -91,15 +91,54 @@ public class App extends AppCompatActivity {
             System.out.println(e.getMessage());
         }
     }
-
-    private void insertIntoTable(String channel, String userName, String hashedPassword){
+    private void createTableUsers() {
         String url = "jdbc:sqlite:app/src/main/database.db";
-        String insert = "INSERT INTO accounts(channel, username, password) VALUES(?, ?, ?);";
+        String sqlCommand = "CREATE TABLE IF NOT EXISTS users (\n"
+                + "	channel_id int NOT NULL,\n"
+                + "	username text NOT NULL,\n"
+                + "	password text NOT NULL\n"
+                + "CONSTRAINT users_ct FOREIGN KEY(channel_id) \n"
+                + " REFERENCES channels(id) ON DELETE CASCADE ON UPDATE CASCADE"
+                + ");";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            Statement statement = conn.createStatement();
+            statement.execute(sqlCommand);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    private void insertIntoChannels(int id, String name){
+        String url = "jdbc:sqlite:app/src/main/database.db";
+        String insert = "INSERT INTO channels(id, name) VALUES(?, ?);";
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement preparedStatement = conn.prepareStatement(insert);
-            preparedStatement.setString(1, channel);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, name);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void insertIntoUsers(int id, String userName, String hashedPassword){
+        String url = "jdbc:sqlite:app/src/main/database.db";
+        String insert = "INSERT INTO users(id, username, password) VALUES(?, ?, ?);";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement preparedStatement = conn.prepareStatement(insert);
+            preparedStatement.setInt(1, id);
             preparedStatement.setString(2, userName);
             preparedStatement.setString(3, hashedPassword);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    private void removeUser(int id){
+        String url = "jdbc:sqlite:app/src/main/database.db";
+        String remove = "DELETE FROM users WHERE id = ?; ";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement preparedStatement = conn.prepareStatement(remove);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
