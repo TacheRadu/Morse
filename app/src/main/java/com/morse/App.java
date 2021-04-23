@@ -81,8 +81,8 @@ public class App extends AppCompatActivity {
     private void createTableChannels(){
         String url = "jdbc:sqlite:app/src/main/database.db";
         String sqlCommand = "CREATE TABLE IF NOT EXISTS channels (\n"
-                + "	id int PRIMARY KEY,\n"
-                + "	name text NOT NULL\n"
+                + "	channel_id int PRIMARY KEY,\n"
+                + "	channel_name text NOT NULL\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url)) {
             Statement statement = conn.createStatement();
@@ -98,7 +98,7 @@ public class App extends AppCompatActivity {
                 + "	username text NOT NULL,\n"
                 + "	password text NOT NULL\n"
                 + "CONSTRAINT users_ct FOREIGN KEY(channel_id) \n"
-                + " REFERENCES channels(id) ON DELETE CASCADE ON UPDATE CASCADE"
+                + " REFERENCES channels(channel_id) ON DELETE CASCADE ON UPDATE CASCADE"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url)) {
             Statement statement = conn.createStatement();
@@ -109,7 +109,7 @@ public class App extends AppCompatActivity {
     }
     private void insertIntoChannels(int id, String name){
         String url = "jdbc:sqlite:app/src/main/database.db";
-        String insert = "INSERT INTO channels(id, name) VALUES(?, ?);";
+        String insert = "INSERT INTO channels(channel_id, channel_name) VALUES(?, ?);";
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement preparedStatement = conn.prepareStatement(insert);
             preparedStatement.setInt(1, id);
@@ -122,7 +122,7 @@ public class App extends AppCompatActivity {
 
     private void insertIntoUsers(int id, String userName, String hashedPassword){
         String url = "jdbc:sqlite:app/src/main/database.db";
-        String insert = "INSERT INTO users(id, username, password) VALUES(?, ?, ?);";
+        String insert = "INSERT INTO users(channel_id, username, password) VALUES(?, ?, ?);";
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement preparedStatement = conn.prepareStatement(insert);
             preparedStatement.setInt(1, id);
@@ -133,12 +133,12 @@ public class App extends AppCompatActivity {
             System.out.println(e.getMessage());
         }
     }
-    private void removeUser(int id){
+    private void removeUser(String username){
         String url = "jdbc:sqlite:app/src/main/database.db";
-        String remove = "DELETE FROM users WHERE id = ?; ";
+        String remove = "DELETE FROM users WHERE lower(trim(username)) = lower(trim(?)); ";
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement preparedStatement = conn.prepareStatement(remove);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, username);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
