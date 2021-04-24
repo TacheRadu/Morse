@@ -1,6 +1,7 @@
 package com.androidsms;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 import android.telephony.SmsManager;
 import android.widget.Toast;
@@ -47,6 +48,22 @@ public class SmsMessage extends AppCompatActivity implements Message {
         (new Handler()).postDelayed(() -> {
             send();
         }, delayedMilliSeconds);
+    }
+
+    /**
+     * @author Peiu Iulian
+     * Delete a message from content://sms/{id}, where id is set from the 2 param constructor
+     */
+    @Override
+    public Boolean delete(int id){
+
+        try{
+            context.getContentResolver().delete(
+                    Uri.parse("content://sms/" + id), null, null);
+        } catch(Exception exp){
+            return false;
+        }
+        return true;
     }
 
 }
