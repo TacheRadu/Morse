@@ -96,7 +96,7 @@ public class SelectChannel extends AppCompatActivity {
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
                 int result = data.getIntExtra("Channel", 0);
-                channelList.add(new SmsChannel(this));
+                channelList.add(new SmsChannel(SelectChannel.this));
                 adapter.notifyDataSetChanged();
                 app.insertIntoChannels("sms");
             }
