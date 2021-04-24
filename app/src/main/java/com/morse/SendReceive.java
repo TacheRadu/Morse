@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SendReceive extends AppCompatActivity {
     ListView listView;
-    String mTitle[] = {"Ionut", "Gabi"};
-    String mDescription[] = {"Mesajul lui Ionut", "Mesajul lui Gabi"};
+    String mTitle[] = {"Ionut", "Gabi", "Radu","Ionut", "Gabi", "Radu"};
+    String mDescription[] = {"Mesajul lui Ionut", "Mesajul lui Gabi", "Mesajul lui Radu", "Mesajul lui Ionut", "Mesajul lui Gabi", "Mesajul lui Radu"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

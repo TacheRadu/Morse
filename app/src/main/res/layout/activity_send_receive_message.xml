@@ -1,41 +1,46 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.morse.SendReceive"
-    tools:ignore="HardcodedText"
-    android:orientation="vertical">
+    tools:ignore="HardcodedText">
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="530dp">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
 
     </ListView>
 
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="fill_parent"
+    <Button
+        android:id="@+id/sendMessage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="15dp"
-        android:gravity="center">
+        android:text="Send Message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/addchannelbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send Message" />
-
-    </TableRow>
     <EditText
         android:id="@+id/message"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:autofillHints=""
+        android:gravity="bottom"
         android:hint="@string/type_message"
         android:inputType="textLongMessage"
-        android:gravity="top"
-        android:layout_margin="8dp"
-        android:autofillHints="" />
+        android:windowSoftInputMode="stateVisible|adjustResize"
+        app:layout_constraintBottom_toTopOf="@+id/sendMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
