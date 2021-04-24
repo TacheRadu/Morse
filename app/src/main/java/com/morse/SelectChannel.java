@@ -88,7 +88,7 @@ public class SelectChannel extends AppCompatActivity {
         });
     }
     public void openSelectChannel(){
-        Intent intent =  new Intent(this, AddChannel.class);
+        Intent intent =  new Intent(this, SmsChannel.class);
         startActivityForResult(intent, 0);
     }
 

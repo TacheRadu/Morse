@@ -30,4 +30,23 @@ public class MessageInfo {
                 '}';
     }
 
+    public String getPerson() {
+        return person;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getMessageText() {
+        return messageText;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getSeen() {
+        return seen;
+    }
 }
