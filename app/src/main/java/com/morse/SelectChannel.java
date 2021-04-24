@@ -48,10 +48,6 @@ public class SelectChannel extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == listView.getCount() - 1){
-                    openSelectChannel();
-                }
-                else
                 startActivity(channelList.get(position).getIntent());
             }
         });
@@ -88,7 +84,7 @@ public class SelectChannel extends AppCompatActivity {
         });
     }
     public void openSelectChannel(){
-        Intent intent =  new Intent(this, SmsChannel.class);
+        Intent intent =  new Intent(this, AddChannel.class);
         startActivityForResult(intent, 0);
     }
 
