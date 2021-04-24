@@ -17,13 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectChannel extends AppCompatActivity {
+    App app;
     ListView listView;
     private Button button;
     List<Channel> channelList;
     ArrayAdapter<Channel> adapter;
-    String[] mTitle = { "Signal", "Twitter", "Reddit"};
+    String[] mTitle = { "SMS", "Twitter", "Reddit"};
     String[] mDescription = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
-    int[] images = { R.drawable.signal, R.drawable.twitter, R.drawable.reddit};
+    int[] images = { R.drawable.sms, R.drawable.twitter, R.drawable.reddit};
     String[] final_title;
     String[] final_description;
     int[] final_images;
@@ -32,9 +33,11 @@ public class SelectChannel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = new App(this);
         setContentView(R.layout.activity_select_channel);
         listView = findViewById(R.id.listView);
         channelList = new ArrayList<>();
+        channelList.addAll(app.getChannels());
         adapter = new ArrayAdapter<Channel>(this,
                 android.R.layout.simple_list_item_1, channelList);
         listView.setAdapter(adapter);
@@ -93,6 +96,7 @@ public class SelectChannel extends AppCompatActivity {
                 //Add this value to your adapter and call notifyDataSetChanged();
                 channelList.add(new SmsChannel(this));
                 adapter.notifyDataSetChanged();
+                app.insertIntoChannels("sms");
             }
 
         }

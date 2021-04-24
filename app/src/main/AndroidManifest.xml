@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morse">
 
-        <activity android:name=".morse.SendReceive">
+        <activity android:name=".morse.SelectChannel">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

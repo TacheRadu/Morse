@@ -13,7 +13,7 @@ public class AddChannel extends AppCompatActivity {
     ListView listView;
     String mTitle[] = {"Signal", "Twitter", "Reddit"};
     String mDescription[] = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
-    int images[] = {R.drawable.signal, R.drawable.twitter, R.drawable.reddit};
+    int images[] = {R.drawable.sms, R.drawable.twitter, R.drawable.reddit};
     // so our images and other things are set in array
 
     // now paste some images in drawable
