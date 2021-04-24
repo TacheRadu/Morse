@@ -1,6 +1,7 @@
 package com.morse;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.R;
 import com.androidsms.SmsChannel;
 
@@ -22,10 +24,10 @@ public class SelectChannel extends AppCompatActivity {
     private Button button;
     List<Channel> channelList;
     ArrayAdapter<Channel> adapter;
-    String[] mTitle = { "SMS", "Twitter", "Reddit"};
+    String[] mTitle = {"SMS", "Twitter", "Reddit"};
 
     String[] mDescription = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
-    int[] images = { R.drawable.sms, R.drawable.twitter, R.drawable.reddit};
+    int[] images = {R.drawable.sms, R.drawable.twitter, R.drawable.reddit};
     String[] final_title;
     String[] final_description;
     int[] final_images;
@@ -48,7 +50,7 @@ public class SelectChannel extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(channelList.get(position).getIntent());
+                openChannel(position);
             }
         });
 
@@ -68,7 +70,7 @@ public class SelectChannel extends AppCompatActivity {
 //            MyAdapter adapter = new MyAdapter(this, final_title, final_description, final_images);
 //            listView.setAdapter(adapter);
 
-            Toast.makeText(SelectChannel.this, "You selected " +  mTitle[final_value] , Toast.LENGTH_SHORT).show();
+            Toast.makeText(SelectChannel.this, "You selected " + mTitle[final_value], Toast.LENGTH_SHORT).show();
 
             //The key argument here must match that used in the other activity
         }
@@ -78,13 +80,23 @@ public class SelectChannel extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openSelectChannel();
+                openAddChannel();
             }
 
         });
     }
-    public void openSelectChannel(){
-        Intent intent =  new Intent(this, AddChannel.class);
+
+    public void openChannel(int position) {
+        Intent intent;
+        if (channelList.get(position) instanceof SmsChannel){
+            intent = new Intent(this, SmsChannel.class);
+            startActivityForResult(intent, 0);
+        }
+        //TODO for Reddit and Twitter
+    }
+
+    public void openAddChannel() {
+        Intent intent = new Intent(this, AddChannel.class);
         startActivityForResult(intent, 0);
     }
 
