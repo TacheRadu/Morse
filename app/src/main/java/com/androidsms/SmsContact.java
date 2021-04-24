@@ -13,12 +13,10 @@ import android.provider.ContactsContract;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.R;
 import com.morse.Contact;
 import java.util.ArrayList;
@@ -169,7 +167,6 @@ public class SmsContact extends AppCompatActivity implements Contact {
         }
         return contactName;
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
