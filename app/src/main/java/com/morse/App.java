@@ -81,8 +81,8 @@ public class App extends AppCompatActivity {
     private void createTableChannels(){
         String url = "jdbc:sqlite:app/src/main/database.db";
         String sqlCommand = "CREATE TABLE IF NOT EXISTS channels (\n"
-                + "	channel_id int PRIMARY KEY,\n"
-                + "	channel_name text NOT NULL\n"
+                + "	id int PRIMARY KEY,\n"
+                + "	name text NOT NULL\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url)) {
             Statement statement = conn.createStatement();
@@ -98,7 +98,7 @@ public class App extends AppCompatActivity {
                 + "	username text NOT NULL,\n"
                 + "	password text NOT NULL\n"
                 + "CONSTRAINT users_ct FOREIGN KEY(channel_id) \n"
-                + " REFERENCES channels(channel_id) ON DELETE CASCADE ON UPDATE CASCADE"
+                + " REFERENCES channels(id) ON DELETE CASCADE ON UPDATE CASCADE"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url)) {
             Statement statement = conn.createStatement();
@@ -109,7 +109,7 @@ public class App extends AppCompatActivity {
     }
     private void insertIntoChannels(int id, String name){
         String url = "jdbc:sqlite:app/src/main/database.db";
-        String insert = "INSERT INTO channels(channel_id, channel_name) VALUES(?, ?);";
+        String insert = "INSERT INTO channels(id, name) VALUES(?, ?);";
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement preparedStatement = conn.prepareStatement(insert);
             preparedStatement.setInt(1, id);
@@ -135,7 +135,7 @@ public class App extends AppCompatActivity {
     }
     private void removeUser(String username){
         String url = "jdbc:sqlite:app/src/main/database.db";
-        String remove = "DELETE FROM users WHERE lower(trim(username)) = lower(trim(?)); ";
+        String remove = "DELETE FROM users WHERE trim(username) = trim(?); ";
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement preparedStatement = conn.prepareStatement(remove);
             preparedStatement.setString(1, username);
