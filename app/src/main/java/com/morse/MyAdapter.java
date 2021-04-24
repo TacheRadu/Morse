@@ -11,15 +11,18 @@ import com.R;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 class MyAdapter extends ArrayAdapter<String> {
 
     Context context;
-    String rTitle[];
-    String rDescription[];
-    int rImgs[];
+    String[] rTitle;
+    String[] rDescription;
+    Integer[] rImgs;
 
-    MyAdapter(Context c, String title[], String description[], int imgs[]) {
+    MyAdapter(Context c, String[] title, String[] description, Integer[] imgs) {
         super(c, R.layout.content_scrolling, R.id.textView1, title);
         this.context = c;
         this.rTitle = title;
@@ -41,6 +44,11 @@ class MyAdapter extends ArrayAdapter<String> {
         myTitle.setText(rTitle[position]);
         myDescription.setText(rDescription[position]);
         return row;
+    }
+
+    @Override
+    public String getItem(int position){
+        return rTitle[position];
     }
 }
 

@@ -3,30 +3,41 @@ package com.morse;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.R;
+import com.androidsms.SmsChannel;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AddChannel extends AppCompatActivity {
     ListView listView;
-    String mTitle[] = {"Signal", "Twitter", "Reddit"};
-    String mDescription[] = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
-    int images[] = {R.drawable.sms, R.drawable.twitter, R.drawable.reddit};
-    // so our images and other things are set in array
+    App app;
+    MyAdapter adapter;
+    List<String> mTitle = new ArrayList<>(Arrays.asList("SMS", "Reddit"));
+    List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Redit"));
+    List<Integer> images = new ArrayList<>(Arrays.asList(R.drawable.sms, R.drawable.reddit));
 
-    // now paste some images in drawable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = new App(this);
+
         setContentView(R.layout.activity_add_channel);
 
         listView = findViewById(R.id.listView);
         // now create an adapter class
-
-        MyAdapter adapter = new MyAdapter(this, mTitle, mDescription, images);
+        disableAlreadyExistent();
+        adapter = new MyAdapter(this, mTitle.toArray(new String[mTitle.size()]),
+                mDescription.toArray(new String[mDescription.size()]), images.toArray(new Integer[images.size()]));
         listView.setAdapter(adapter);
         // there is my mistake...
         // now again check this..
@@ -48,5 +59,18 @@ public class AddChannel extends AppCompatActivity {
         // so item click is done now check list view
     }
 
+    private void disableAlreadyExistent(){
+        List<Channel> channels = app.getChannels();
+        for(Channel channel : channels){
+            for(int index = 0; index < mTitle.size(); index++){
+                if(channel instanceof SmsChannel && mTitle.get(index).equals("SMS")){
+                    mTitle.remove(index);
+                    mDescription.remove(index);
+                    images.remove(index);
+
+                }
+            }
+        }
+    }
 
 }
