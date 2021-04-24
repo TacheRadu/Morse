@@ -11,12 +11,19 @@ public class MessageInfo {
 
     private final String seen;
 
-    public MessageInfo(String person, String phoneNumber, String messageText, String date, String seen) {
+    private final Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public MessageInfo(String person, String phoneNumber, String messageText, String date, String seen, Integer id) {
         this.person = person;
         this.phoneNumber = phoneNumber;
         this.messageText = messageText;
         this.date = date;
         this.seen = seen;
+        this.id = id;
     }
 
     @Override
@@ -27,6 +34,7 @@ public class MessageInfo {
                 ", messageText='" + messageText + '\'' +
                 ", date='" + date + '\'' +
                 ", seen='" + seen + '\'' +
+                ", id=" + id +
                 '}';
     }
 
