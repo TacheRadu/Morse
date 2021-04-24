@@ -50,7 +50,7 @@ public class SelectChannel extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                openChannel(position);
+                startActivity(channelList.get(position).getIntent());
             }
         });
 
@@ -84,15 +84,6 @@ public class SelectChannel extends AppCompatActivity {
             }
 
         });
-    }
-
-    public void openChannel(int position) {
-        Intent intent;
-        if (channelList.get(position) instanceof SmsChannel){
-            intent = new Intent(this, SmsChannel.class);
-            startActivityForResult(intent, 0);
-        }
-        //TODO for Reddit and Twitter
     }
 
     public void openAddChannel() {
