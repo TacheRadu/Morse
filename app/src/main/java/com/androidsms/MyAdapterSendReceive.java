@@ -1,4 +1,4 @@
-package com.morse;
+package com.androidsms;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,15 +11,17 @@ import com.R;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.List;
+
 
 class MyAdapterSendReceive extends ArrayAdapter<String> {
 
     Context context;
-    String rTitle[];
-    String rDescription[];
+    List<String> rTitle;
+    List<String> rDescription;
 
-    MyAdapterSendReceive(Context c, String title[], String description[]) {
-        super(c, R.layout.content_scrolling, R.id.textView1, title);
+    MyAdapterSendReceive(Context c, List<String> title, List<String> description) {
+        super(c, R.layout.content_scrolling_send_receive_message, R.id.textView1, title);
         this.context = c;
         this.rTitle = title;
         this.rDescription = description;
@@ -29,13 +31,13 @@ class MyAdapterSendReceive extends ArrayAdapter<String> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = layoutInflater.inflate(R.layout.content_scrolling, parent, false);
+        View row = layoutInflater.inflate(R.layout.content_scrolling_send_receive_message, parent, false);
         TextView myTitle = row.findViewById(R.id.textView1);
         TextView myDescription = row.findViewById(R.id.textView2);
 
         // now set our resources on views
-        myTitle.setText(rTitle[position]);
-        myDescription.setText(rDescription[position]);
+        myTitle.setText(rTitle.get(position));
+        myDescription.setText(rDescription.get(position));
         return row;
     }
 }

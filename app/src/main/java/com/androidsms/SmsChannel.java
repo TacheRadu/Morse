@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -43,7 +44,6 @@ public class SmsChannel extends AppCompatActivity implements Channel {
 
 
         listView = (ListView) findViewById(R.id.lstContacts);
-        listView.setAdapter(dataAdapter);
         requestContactPermission();
     }
 
@@ -88,6 +88,17 @@ public class SmsChannel extends AppCompatActivity implements Channel {
 
         dataAdapter = new MyCustomAdapter(SmsChannel.this, R.layout.contact_info, contactsInfoList);
         listView.setAdapter(dataAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(SmsChannel.this, SmsContact.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("phoneNumber", contactsInfoList.get(position).getPhoneNumber());
+                bundle.putString("name", contactsInfoList.get(position).getDisplayName());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
 
