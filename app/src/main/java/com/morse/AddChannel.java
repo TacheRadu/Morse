@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.R;
-import com.androidsms.SmsChannel;
+import com.channels.androidsms.SmsChannel;
 
 import androidx.appcompat.app.AppCompatActivity;
 

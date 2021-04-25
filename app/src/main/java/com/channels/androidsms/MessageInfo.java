@@ -1,4 +1,4 @@
-package com.androidsms;
+package com.channels.androidsms;
 
 public class MessageInfo {
     private final String person;

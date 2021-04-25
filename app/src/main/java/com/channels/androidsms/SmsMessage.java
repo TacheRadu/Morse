@@ -1,4 +1,4 @@
-package com.androidsms;
+package com.channels.androidsms;
 
 import android.content.Context;
 import android.net.Uri;

@@ -1,7 +1,6 @@
 package com.morse;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,13 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.R;
-import com.androidsms.SmsChannel;
-import com.twitterchannel.TwitterChannelActivity;
-
+import com.channels.androidsms.SmsChannel;
+import com.channels.twitter.TwitterChannelLoginActivity;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class SelectChannel extends AppCompatActivity {
     App app;
@@ -77,13 +75,12 @@ public class SelectChannel extends AppCompatActivity {
         }
 
         //this button will redirect you to the SelectChannel Page
-        button = (Button) findViewById(R.id.addchannelbtn);
+        button = findViewById(R.id.addchannelbtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openAddChannel();
             }
-
         });
     }
 
@@ -103,7 +100,7 @@ public class SelectChannel extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     app.insertIntoChannels("sms");
                 } else if (code == 1) {
-                    channelList.add(new TwitterChannelActivity(SelectChannel.this));
+                    channelList.add(new TwitterChannelLoginActivity(SelectChannel.this));
                     adapter.notifyDataSetChanged();
                     app.insertIntoChannels("twitter");
                 }

@@ -29,12 +29,14 @@
         <activity android:name=".morse.LoginActivity">
 
         </activity>
-        <activity android:name=".androidsms.SmsChannel">
+        <activity android:name=".channels.androidsms.SmsChannel">
 
         </activity>
-        <activity android:name=".androidsms.SmsContact">
+        <activity android:name=".channels.androidsms.SmsContact">
 
         </activity>
+
+        <activity android:name=".channels.twitter.TwitterChannelLoginActivity" />
 
     </application>
 

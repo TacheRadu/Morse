@@ -7,12 +7,15 @@
     tools:context="morse.LoginActivity">
 
     <EditText
-        android:id="@+id/etName"
+        android:id="@+id/userCredential"
+        style="@style/Widget.AppCompat.AutoCompleteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter name:"
+        android:ems="11"
+        android:hint="Phone, email or username"
         android:inputType="textPersonName"
+        android:soundEffectsEnabled="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -21,40 +24,44 @@
         app:layout_constraintVertical_bias="0.405" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/userPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Password:"
+        android:ems="11"
+        android:hint="Password"
         android:inputType="textPassword"
+        android:password="true"
+        android:phoneNumber="false"
+        android:soundEffectsEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etName"
+        app:layout_constraintTop_toBottomOf="@+id/userCredential"
         app:layout_constraintVertical_bias="0.136" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:soundEffectsEnabled="true"
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"
+        app:layout_constraintTop_toBottomOf="@+id/userPassword"
         app:layout_constraintVertical_bias="0.211" />
 
     <TextView
         android:id="@+id/remainingAttempsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No. of attempts remaining: "
+        android:text="Number of attempts remaining: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
         app:layout_constraintVertical_bias="0.173" />
 
     <TextView
@@ -70,7 +77,7 @@
         android:layout_width="146dp"
         android:layout_height="112dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/etName"
+        app:layout_constraintBottom_toTopOf="@+id/userCredential"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

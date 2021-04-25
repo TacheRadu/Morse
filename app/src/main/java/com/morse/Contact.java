@@ -1,6 +1,6 @@
 package com.morse;
 
-import com.androidsms.MessageInfo;
+import com.channels.androidsms.MessageInfo;
 
 import java.util.List;
 

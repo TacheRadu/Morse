@@ -1,4 +1,4 @@
-package com.androidsms;
+package com.channels.androidsms;
 
 import android.Manifest;
 import android.content.ContentResolver;

@@ -1,4 +1,4 @@
-package com.androidsms;
+package com.channels.androidsms;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,10 +20,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.R;
-import com.morse.App;
 import com.morse.Channel;
 import com.morse.Contact;
-import com.morse.LoginActivity;
 import com.morse.Message;
 
 import java.util.ArrayList;

@@ -1,24 +1,17 @@
 package com.morse;
-import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.R;
-import com.androidsms.SmsChannel;
-import com.twitterchannel.TwitterChannelActivity;
+import com.channels.androidsms.SmsChannel;
+import com.channels.twitter.TwitterChannelLoginActivity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -136,7 +129,7 @@ public class App extends AppCompatActivity {
                     //TODO
                     break;
                 case "twitter":
-                    channels.add(new TwitterChannelActivity(parentActivity));
+                    channels.add(new TwitterChannelLoginActivity(parentActivity));
                     break;
             }
         }

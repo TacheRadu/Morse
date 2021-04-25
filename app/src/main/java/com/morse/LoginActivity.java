@@ -27,9 +27,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        eName = findViewById(R.id.etName);
-        ePassword = findViewById(R.id.etPassword);
-        eLogin =findViewById(R.id.btnLogin);
+        eName = findViewById(R.id.userCredential);
+        ePassword = findViewById(R.id.userPassword);
+        eLogin =findViewById(R.id.loginButton);
         eAttemptsInfo = findViewById(R.id.remainingAttempsText);
 
         eLogin.setOnClickListener(new View.OnClickListener() {
