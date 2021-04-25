@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.R;
 import com.androidsms.SmsChannel;
+import com.twitterchannel.TwitterChannelActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,20 +92,22 @@ public class SelectChannel extends AppCompatActivity {
         startActivityForResult(intent, 0);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
-                int result = data.getIntExtra("Channel", 0);
-                channelList.add(new SmsChannel(SelectChannel.this));
-                adapter.notifyDataSetChanged();
-                app.insertIntoChannels("sms");
+                int code = data.getIntExtra("Channel", -1);
+                if (code == 0) {
+                    channelList.add(new SmsChannel(SelectChannel.this));
+                    adapter.notifyDataSetChanged();
+                    app.insertIntoChannels("sms");
+                } else if (code == 1) {
+                    channelList.add(new TwitterChannelActivity(SelectChannel.this));
+                    adapter.notifyDataSetChanged();
+                    app.insertIntoChannels("twitter");
+                }
             }
-
         }
-
     }
 }

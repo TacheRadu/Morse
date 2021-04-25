@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
 import com.androidsms.SmsChannel;
+import com.twitterchannel.TwitterChannelActivity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -135,7 +136,8 @@ public class App extends AppCompatActivity {
                     //TODO
                     break;
                 case "twitter":
-                    //TODO
+                    channels.add(new TwitterChannelActivity(parentActivity));
+                    break;
             }
         }
         cursor.close();

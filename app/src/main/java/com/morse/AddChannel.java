@@ -21,10 +21,11 @@ public class AddChannel extends AppCompatActivity {
     ListView listView;
     App app;
     MyAdapter adapter;
-    List<String> mTitle = new ArrayList<>(Arrays.asList("SMS", "Reddit"));
-    List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Redit"));
-    List<Integer> images = new ArrayList<>(Arrays.asList(R.drawable.sms, R.drawable.reddit));
-
+    List<String> mTitle = new ArrayList<>(Arrays.asList("SMS", "Reddit", "Twitter"));
+    List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Reddit",
+            "It's what's happening / Twitter"));
+    List<Integer> images = new ArrayList<>(Arrays.asList(R.drawable.sms, R.drawable.reddit,
+            R.drawable.twitter));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,6 @@ public class AddChannel extends AppCompatActivity {
                     mTitle.remove(index);
                     mDescription.remove(index);
                     images.remove(index);
-
                 }
             }
         }

@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         eName = findViewById(R.id.etName);
         ePassword = findViewById(R.id.etPassword);
         eLogin =findViewById(R.id.btnLogin);
-        eAttemptsInfo = findViewById(R.id.tvAttemptsInfo);
+        eAttemptsInfo = findViewById(R.id.remainingAttempsText);
 
         eLogin.setOnClickListener(new View.OnClickListener() {
             @Override
