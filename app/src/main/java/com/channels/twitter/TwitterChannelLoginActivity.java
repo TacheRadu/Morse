@@ -36,11 +36,6 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
 
     public TwitterChannelLoginActivity(AppCompatActivity activity) {
         this.parentActivity = activity;
-        if (this.parentActivity == null) {
-            System.out.println("E null frate");
-        } else {
-            System.out.println("In constructor nu e null.");
-        }
     }
 
     @Override
