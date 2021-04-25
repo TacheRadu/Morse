@@ -81,7 +81,7 @@ public class SmsChannel extends AppCompatActivity implements Channel {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(SmsChannel.this, SmsContact.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("phoneNumber", contactInfoList.get(position).getLastMessage());
+                bundle.putString("phoneNumber", contactInfoList.get(position).getPhoneNumber());
                 bundle.putString("name", contactInfoList.get(position).getDisplayName());
                 intent.putExtras(bundle);
                 startActivity(intent);
