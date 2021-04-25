@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -45,10 +46,22 @@ public class SmsChannel extends AppCompatActivity implements Channel {
         requestContactPermission();
     }
 
+    public String getName(){
+        return "SMS";
+    }
+
+    public String getDescription(){
+        return "Direct SMS";
+    }
+
+    public int getImage(){
+        return R.drawable.sms;
+    }
+
     private void getContacts(){
 
         Cursor cursor = getContentResolver()
-                .query(Uri.parse("content://sms"), null, null, null, null);
+                .query(Telephony.Sms.CONTENT_URI, null, null, null, null);
 
         contactInfoList = new ArrayList<ContactInfo>();
 
