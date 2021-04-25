@@ -23,15 +23,19 @@ public class SelectChannel extends AppCompatActivity {
     ListView listView;
     private Button button;
     List<Channel> channelList;
-    ArrayAdapter<Channel> adapter;
-    String[] mTitle = {"SMS", "Twitter", "Reddit"};
+    MyAdapter adapter;
 
-    String[] mDescription = {"Channel for Signal", "Channel for Twitter", "Channel for Reddit"};
-    int[] images = {R.drawable.sms, R.drawable.twitter, R.drawable.reddit};
-    String[] final_title;
-    String[] final_description;
-    int[] final_images;
-    int contor = 0;
+    private void createAdapter(){
+        List<String> titles = new ArrayList<>();
+        List<String> descriptions = new ArrayList<>();
+        List<Integer> images = new ArrayList<>();
+        for(Channel channel : channelList){
+            titles.add(channel.getName());
+            descriptions.add(channel.getDescription());
+            images.add(channel.getImage());
+        }
+        adapter = new MyAdapter(SelectChannel.this, titles, descriptions, images);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,8 @@ public class SelectChannel extends AppCompatActivity {
         channelList = new ArrayList<>();
 
         channelList.addAll(app.getChannels());
-        adapter = new ArrayAdapter<Channel>(this,
-                android.R.layout.simple_list_item_1, channelList);
+        createAdapter();
+        adapter.notifyDataSetChanged();
 
         listView.setAdapter(adapter);
 
@@ -69,8 +73,6 @@ public class SelectChannel extends AppCompatActivity {
 //            listView = findViewById(R.id.listView);
 //            MyAdapter adapter = new MyAdapter(this, final_title, final_description, final_images);
 //            listView.setAdapter(adapter);
-
-            Toast.makeText(SelectChannel.this, "You selected " + mTitle[final_value], Toast.LENGTH_SHORT).show();
 
             //The key argument here must match that used in the other activity
         }
@@ -100,6 +102,7 @@ public class SelectChannel extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 int result = data.getIntExtra("Channel", 0);
                 channelList.add(new SmsChannel(SelectChannel.this));
+                adapter.add(channelList.get(channelList.size() - 1));
                 adapter.notifyDataSetChanged();
                 app.insertIntoChannels("sms");
             }
