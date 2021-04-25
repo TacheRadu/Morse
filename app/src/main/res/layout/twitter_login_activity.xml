@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="11"
-        android:hint="Phone, email or username"
+        android:hint="@string/user_credential"
         android:inputType="textPersonName"
         android:soundEffectsEnabled="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -21,31 +21,31 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.405" />
+        app:layout_constraintVertical_bias="0.405"
+        android:autofillHints="@string/user_credential" />
 
     <EditText
         android:id="@+id/userPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="11"
-        android:hint="Password"
+        android:hint="@string/userPassword"
         android:inputType="textPassword"
-        android:password="true"
-        android:phoneNumber="false"
         android:soundEffectsEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userCredential"
-        app:layout_constraintVertical_bias="0.136" />
+        app:layout_constraintVertical_bias="0.136"
+        android:autofillHints="@string/userPassword" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:soundEffectsEnabled="true"
-        android:text="Login"
+        android:text="@string/login_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
         android:id="@+id/remainingAttempsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of attempts remaining: "
+        android:text="@string/attempts_remaining_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -68,7 +68,7 @@
         android:id="@+id/remainingAttemps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3"
+        android:text="@string/attempts_remaining"
         app:layout_constraintStart_toEndOf="@+id/remainingAttempsText"
         app:layout_constraintTop_toTopOf="@+id/remainingAttempsText" />
 
@@ -81,6 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/twitter" />
+        app:srcCompat="@drawable/twitter"
+        android:contentDescription="@string/twitter_logo_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

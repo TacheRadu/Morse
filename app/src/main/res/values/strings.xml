@@ -4,4 +4,10 @@
     <string name="phone_number">Phone number</string>
     <string name="type_message">Type Message</string>
     <string name="send">Send</string>
+    <string name="login_button">Login</string>
+    <string name="attempts_remaining_text">Number of attempts remaining:</string>
+    <string name="attempts_remaining">3</string>
+    <string name="userPassword">Password</string>
+    <string name="user_credential">Phone, email or username</string>
+    <string name="twitter_logo_image">Twitter logo image</string>
 </resources>
