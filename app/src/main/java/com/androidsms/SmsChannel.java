@@ -45,60 +45,6 @@ public class SmsChannel extends AppCompatActivity implements Channel {
         requestContactPermission();
     }
 
-//    private void getContacts(){
-//        ContentResolver contentResolver = getContentResolver();
-//        String contactId = null;
-//        String displayName = null;
-//        contactInfoList = new ArrayList<ContactInfo>();
-//        Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
-//        if (cursor.getCount() > 0) {
-//            while (cursor.moveToNext()) {
-//                int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
-//                if (hasPhoneNumber > 0) {
-//
-//                    ContactInfo contactsInfo = new ContactInfo();
-//                    contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-//                    displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-//
-//                    contactsInfo.setContactId(contactId);
-//                    contactsInfo.setDisplayName(displayName);
-//
-//                    Cursor phoneCursor = getContentResolver().query(
-//                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-//                            null,
-//                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-//                            new String[]{contactId},
-//                            null);
-//
-//                    if (phoneCursor.moveToNext()) {
-//                        String phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-//
-//                        contactsInfo.setPhoneNumber(phoneNumber);
-//                    }
-//
-//                    phoneCursor.close();
-//
-//                    contactInfoList.add(contactsInfo);
-//                }
-//            }
-//        }
-//        cursor.close();
-//
-//        dataAdapter = new MyCustomAdapter(SmsChannel.this, R.layout.contact_info, contactInfoList);
-//        listView.setAdapter(dataAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(SmsChannel.this, SmsContact.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("phoneNumber", contactInfoList.get(position).getPhoneNumber());
-//                bundle.putString("name", contactInfoList.get(position).getDisplayName());
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        });
-//    }
-
     private void getContacts(){
 
         Cursor cursor = getContentResolver()
@@ -114,11 +60,12 @@ public class SmsChannel extends AppCompatActivity implements Channel {
                 String contactId = cursor.getString(cursor.getColumnIndexOrThrow("thread_id"));
                 String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
                 String displayName = smsContact.getContactName(this, address);
+                String lastMessageText = smsContact.getLastMessageText(address);
 
                 if (displayName == null)
                     displayName = new String(address);
 
-                ContactInfo currentContact = new ContactInfo(contactId, displayName, address);
+                ContactInfo currentContact = new ContactInfo(contactId, displayName, address, lastMessageText);
 
                 addToContactInfoListIfNotExists(currentContact, contactInfoList);
 
@@ -134,7 +81,7 @@ public class SmsChannel extends AppCompatActivity implements Channel {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(SmsChannel.this, SmsContact.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("phoneNumber", contactInfoList.get(position).getPhoneNumber());
+                bundle.putString("phoneNumber", contactInfoList.get(position).getLastMessage());
                 bundle.putString("name", contactInfoList.get(position).getDisplayName());
                 intent.putExtras(bundle);
                 startActivity(intent);

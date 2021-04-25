@@ -84,7 +84,6 @@ public class SmsContact extends AppCompatActivity implements Contact {
         }
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public List<MessageInfo> getMessages(String fromAddress) {
@@ -146,6 +145,31 @@ public class SmsContact extends AppCompatActivity implements Contact {
         });
 
         return messages;
+    }
+
+    public String getLastMessageText(String fromAddress){
+        if (context == null)
+            throw new NullPointerException();
+
+        Cursor cursor = context.getContentResolver()
+                .query(Uri.parse("content://sms"), null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+
+                String currentAddress = cursor.getString(
+                        cursor.getColumnIndexOrThrow("address"));
+
+                if (currentAddress.equals(fromAddress)) {
+                    String lastMessageText =
+                            cursor.getString(cursor.getColumnIndexOrThrow("body"));
+                    return lastMessageText;
+                }
+
+            } while (cursor.moveToNext());
+        }
+
+        return "";
+
     }
 
     public String getContactName(Context context, String phoneNumber) {

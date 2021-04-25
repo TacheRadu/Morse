@@ -6,11 +6,13 @@ public class ContactInfo {
     private String contactId;
     private String displayName;
     private String phoneNumber;
+    private String lastMessage;
 
-    public ContactInfo(String contactId, String displayName, String phoneNumber) {
+    public ContactInfo(String contactId, String displayName, String phoneNumber, String lastMessage) {
         this.contactId = contactId;
         this.displayName = displayName;
         this.phoneNumber = phoneNumber;
+        this.lastMessage = lastMessage;
     }
 
     public ContactInfo(){
@@ -30,6 +32,16 @@ public class ContactInfo {
     @Override
     public int hashCode() {
         return Objects.hash(contactId, displayName, phoneNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "ContactInfo{" +
+                "contactId='" + contactId + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", lastMessage='" + lastMessage + '\'' +
+                '}';
     }
 
     public String getContactId() {
@@ -54,5 +66,9 @@ public class ContactInfo {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
     }
 }
