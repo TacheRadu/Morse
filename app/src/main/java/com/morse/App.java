@@ -1,4 +1,5 @@
 package com.morse;
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,9 +28,11 @@ import java.util.List;
 public class App extends AppCompatActivity {
 
     private final Database database;
+    private final AppCompatActivity parentActivity;
 
-    public App(Context context){
-        database = new Database(context);
+    public App(AppCompatActivity activity){
+        this.parentActivity = activity;
+        database = new Database(activity.getApplicationContext());
 
     }
 
@@ -126,7 +129,7 @@ public class App extends AppCompatActivity {
             String name = cursor.getString(1);
             switch (name){
                 case "sms":
-                    channels.add(new SmsChannel());
+                    channels.add(new SmsChannel(parentActivity));
                     break;
                 case "reddit":
                     //TODO
