@@ -10,16 +10,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
+import android.telephony.TelephonyManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import com.R;
 import com.morse.Contact;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -40,8 +46,7 @@ public class SmsContact extends AppCompatActivity implements Contact {
     Button sendButton;
     int size;
 
-
-    public SmsContact(){
+    public SmsContact() {
 
     }
 
@@ -64,7 +69,7 @@ public class SmsContact extends AppCompatActivity implements Contact {
             ActivityCompat.requestPermissions(SmsContact.this, new String[]{"android.permission.READ_SMS"}, 123);
         else {
             List<MessageInfo> messages = getMessages(phNumber);
-            if(nameList != null)
+            if (nameList != null)
                 size = nameList.size();
 
             nameList = new ArrayList<>();
@@ -75,11 +80,11 @@ public class SmsContact extends AppCompatActivity implements Contact {
                 messageList.add(message.getMessageText());
             }
 
-           if(size!=nameList.size()){
-               adapter = new MyAdapterSendReceive(context, nameList, messageList);
-               listView.setAdapter(adapter);
-               adapter.notifyDataSetChanged();
-           }
+            if (size != nameList.size()) {
+                adapter = new MyAdapterSendReceive(context, nameList, messageList);
+                listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
 
         }
     }
@@ -91,85 +96,86 @@ public class SmsContact extends AppCompatActivity implements Contact {
         if (context == null)
             throw new NullPointerException();
 
+        Cursor inboxSMSsCursor = context.getContentResolver()
+                .query(Telephony.Sms.Inbox.CONTENT_URI,
+                        new String[] { Telephony.Sms.Inbox._ID,
+                                Telephony.Sms.Inbox.ADDRESS,
+                                Telephony.Sms.Inbox.BODY,
+                                Telephony.Sms.Inbox.DATE,
+                                Telephony.Sms.Inbox.SEEN},
+                        null, null, null);
+
+        Cursor sentSMSsCursor = context.getContentResolver().query(
+                Telephony.Sms.Sent.CONTENT_URI, new String[] {
+                        Telephony.Sms.Sent._ID,
+                        Telephony.Sms.Sent.ADDRESS,
+                        Telephony.Sms.Sent.BODY,
+                        Telephony.Sms.Sent.DATE,
+                        Telephony.Sms.Sent.SEEN},
+                null,null, null);
+
+        List<MessageInfo> inboxMessagesFromAddress =
+                getMessagesFromCursor(inboxSMSsCursor, fromAddress, getContactName(context, fromAddress));
+
+        List<MessageInfo> sentMessagesToAddress =
+                getMessagesFromCursor(sentSMSsCursor, fromAddress, "Me");
+
         List<MessageInfo> messages = new ArrayList<>();
+        messages.addAll(inboxMessagesFromAddress);
+        messages.addAll(sentMessagesToAddress);
 
-        Cursor cursor = context.getContentResolver()
-                .query(Uri.parse("content://sms/inbox"), null, null, null, null);
-        if (cursor.moveToFirst()) {
-            do {
-
-                String currentAddress = cursor.getString(
-                        cursor.getColumnIndexOrThrow("address"));
-
-                if (currentAddress.equals(fromAddress)) {
-                    MessageInfo currentMessageReceived = new MessageInfo(getContactName(context,
-                            cursor.getString(cursor.getColumnIndexOrThrow("address"))),
-                            cursor.getString(cursor.getColumnIndexOrThrow("address")),
-                            cursor.getString(cursor.getColumnIndexOrThrow("body")),
-                            cursor.getString(cursor.getColumnIndexOrThrow("date")),
-                            cursor.getString(cursor.getColumnIndexOrThrow("seen")),
-                            cursor.getInt(cursor.getColumnIndexOrThrow("_id")));
-                    messages.add(currentMessageReceived);
-                }
-
-            } while (cursor.moveToNext());
-        }
-        Cursor cursor2 = context.getContentResolver()
-                .query(Uri.parse("content://sms/sent"), null, null, null, null);
-
-        if (cursor2.moveToFirst()) {
-            do {
-                String currentAddress = cursor2.getString(
-                        cursor2.getColumnIndexOrThrow("address"));
-                if (currentAddress.equals(fromAddress)) {
-                    MessageInfo currentMessageSent = new MessageInfo("Me",
-                            cursor2.getString(cursor2.getColumnIndexOrThrow("address")),
-                            cursor2.getString(cursor2.getColumnIndexOrThrow("body")),
-                            cursor2.getString(cursor2.getColumnIndexOrThrow("date")),
-                            cursor2.getString(cursor2.getColumnIndexOrThrow("seen")),
-                            cursor2.getInt(cursor2.getColumnIndexOrThrow("_id")));
-                    System.out.println(cursor2);
-                    messages.add(currentMessageSent);
-                }
-
-            } while (cursor2.moveToNext());
-
-        }
-
-        messages.sort(new Comparator<MessageInfo>() {
-
-            @Override
-            public int compare(MessageInfo o1, MessageInfo o2) {
-                return o1.getDate().compareTo(o2.getDate());
-            }
-        });
+        messages.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
 
         return messages;
     }
 
+    private List<MessageInfo> getMessagesFromCursor(Cursor currentCursor, String fromAddress, String givenName){
+        List<MessageInfo> messages = new ArrayList<>();
+
+        if (currentCursor.moveToFirst()) {
+            do {
+                String currentAddress = currentCursor.getString(1);
+                if (currentAddress.equals(fromAddress)) {
+                    MessageInfo currentMessageSent = new MessageInfo(
+                            Integer.parseInt(currentCursor.getString(0)),
+                            givenName,
+                            currentCursor.getString(1),
+                            currentCursor.getString(2),
+                            currentCursor.getString(3),
+                            currentCursor.getString(4));
+                    messages.add(currentMessageSent);
+                }
+
+            } while (currentCursor.moveToNext());
+        }
+        return messages;
+    }
+
     public String getLastMessageText(String fromAddress){
+        
         if (context == null)
             throw new NullPointerException();
 
         Cursor cursor = context.getContentResolver()
-                .query(Uri.parse("content://sms"), null, null, null, null);
+                .query(Telephony.Sms.CONTENT_URI,
+                        new String[]{
+                                Telephony.Sms.ADDRESS,
+                                Telephony.Sms.BODY},
+                        null, null, null);
+
         if (cursor.moveToFirst()) {
             do {
-
-                String currentAddress = cursor.getString(
-                        cursor.getColumnIndexOrThrow("address"));
+                String currentAddress = cursor.getString(0);
 
                 if (currentAddress.equals(fromAddress)) {
                     String lastMessageText =
-                            cursor.getString(cursor.getColumnIndexOrThrow("body"));
+                            cursor.getString(1);
                     return lastMessageText;
                 }
-
             } while (cursor.moveToNext());
         }
-
+        
         return "";
-
     }
 
     public String getContactName(Context context, String phoneNumber) {
@@ -177,18 +183,21 @@ public class SmsContact extends AppCompatActivity implements Contact {
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                 Uri.encode(phoneNumber));
         Cursor cursor = cr.query(uri,
-                new String[] { ContactsContract.PhoneLookup.DISPLAY_NAME }, null, null, null);
-        if (cursor == null) {
+                new String[] { ContactsContract.PhoneLookup.DISPLAY_NAME }, null , null, null);
+
+        if (cursor == null)
             return null;
-        }
-        String contactName = null;
-        if (cursor.moveToFirst()) {
-            contactName = cursor.getString(cursor
-                    .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
-        }
-        if (cursor != null && !cursor.isClosed()) {
+
+        String contactName = "";
+        if (cursor.moveToFirst())
+            contactName = cursor.getString(0);
+
+        if (cursor != null && !cursor.isClosed())
             cursor.close();
-        }
+
+        if (contactName.equals(""))
+            return phoneNumber;
+
         return contactName;
     }
 

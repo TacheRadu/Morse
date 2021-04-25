@@ -76,7 +76,7 @@ public class SmsChannel extends AppCompatActivity implements Channel {
                 String lastMessageText = smsContact.getLastMessageText(address);
 
                 if (displayName == null)
-                    displayName = new String(address);
+                    displayName = address;
 
                 ContactInfo currentContact = new ContactInfo(contactId, displayName, address, lastMessageText);
 
@@ -89,16 +89,14 @@ public class SmsChannel extends AppCompatActivity implements Channel {
 
         dataAdapter = new MyCustomAdapter(SmsChannel.this, R.layout.contact_info, contactInfoList);
         listView.setAdapter(dataAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SmsChannel.this, SmsContact.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("phoneNumber", contactInfoList.get(position).getPhoneNumber());
-                bundle.putString("name", contactInfoList.get(position).getDisplayName());
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(SmsChannel.this, SmsContact.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("phoneNumber", contactInfoList.get(position).getPhoneNumber());
+            bundle.putString("name", contactInfoList.get(position).getDisplayName());
+            bundle.putString("lastMessage", contactInfoList.get(position).getLastMessage());
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
     }
 
@@ -150,7 +148,7 @@ public class SmsChannel extends AppCompatActivity implements Channel {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_READ_SMS: {
                 if (grantResults.length > 0
