@@ -157,9 +157,9 @@ public class SmsChannel extends AppCompatActivity implements Channel {
 
     public void requestContactPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        android.Manifest.permission.READ_CONTACTS)) {
+                        android.Manifest.permission.READ_SMS)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Read contacts access needed");
                     builder.setPositiveButton(android.R.string.ok, null);
@@ -170,14 +170,14 @@ public class SmsChannel extends AppCompatActivity implements Channel {
                         public void onDismiss(DialogInterface dialog) {
                             requestPermissions(
                                     new String[]
-                                            {android.Manifest.permission.READ_CONTACTS}
+                                            {android.Manifest.permission.READ_SMS}
                                     , PERMISSIONS_REQUEST_READ_CONTACTS);
                         }
                     });
                     builder.show();
                 } else {
                     ActivityCompat.requestPermissions(this,
-                            new String[]{android.Manifest.permission.READ_CONTACTS},
+                            new String[]{android.Manifest.permission.READ_SMS},
                             PERMISSIONS_REQUEST_READ_CONTACTS);
                 }
             } else {
