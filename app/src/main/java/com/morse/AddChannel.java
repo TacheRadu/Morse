@@ -22,7 +22,7 @@ public class AddChannel extends AppCompatActivity {
     App app;
     MyAdapter adapter;
     List<String> mTitle = new ArrayList<>(Arrays.asList("SMS", "Reddit"));
-    List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Redit"));
+    List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Reddit"));
     List<Integer> images = new ArrayList<>(Arrays.asList(R.drawable.sms, R.drawable.reddit));
 
 
@@ -36,8 +36,7 @@ public class AddChannel extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         // now create an adapter class
         disableAlreadyExistent();
-        adapter = new MyAdapter(this, mTitle.toArray(new String[mTitle.size()]),
-                mDescription.toArray(new String[mDescription.size()]), images.toArray(new Integer[images.size()]));
+        adapter = new MyAdapter(this, mTitle, mDescription, images);
         listView.setAdapter(adapter);
         // there is my mistake...
         // now again check this..
