@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import java.util.List;
@@ -44,9 +43,9 @@ public class MyCustomAdapter extends ArrayAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        ContactsInfo contactsInfo = (ContactsInfo) contactsInfoList.get(position);
-        holder.displayName.setText(contactsInfo.getDisplayName());
-        holder.phoneNumber.setText(contactsInfo.getPhoneNumber());
+        ContactInfo contactInfo = (ContactInfo) contactsInfoList.get(position);
+        holder.displayName.setText(contactInfo.getDisplayName());
+        holder.phoneNumber.setText(contactInfo.getPhoneNumber());
 
         return convertView;
     }

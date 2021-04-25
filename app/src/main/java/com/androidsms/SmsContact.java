@@ -148,7 +148,7 @@ public class SmsContact extends AppCompatActivity implements Contact {
         return messages;
     }
 
-    private String getContactName(Context context, String phoneNumber) {
+    public String getContactName(Context context, String phoneNumber) {
         ContentResolver cr = context.getContentResolver();
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                 Uri.encode(phoneNumber));
