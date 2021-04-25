@@ -30,7 +30,7 @@ import java.util.List;
 
 public class SmsChannel extends AppCompatActivity implements Channel {
 
-    public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    public static final int PERMISSIONS_REQUEST_READ_SMS = 1;
     MyCustomAdapter dataAdapter = null;
     ListView listView;
     List<ContactInfo> contactInfoList;
@@ -118,14 +118,14 @@ public class SmsChannel extends AppCompatActivity implements Channel {
                             requestPermissions(
                                     new String[]
                                             {android.Manifest.permission.READ_SMS}
-                                    , PERMISSIONS_REQUEST_READ_CONTACTS);
+                                    , PERMISSIONS_REQUEST_READ_SMS);
                         }
                     });
                     builder.show();
                 } else {
                     ActivityCompat.requestPermissions(this,
                             new String[]{android.Manifest.permission.READ_SMS},
-                            PERMISSIONS_REQUEST_READ_CONTACTS);
+                            PERMISSIONS_REQUEST_READ_SMS);
                 }
             } else {
                 getContacts();
@@ -139,7 +139,7 @@ public class SmsChannel extends AppCompatActivity implements Channel {
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case PERMISSIONS_REQUEST_READ_CONTACTS: {
+            case PERMISSIONS_REQUEST_READ_SMS: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getContacts();
