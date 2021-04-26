@@ -1,5 +1,6 @@
 package com.androidsms;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -32,6 +33,7 @@ import java.util.List;
 public class SmsChannel extends AppCompatActivity implements Channel {
 
     public static final int PERMISSIONS_REQUEST_READ_SMS = 1;
+    public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     MyCustomAdapter dataAdapter = null;
     ListView listView;
     List<ContactInfo> contactInfoList;
@@ -122,24 +124,32 @@ public class SmsChannel extends AppCompatActivity implements Channel {
 
     public void requestContactPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        android.Manifest.permission.READ_SMS)) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("Read contacts access needed");
-                    builder.setPositiveButton(android.R.string.ok, null);
-                    builder.setMessage("Please enable access to contacts.");
-                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @TargetApi(Build.VERSION_CODES.M)
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            requestPermissions(
-                                    new String[]
-                                            {android.Manifest.permission.READ_SMS}
-                                    , PERMISSIONS_REQUEST_READ_SMS);
-                        }
-                    });
-                    builder.show();
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED ) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                            android.Manifest.permission.READ_SMS)) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle("Read contacts access needed");
+                        builder.setPositiveButton(android.R.string.ok, null);
+                        builder.setMessage("Please enable access to contacts.");
+                        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @TargetApi(Build.VERSION_CODES.M)
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                requestPermissions(
+                                        new String[]
+                                                {android.Manifest.permission.READ_SMS}
+                                        , PERMISSIONS_REQUEST_READ_SMS);
+                            }
+                        });
+                        builder.show();
+                    }
+                    else{
+                        ActivityCompat.requestPermissions(this,
+                                new String[]{Manifest.permission.READ_CONTACTS},
+                                PERMISSIONS_REQUEST_READ_CONTACTS);
+                    }
+
                 } else {
                     ActivityCompat.requestPermissions(this,
                             new String[]{android.Manifest.permission.READ_SMS},
