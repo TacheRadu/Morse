@@ -24,9 +24,7 @@ public class ContactInfo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactInfo that = (ContactInfo) o;
-        return contactId.equals(that.contactId) &&
-                displayName.equals(that.displayName) &&
-                phoneNumber.equals(that.phoneNumber);
+        return displayName.equals(that.displayName);
     }
 
     @Override

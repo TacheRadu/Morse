@@ -85,6 +85,8 @@ public class SmsChannel extends AppCompatActivity implements Channel {
             } while (cursor.moveToNext());
         }
 
+        System.out.println(contactInfoList);
+
         cursor.close();
 
         dataAdapter = new MyCustomAdapter(SmsChannel.this, R.layout.contact_info, contactInfoList);
@@ -108,7 +110,12 @@ public class SmsChannel extends AppCompatActivity implements Channel {
 
         ContactInfo lastContactInList = contactInfoList.get(contactInfoList.size()-1);
 
-        if (!lastContactInList.equals(currentContact))
+        Boolean contactExistsInList = false;
+        for (ContactInfo contactInfo : contactInfoList)
+            if (currentContact.getDisplayName().equals(contactInfo.getDisplayName()))
+                contactExistsInList = true;
+
+        if (!contactExistsInList)
             contactInfoList.add(currentContact);
     }
 
