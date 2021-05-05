@@ -8,7 +8,6 @@ import java.util.List;
  *
  */
 public interface Channel {
-
     /**
      *
      */
@@ -28,8 +27,11 @@ public interface Channel {
      *
      */
     void checkCredentials();
+
     String getName();
+
     String getDescription();
+
     int getImage();
 
     /**
@@ -38,6 +40,6 @@ public interface Channel {
      */
     void sendDelayedMessage(Message message, List<Contact> contact);
 
-    public Intent getIntent();
+    Intent getIntent();
 
 }

@@ -16,43 +16,26 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+
 /**
+ *
+ * <Daca tot incepi sa pui comentariile pentru javadoc, mai si scrie ceva in el.>
  *
  */
 public class App extends AppCompatActivity {
-
     private final Database database;
     private final AppCompatActivity parentActivity;
+    public List<Channel> channels;
+    public Sender sender;
 
-    public App(AppCompatActivity activity){
+    public void App() {
+        // TODO implement here
+    }
+
+    public App(AppCompatActivity activity) {
         this.parentActivity = activity;
         database = new Database(activity.getApplicationContext());
 
-    }
-
-
-
-
-
-    /**
-     *
-     */
-    public List<Channel> channels;
-    /**
-     *
-     */
-    public Sender sender;
-
-    /**
-     * Default constructor
-     */
-
-
-    /**
-     *
-     */
-    public void App() {
-        // TODO implement here
     }
 
     /**
@@ -71,19 +54,19 @@ public class App extends AppCompatActivity {
         // TODO implement here
     }
 
-
-    public void insertIntoChannels(String name){
+    public void insertIntoChannels(String name) {
         String insert = "INSERT INTO channels (name) VALUES(?);";
         SQLiteStatement statement = database.getWritableDatabase().compileStatement(insert);
         statement.bindString(1, name);
         statement.execute();
     }
 
-    private void insertIntoUsers(int id, String userName, String hashedPassword){
+    private void insertIntoUsers(int id, String userName, String hashedPassword) {
         String insert = "INSERT INTO users(channel_id, username, password) VALUES(?, ?, ?);";
         //TODO
     }
-    private void removeUser(String username){
+
+    private void removeUser(String username) {
         String url = "jdbc:sqlite:database.db";
         String remove = "DELETE FROM users WHERE trim(username) = trim(?); ";
         try (Connection conn = DriverManager.getConnection(url)) {
@@ -95,7 +78,7 @@ public class App extends AppCompatActivity {
         }
     }
 
-    private List<String> queryChannel(String channel){
+    private List<String> queryChannel(String channel) {
         List<String> userData = new ArrayList<>(2);
         String url = "jdbc:sqlite:database.db";
         String select = "SELECT username, password from accounts WHERE channel = ?";
@@ -115,11 +98,11 @@ public class App extends AppCompatActivity {
         return userData;
     }
 
-    public List<Channel> getChannels(){
+    public List<Channel> getChannels() {
         String select = "SELECT * from channels;";
         List<Channel> channels = new ArrayList<>();
         Cursor cursor = database.getReadableDatabase().rawQuery(select, null);
-        while(cursor.moveToNext()){
+        while(cursor.moveToNext()) {
             String name = cursor.getString(1);
             switch (name){
                 case "sms":
@@ -134,6 +117,7 @@ public class App extends AppCompatActivity {
                     break;
             }
         }
+
         cursor.close();
         return channels;
     }

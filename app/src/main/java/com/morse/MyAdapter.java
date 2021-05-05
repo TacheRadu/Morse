@@ -12,37 +12,35 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 class MyAdapter extends ArrayAdapter<String> {
-
     Context context;
-    List<String> rTitle = new ArrayList<>();
-    List<String> rDescription;
-    List<Integer> rImgs;
+    List<String> rApplicationTitlesList;
+    List<String> rApplicationDescriptionsList;
+    List<Integer> rApplicationImagesList;
 
     MyAdapter(Context c, List<String> title, List<String> description, List<Integer> imgs) {
         super(c, R.layout.content_scrolling, R.id.textView1, title);
         this.context = c;
-        this.rTitle = title;
-        this.rDescription = description;
-        this.rImgs = imgs;
+        this.rApplicationTitlesList = title;
+        this.rApplicationDescriptionsList = description;
+        this.rApplicationImagesList = imgs;
     }
 
     public void addAll(List<Channel> channels){
         for(Channel channel : channels){
-            rTitle.add(channel.getName());
-            rDescription.add(channel.getDescription());
-            rImgs.add(channel.getImage());
+            rApplicationTitlesList.add(channel.getName());
+            rApplicationDescriptionsList.add(channel.getDescription());
+            rApplicationImagesList.add(channel.getImage());
         }
     }
 
     public void add(Channel channel){
-        rTitle.add(channel.getName());
-        rDescription.add(channel.getDescription());
-        rImgs.add(channel.getImage());
+        rApplicationTitlesList.add(channel.getName());
+        rApplicationDescriptionsList.add(channel.getDescription());
+        rApplicationImagesList.add(channel.getImage());
     }
 
     @NonNull
@@ -55,15 +53,15 @@ class MyAdapter extends ArrayAdapter<String> {
         TextView myDescription = row.findViewById(R.id.textView2);
 
         // now set our resources on views
-        images.setImageResource(rImgs.get(position));
-        myTitle.setText(rTitle.get(position));
-        myDescription.setText(rDescription.get(position));
+        images.setImageResource(rApplicationImagesList.get(position));
+        myTitle.setText(rApplicationTitlesList.get(position));
+        myDescription.setText(rApplicationDescriptionsList.get(position));
         return row;
     }
 
     @Override
     public String getItem(int position){
-        return rTitle.get(position);
+        return rApplicationTitlesList.get(position);
     }
 }
 
