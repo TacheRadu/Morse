@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morse">
 
-        <activity android:name=".channels.twitter.TwitterChannelLoginActivity">
+        <activity android:name=".morse.SelectChannel">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,6 +26,7 @@
         <activity android:name=".morse.LoginActivity" />
         <activity android:name=".channels.androidsms.SmsChannel" />
         <activity android:name=".channels.androidsms.SmsContact" />
+        <activity android:name=".channels.twitter.TwitterChannelLoginActivity" />
     </application>
 
 </manifest>
