@@ -28,6 +28,9 @@ public interface Channel {
      *
      */
     void checkCredentials();
+    String getName();
+    String getDescription();
+    int getImage();
 
     /**
      * @param message

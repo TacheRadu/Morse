@@ -1,6 +1,8 @@
 package com.channels.androidsms;
 
 import com.R;
+import com.androidsms.ContactInfo;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +25,7 @@ public class MyCustomAdapter extends ArrayAdapter {
 
     private class ViewHolder {
         TextView displayName;
-        TextView phoneNumber;
+        TextView lastMessage;
     }
 
     @Override
@@ -37,15 +39,15 @@ public class MyCustomAdapter extends ArrayAdapter {
 
             holder = new ViewHolder();
             holder.displayName = (TextView) convertView.findViewById(R.id.displayName);
-            holder.phoneNumber = (TextView) convertView.findViewById(R.id.phoneNumber);
+            holder.lastMessage = (TextView) convertView.findViewById(R.id.lastMessage);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        ContactsInfo contactsInfo = (ContactsInfo) contactsInfoList.get(position);
-        holder.displayName.setText(contactsInfo.getDisplayName());
-        holder.phoneNumber.setText(contactsInfo.getPhoneNumber());
+        ContactInfo contactInfo = (ContactInfo) contactsInfoList.get(position);
+        holder.displayName.setText(contactInfo.getDisplayName());
+        holder.lastMessage.setText(contactInfo.getLastMessage());
 
         return convertView;
     }

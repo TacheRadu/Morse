@@ -1,6 +1,8 @@
 package com.channels.androidsms;
 
 public class MessageInfo {
+    private final Integer id;
+
     private final String person;
 
     private final String phoneNumber;
@@ -11,13 +13,11 @@ public class MessageInfo {
 
     private final String seen;
 
-    private final Integer id;
-
     public Integer getId() {
         return id;
     }
 
-    public MessageInfo(String person, String phoneNumber, String messageText, String date, String seen, Integer id) {
+    public MessageInfo(Integer id, String person, String phoneNumber, String messageText, String date, String seen) {
         this.person = person;
         this.phoneNumber = phoneNumber;
         this.messageText = messageText;

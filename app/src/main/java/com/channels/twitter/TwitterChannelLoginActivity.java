@@ -30,8 +30,6 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
     private TextView remainingAttempts;
     private boolean credentialsCheckPassed      = false;
     private int currentNumberOfAvailableRetries = 3;
-    /* Hard-coded for now, just to see it works */
-    private final String accountName            = "@0xreloadedd";
 
     public TwitterChannelLoginActivity() {}
 
@@ -117,12 +115,27 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
     }
 
     @Override
+    public String getName() {
+        return "Twitter";
+    }
+
+    @Override
+    public String getDescription() {
+        return "It's what's happening / Twitter";
+    }
+
+    @Override
+    public int getImage() {
+        return R.drawable.twitter;
+    }
+
+    @Override
     public void sendDelayedMessage(Message message, List<Contact> contact) {
         /* TODO: Implement this! */
     }
 
     @Override
     public String toString() {
-        return "Twitter: " + this.accountName;
+        return "¯\\_(ツ)_/¯";
     }
 }
