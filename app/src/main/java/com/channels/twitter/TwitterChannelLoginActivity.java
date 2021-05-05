@@ -19,7 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
  * After a successful login, it will redirect the user to another activity.
  *
  * @author  Ionuț Roșca
- * @version 0.1.0
+ * @author  Ionuț Hristea
+ * @version 0.1.1
  */
 public class TwitterChannelLoginActivity extends AppCompatActivity implements Channel {
     private AppCompatActivity parentActivity = this;
