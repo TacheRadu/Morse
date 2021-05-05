@@ -49,7 +49,7 @@ public class AddChannel extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //we receive from this page a number so that we will know what to show back on our AddChannel page
                 Intent intent = new Intent();
-                intent.putExtra("Channel", position);
+                intent.putExtra(Constants.CHANNEL_TYPE, position);
 
                 setResult(RESULT_OK, intent);
                 finish();

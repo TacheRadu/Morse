@@ -30,7 +30,7 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
     private boolean credentialsCheckPassed      = false;
     private int currentNumberOfAvailableRetries = 3;
     /* Hard-coded for now, just to see it works */
-    private final String accountName            = "@rreloaded_";
+    private final String accountName            = "@0xreloadedd";
 
     public TwitterChannelLoginActivity() {}
 
@@ -91,7 +91,8 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
 
     @Override
     public Intent getIntent(){
-        return new Intent(this.parentActivity, TwitterChannelLoginActivity.class);
+        System.out.println("Got intent");
+        return new Intent(parentActivity, TwitterChannelLoginActivity.class);
     }
 
     @Override

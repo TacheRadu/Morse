@@ -94,13 +94,18 @@ public class SelectChannel extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
-                int code = data.getIntExtra("Channel", -1);
-                if (code == 0) {
+                int code = data.getIntExtra(Constants.CHANNEL_TYPE, -1);
+                if (code == Constants.CHANNEL_ANDROID_SMS) {
                     channelList.add(new SmsChannel(SelectChannel.this));
                     adapter.notifyDataSetChanged();
                     app.insertIntoChannels("sms");
-                } else if (code == 1) {
+                } else if (code == Constants.CHANNEL_REDDIT) {
+                    /* Here should be reddit, but we're adding Twitter and say it's Reddit */
                     channelList.add(new TwitterChannelLoginActivity(SelectChannel.this));
+                    adapter.notifyDataSetChanged();
+                    app.insertIntoChannels("reddit");
+                } else if (code == Constants.CHANNEL_TWITTER) {
+                    channelList.add(new TwitterChannelLoginActivity(this));
                     adapter.notifyDataSetChanged();
                     app.insertIntoChannels("twitter");
                 }

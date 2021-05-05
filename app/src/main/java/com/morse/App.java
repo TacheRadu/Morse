@@ -126,8 +126,9 @@ public class App extends AppCompatActivity {
                     channels.add(new SmsChannel(parentActivity));
                     break;
                 case "reddit":
-                    //TODO
-                    break;
+                    // TODO
+                    /* Does the same as the Twitter channel */
+//                    break;
                 case "twitter":
                     channels.add(new TwitterChannelLoginActivity(parentActivity));
                     break;
