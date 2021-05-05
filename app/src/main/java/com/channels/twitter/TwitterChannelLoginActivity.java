@@ -22,7 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * @version 0.1.0
  */
 public class TwitterChannelLoginActivity extends AppCompatActivity implements Channel {
-    private AppCompatActivity parentActivity;
+    private AppCompatActivity parentActivity = this;
     private EditText userCredential;
     private EditText userPassword;
     private Button loginButton;
