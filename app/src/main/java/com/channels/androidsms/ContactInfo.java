@@ -1,4 +1,4 @@
-package com.androidsms;
+package com.channels.androidsms;
 
 import java.util.Objects;
 

@@ -3,18 +3,13 @@ package com.channels.androidsms;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.Telephony;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,7 +18,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.R;
-import com.androidsms.ContactInfo;
 import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
@@ -39,6 +33,7 @@ public class SmsChannel extends AppCompatActivity implements Channel {
     ListView listView;
     List<ContactInfo> contactInfoList;
     AppCompatActivity parentActivity;
+    private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,46 +117,21 @@ public class SmsChannel extends AppCompatActivity implements Channel {
             contactInfoList.add(currentContact);
     }
 
+    private boolean hasPermissions(){
+        for(String permission : PERMISSIONS){
+            if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void requestContactPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED ) {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            android.Manifest.permission.READ_SMS)) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setTitle("Read contacts access needed");
-                        builder.setPositiveButton(android.R.string.ok, null);
-                        builder.setMessage("Please enable access to contacts.");
-                        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @TargetApi(Build.VERSION_CODES.M)
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                requestPermissions(
-                                        new String[]
-                                                {android.Manifest.permission.READ_SMS}
-                                        , PERMISSIONS_REQUEST_READ_SMS);
-                            }
-                        });
-                        builder.show();
-                    }
-                    else{
-                        ActivityCompat.requestPermissions(this,
-                                new String[]{Manifest.permission.READ_CONTACTS},
-                                PERMISSIONS_REQUEST_READ_CONTACTS);
-                    }
-
-                } else {
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{android.Manifest.permission.READ_SMS},
-                            PERMISSIONS_REQUEST_READ_SMS);
-                }
-            } else {
-                getContacts();
-            }
-        } else {
-            getContacts();
+        if(!hasPermissions()){
+            requestPermissions(PERMISSIONS, 1);
         }
+        else
+            getContacts();
     }
 
     @Override

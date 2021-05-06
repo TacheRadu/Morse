@@ -1,7 +1,6 @@
 package com.channels.androidsms;
 
 import com.R;
-import com.androidsms.ContactInfo;
 
 import android.content.Context;
 import android.view.LayoutInflater;
