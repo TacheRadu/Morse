@@ -1,4 +1,4 @@
-package com.morse;
+package com.morse.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,12 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.R;
 import com.channels.androidsms.SmsChannel;
 import com.channels.twitter.TwitterChannelLoginActivity;
+import com.morse.App;
+import com.morse.Channel;
+import com.morse.Constants;
+import com.morse.MyAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class SelectChannel extends AppCompatActivity {
+public class SelectChannelActivity extends AppCompatActivity {
     App mApp;
     ListView mListView;
     List<Channel> mChannelList;
@@ -32,7 +36,7 @@ public class SelectChannel extends AppCompatActivity {
             descriptions.add(channel.getDescription());
             images.add(channel.getImage());
         }
-        mAdapter = new MyAdapter(SelectChannel.this, titles, descriptions, images);
+        mAdapter = new MyAdapter(SelectChannelActivity.this, titles, descriptions, images);
     }
 
     @Override
@@ -77,7 +81,7 @@ public class SelectChannel extends AppCompatActivity {
     }
 
     public void openAddChannel() {
-        Intent intent = new Intent(this, AddChannel.class);
+        Intent intent = new Intent(this, AddChannelActivity.class);
         startActivityForResult(intent, 0);
     }
 
@@ -88,13 +92,13 @@ public class SelectChannel extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 int code = data.getIntExtra(Constants.CHANNEL_TYPE, -1);
                 if (code == Constants.CHANNEL_ANDROID_SMS) {
-                    mChannelList.add(new SmsChannel(SelectChannel.this));
+                    mChannelList.add(new SmsChannel(SelectChannelActivity.this));
                     mAdapter.add(mChannelList.get(mChannelList.size() - 1));
                     mAdapter.notifyDataSetChanged();
                     mApp.insertIntoChannels("sms");
                 } else if (code == Constants.CHANNEL_REDDIT) {
                     /* Here should be reddit, but we're adding Twitter and say it's Reddit */
-                    mChannelList.add(new TwitterChannelLoginActivity(SelectChannel.this));
+                    mChannelList.add(new TwitterChannelLoginActivity(SelectChannelActivity.this));
                     mAdapter.add(mChannelList.get(mChannelList.size() - 1));
                     mAdapter.notifyDataSetChanged();
                     mApp.insertIntoChannels("reddit");

@@ -17,16 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morse">
 
-        <activity android:name=".morse.SelectChannel">
+        <activity android:name=".morse.activities.SelectChannelActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".morse.AddChannel" />
+        <activity android:name=".morse.activities.AddChannelActivity" />
         <activity android:name=".morse.LoginActivity" />
-        <activity android:name=".channels.androidsms.SmsChannel" />
-        <activity android:name=".channels.androidsms.SmsContact" />
+        <activity android:name=".channels.androidsms.activities.SmsChannelActivity" />
+        <activity android:name=".channels.androidsms.activities.SmsContactActivity" />
         <activity android:name=".channels.twitter.TwitterChannelLoginActivity" />
     </application>
 

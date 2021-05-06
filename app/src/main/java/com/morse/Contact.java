@@ -15,9 +15,4 @@ public interface Contact {
      */
     List<MessageInfo> getMessages(String from);
 
-    /**
-     *
-     */
-    void refreshMessageList();
-
 }

@@ -1,4 +1,4 @@
-package com.morse;
+package com.morse.activities;
 
 
 import android.content.Intent;
@@ -12,12 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.R;
 import com.channels.androidsms.SmsChannel;
 import com.channels.twitter.TwitterChannelLoginActivity;
+import com.morse.App;
+import com.morse.Channel;
+import com.morse.Constants;
+import com.morse.MyAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddChannel extends AppCompatActivity {
+public class AddChannelActivity extends AppCompatActivity {
     ListView listView;
     App app;
     MyAdapter adapter;
