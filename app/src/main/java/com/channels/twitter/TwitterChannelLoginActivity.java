@@ -1,25 +1,28 @@
 package com.channels.twitter;
 
-import com.R;
-import java.util.List;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.R;
 import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
-import android.widget.Toast;
-import android.widget.Button;
-import android.content.Intent;
-import android.widget.EditText;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
 
 
 /**
  * Class that handles the UI/UX for logging in to a Twitter account.
  * After a successful login, it will redirect the user to another activity.
  *
- * @author  Ionuț Roșca
- * @author  Ionuț Hristea
+ * @author Ionuț Roșca
+ * @author Ionuț Hristea
  * @version 0.1.1
  */
 public class TwitterChannelLoginActivity extends AppCompatActivity implements Channel {
@@ -28,10 +31,11 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
     private EditText userPassword;
     private Button loginButton;
     private TextView remainingAttempts;
-    private boolean credentialsCheckPassed      = false;
+    private boolean credentialsCheckPassed = false;
     private int currentNumberOfAvailableRetries = 3;
 
-    public TwitterChannelLoginActivity() {}
+    public TwitterChannelLoginActivity() {
+    }
 
     public TwitterChannelLoginActivity(AppCompatActivity activity) {
         this.parentActivity = activity;
@@ -73,7 +77,7 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
                             "Incorrect username or password", Toast.LENGTH_SHORT).show();
 
                     remainingAttempts.setText(currentNumberOfAvailableRetries);
-                    if (currentNumberOfAvailableRetries == 0){
+                    if (currentNumberOfAvailableRetries == 0) {
                         loginButton.setEnabled(false);
                     }
                 }
@@ -81,7 +85,7 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
         });
     }
 
-    private boolean validateCredentials(String userCredential, String userPassword){
+    private boolean validateCredentials(String userCredential, String userPassword) {
         /* TODO: Implement this to use the Twitter's API in order to check the validity of the
          * credentials.
          */
@@ -89,7 +93,7 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
     }
 
     @Override
-    public Intent getIntent(){
+    public Intent getIntent() {
         System.out.println("Got intent");
         return new Intent(parentActivity, TwitterChannelLoginActivity.class);
     }

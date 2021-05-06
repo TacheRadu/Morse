@@ -1,30 +1,12 @@
 package com.morse.selectchannel;
 
 import android.os.Bundle;
-
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.content.Context;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SelectChannelActivity extends AppCompatActivity {
     ListView listView;
@@ -52,23 +34,22 @@ public class SelectChannelActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position ==  0) {
+                if (position == 0) {
                     Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[0], Toast.LENGTH_SHORT).show();
                 }
-                if (position ==  1) {
-                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " +  mTitle[1] , Toast.LENGTH_SHORT).show();
+                if (position == 1) {
+                    Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[1], Toast.LENGTH_SHORT).show();
                 }
-                if (position ==  2) {
+                if (position == 2) {
                     Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[2], Toast.LENGTH_SHORT).show();
                 }
-                if (position ==  3) {
+                if (position == 3) {
                     Toast.makeText(SelectChannelActivity.this, "You selected a channel. " + mTitle[3], Toast.LENGTH_SHORT).show();
                 }
             }
         });
         // so item click is done now check list view
     }
-
 
 
 }

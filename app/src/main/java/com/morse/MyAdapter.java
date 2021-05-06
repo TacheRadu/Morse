@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
+import com.R;
+
 import java.util.List;
 
 
@@ -29,15 +30,15 @@ class MyAdapter extends ArrayAdapter<String> {
         this.rApplicationImagesList = imgs;
     }
 
-    public void addAll(List<Channel> channels){
-        for(Channel channel : channels){
+    public void addAll(List<Channel> channels) {
+        for (Channel channel : channels) {
             rApplicationTitlesList.add(channel.getName());
             rApplicationDescriptionsList.add(channel.getDescription());
             rApplicationImagesList.add(channel.getImage());
         }
     }
 
-    public void add(Channel channel){
+    public void add(Channel channel) {
         rApplicationTitlesList.add(channel.getName());
         rApplicationDescriptionsList.add(channel.getDescription());
         rApplicationImagesList.add(channel.getImage());
@@ -60,7 +61,7 @@ class MyAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public String getItem(int position){
+    public String getItem(int position) {
         return rApplicationTitlesList.get(position);
     }
 }

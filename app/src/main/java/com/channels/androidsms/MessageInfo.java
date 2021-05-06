@@ -13,10 +13,6 @@ public class MessageInfo {
 
     private final String seen;
 
-    public Integer getId() {
-        return id;
-    }
-
     public MessageInfo(Integer id, String person, String phoneNumber, String messageText, String date, String seen) {
         this.person = person;
         this.phoneNumber = phoneNumber;
@@ -24,6 +20,10 @@ public class MessageInfo {
         this.date = date;
         this.seen = seen;
         this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     @Override

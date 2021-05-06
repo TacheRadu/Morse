@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.R;
 
 /**
- * @author  Ionuț Roșca
+ * @author Ionuț Roșca
  * @version 0.1.0
  */
 public class SendSMSActivity extends AppCompatActivity {
@@ -35,7 +35,7 @@ public class SendSMSActivity extends AppCompatActivity {
 
                     messenger.send();
                 } else {
-                    requestPermissions(new String[] {Manifest.permission.SEND_SMS}, 1);
+                    requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 1);
                 }
             }
         });

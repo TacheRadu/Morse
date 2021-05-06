@@ -55,12 +55,12 @@ public class SmsMessage extends AppCompatActivity implements Message {
      * Delete a message from content://sms/{id}, where id is set from the 2 param constructor
      */
     @Override
-    public Boolean delete(int id){
+    public Boolean delete(int id) {
 
-        try{
+        try {
             context.getContentResolver().delete(
                     Uri.parse("content://sms/" + id), null, null);
-        } catch(Exception exp){
+        } catch (Exception exp) {
             return false;
         }
         return true;

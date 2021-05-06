@@ -1,14 +1,16 @@
 package com.channels.androidsms;
 
-import com.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
+
+import com.R;
+
 import java.util.List;
 
 public class MyCustomAdapter extends ArrayAdapter {
@@ -20,11 +22,6 @@ public class MyCustomAdapter extends ArrayAdapter {
         super(context, resource, objects);
         this.contactsInfoList = objects;
         this.context = context;
-    }
-
-    private class ViewHolder {
-        TextView displayName;
-        TextView lastMessage;
     }
 
     @Override
@@ -49,5 +46,10 @@ public class MyCustomAdapter extends ArrayAdapter {
         holder.lastMessage.setText(contactInfo.getLastMessage());
 
         return convertView;
+    }
+
+    private class ViewHolder {
+        TextView displayName;
+        TextView lastMessage;
     }
 }

@@ -1,4 +1,5 @@
 package com.morse;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
@@ -13,14 +14,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import java.util.List;
 
 
 /**
- *
  * <Daca tot incepi sa pui comentariile pentru javadoc, mai si scrie ceva in el.>
- *
  */
 public class App extends AppCompatActivity {
     private final Database database;
@@ -28,14 +26,14 @@ public class App extends AppCompatActivity {
     public List<Channel> channels;
     public Sender sender;
 
-    public void App() {
-        // TODO implement here
-    }
-
     public App(AppCompatActivity activity) {
         this.parentActivity = activity;
         database = new Database(activity.getApplicationContext());
 
+    }
+
+    public void App() {
+        // TODO implement here
     }
 
     /**
@@ -102,9 +100,9 @@ public class App extends AppCompatActivity {
         String select = "SELECT * from channels;";
         List<Channel> channels = new ArrayList<>();
         Cursor cursor = database.getReadableDatabase().rawQuery(select, null);
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             String name = cursor.getString(1);
-            switch (name){
+            switch (name) {
                 case "sms":
                     channels.add(new SmsChannel(parentActivity));
                     break;

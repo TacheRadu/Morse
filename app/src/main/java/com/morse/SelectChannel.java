@@ -1,16 +1,17 @@
 package com.morse;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
 import com.channels.androidsms.SmsChannel;
 import com.channels.twitter.TwitterChannelLoginActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +19,15 @@ import java.util.List;
 public class SelectChannel extends AppCompatActivity {
     App mApp;
     ListView mListView;
-    private Button mButton;
     List<Channel> mChannelList;
     MyAdapter mAdapter;
+    private Button mButton;
 
-    private void createAdapter(){
+    private void createAdapter() {
         List<String> titles = new ArrayList<>();
         List<String> descriptions = new ArrayList<>();
         List<Integer> images = new ArrayList<>();
-        for(Channel channel : mChannelList){
+        for (Channel channel : mChannelList) {
             titles.add(channel.getName());
             descriptions.add(channel.getDescription());
             images.add(channel.getImage());

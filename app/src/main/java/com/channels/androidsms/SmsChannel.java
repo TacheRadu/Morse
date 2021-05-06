@@ -1,13 +1,9 @@
 package com.channels.androidsms;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.widget.ListView;
@@ -15,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.R;
 import com.morse.Channel;
@@ -35,6 +30,14 @@ public class SmsChannel extends AppCompatActivity implements Channel {
     AppCompatActivity parentActivity;
     private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS};
 
+    public SmsChannel(AppCompatActivity activity) {
+        parentActivity = activity;
+    }
+
+    public SmsChannel() {
+
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contacts_activity_main);
@@ -44,19 +47,19 @@ public class SmsChannel extends AppCompatActivity implements Channel {
         requestContactPermission();
     }
 
-    public String getName(){
+    public String getName() {
         return "SMS";
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return "Direct SMS";
     }
 
-    public int getImage(){
+    public int getImage() {
         return R.drawable.sms;
     }
 
-    private void getContacts(){
+    private void getContacts() {
 
         Cursor cursor = getContentResolver()
                 .query(Telephony.Sms.CONTENT_URI, null, null, null, null);
@@ -106,7 +109,7 @@ public class SmsChannel extends AppCompatActivity implements Channel {
             return;
         }
 
-        ContactInfo lastContactInList = contactInfoList.get(contactInfoList.size()-1);
+        ContactInfo lastContactInList = contactInfoList.get(contactInfoList.size() - 1);
 
         Boolean contactExistsInList = false;
         for (ContactInfo contactInfo : contactInfoList)
@@ -117,8 +120,8 @@ public class SmsChannel extends AppCompatActivity implements Channel {
             contactInfoList.add(currentContact);
     }
 
-    private boolean hasPermissions(){
-        for(String permission : PERMISSIONS){
+    private boolean hasPermissions() {
+        for (String permission : PERMISSIONS) {
             if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
@@ -127,10 +130,9 @@ public class SmsChannel extends AppCompatActivity implements Channel {
     }
 
     public void requestContactPermission() {
-        if(!hasPermissions()){
+        if (!hasPermissions()) {
             requestPermissions(PERMISSIONS, 1);
-        }
-        else
+        } else
             getContacts();
     }
 
@@ -149,22 +151,15 @@ public class SmsChannel extends AppCompatActivity implements Channel {
             }
         }
     }
+
     @Override
     public void login() {
 
     }
 
     @Override
-    public Intent getIntent(){
+    public Intent getIntent() {
         return new Intent(parentActivity, SmsChannel.class);
-    }
-
-    public SmsChannel(AppCompatActivity activity){
-        parentActivity = activity;
-    }
-
-    public SmsChannel(){
-
     }
 
     @Override

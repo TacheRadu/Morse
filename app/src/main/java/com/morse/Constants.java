@@ -3,7 +3,7 @@ package com.morse;
 /**
  * Class which defines general-purpose constants to be used throughout the Application's code.
  *
- * @author  Ionuț Roșca
+ * @author Ionuț Roșca
  * @version 0.1.0
  */
 public class Constants {

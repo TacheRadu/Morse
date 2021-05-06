@@ -15,7 +15,7 @@ public class ContactInfo {
         this.lastMessage = lastMessage;
     }
 
-    public ContactInfo(){
+    public ContactInfo() {
 
     }
 
