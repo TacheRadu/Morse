@@ -10,6 +10,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.R;
 import com.channels.androidsms.SmsChannel;
+import com.channels.twitter.TwitterChannelLoginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -64,6 +65,11 @@ public class AddChannel extends AppCompatActivity {
         for(Channel channel : channels){
             for(int index = 0; index < mTitle.size(); index++){
                 if(channel instanceof SmsChannel && mTitle.get(index).equals("SMS")){
+                    mTitle.remove(index);
+                    mDescription.remove(index);
+                    images.remove(index);
+                }
+                else if(channel instanceof TwitterChannelLoginActivity && mTitle.get(index).equals("Twitter")){
                     mTitle.remove(index);
                     mDescription.remove(index);
                     images.remove(index);
