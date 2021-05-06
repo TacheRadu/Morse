@@ -49,7 +49,12 @@ public class AddChannel extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //we receive from this page a number so that we will know what to show back on our AddChannel page
                 Intent intent = new Intent();
-                intent.putExtra(Constants.CHANNEL_TYPE, position);
+                if(adapter.getItem(position).equals("SMS"))
+                    intent.putExtra(Constants.CHANNEL_TYPE, Constants.CHANNEL_ANDROID_SMS);
+                else if(adapter.getItem(position).equals("Reddit"))
+                    intent.putExtra(Constants.CHANNEL_TYPE, Constants.CHANNEL_REDDIT);
+                else if(adapter.getItem(position).equals("Twitter"))
+                    intent.putExtra(Constants.CHANNEL_TYPE, Constants.CHANNEL_TWITTER);
 
                 setResult(RESULT_OK, intent);
                 finish();
