@@ -1,4 +1,4 @@
-package com.androidsms;
+package com.channels.androidsms;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
-import android.telephony.TelephonyManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -25,26 +24,20 @@ import com.R;
 import com.morse.Contact;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 
 public class SmsContact extends AppCompatActivity implements Contact {
-
-    private Context context;
-
-    private String phNumber;
-
-    private String name;
-
-    private MyAdapterSendReceive adapter;
 
     ListView listView;
     List<String> nameList;
     List<String> messageList;
     Button sendButton;
     int size;
+    private Context context;
+    private String phNumber;
+    private String name;
+    private MyAdapterSendReceive adapter;
 
     public SmsContact() {
 
@@ -98,7 +91,7 @@ public class SmsContact extends AppCompatActivity implements Contact {
 
         Cursor inboxSMSsCursor = context.getContentResolver()
                 .query(Telephony.Sms.Inbox.CONTENT_URI,
-                        new String[] { Telephony.Sms.Inbox._ID,
+                        new String[]{Telephony.Sms.Inbox._ID,
                                 Telephony.Sms.Inbox.ADDRESS,
                                 Telephony.Sms.Inbox.BODY,
                                 Telephony.Sms.Inbox.DATE,
@@ -106,13 +99,13 @@ public class SmsContact extends AppCompatActivity implements Contact {
                         null, null, null);
 
         Cursor sentSMSsCursor = context.getContentResolver().query(
-                Telephony.Sms.Sent.CONTENT_URI, new String[] {
+                Telephony.Sms.Sent.CONTENT_URI, new String[]{
                         Telephony.Sms.Sent._ID,
                         Telephony.Sms.Sent.ADDRESS,
                         Telephony.Sms.Sent.BODY,
                         Telephony.Sms.Sent.DATE,
                         Telephony.Sms.Sent.SEEN},
-                null,null, null);
+                null, null, null);
 
         List<MessageInfo> inboxMessagesFromAddress =
                 getMessagesFromCursor(inboxSMSsCursor, fromAddress, getContactName(context, fromAddress));
@@ -129,7 +122,7 @@ public class SmsContact extends AppCompatActivity implements Contact {
         return messages;
     }
 
-    private List<MessageInfo> getMessagesFromCursor(Cursor currentCursor, String fromAddress, String givenName){
+    private List<MessageInfo> getMessagesFromCursor(Cursor currentCursor, String fromAddress, String givenName) {
         List<MessageInfo> messages = new ArrayList<>();
 
         if (currentCursor.moveToFirst()) {
@@ -151,8 +144,8 @@ public class SmsContact extends AppCompatActivity implements Contact {
         return messages;
     }
 
-    public String getLastMessageText(String fromAddress){
-        
+    public String getLastMessageText(String fromAddress) {
+
         if (context == null)
             throw new NullPointerException();
 
@@ -174,7 +167,7 @@ public class SmsContact extends AppCompatActivity implements Contact {
                 }
             } while (cursor.moveToNext());
         }
-        
+
         return "";
     }
 
@@ -183,7 +176,7 @@ public class SmsContact extends AppCompatActivity implements Contact {
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                 Uri.encode(phoneNumber));
         Cursor cursor = cr.query(uri,
-                new String[] { ContactsContract.PhoneLookup.DISPLAY_NAME }, null , null, null);
+                new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
 
         if (cursor == null)
             return null;
@@ -218,7 +211,6 @@ public class SmsContact extends AppCompatActivity implements Contact {
         listView.setAdapter(adapter);
 
 
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -234,11 +226,11 @@ public class SmsContact extends AppCompatActivity implements Contact {
                 if (checkSelfPermission(Manifest.permission.SEND_SMS) ==
                         PackageManager.PERMISSION_GRANTED) {
                     SmsMessage messenger = new SmsMessage(this, phNumber,
-                            ((EditText)findViewById(R.id.message)).getText().toString());
-                    ((EditText)findViewById(R.id.message)).getText().clear();
+                            ((EditText) findViewById(R.id.message)).getText().toString());
+                    ((EditText) findViewById(R.id.message)).getText().clear();
                     messenger.send();
                 } else {
-                    requestPermissions(new String[] {Manifest.permission.SEND_SMS}, 1);
+                    requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 1);
                 }
             }
         });

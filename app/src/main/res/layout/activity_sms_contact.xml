@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.androidsms.SmsContact"
+    tools:context=".channels.androidsms.SmsContact"
     tools:ignore="HardcodedText">
 
     <ListView
         android:id="@+id/listView"
-        android:stackFromBottom="true"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:stackFromBottom="true"
         app:layout_constraintBottom_toTopOf="@+id/message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

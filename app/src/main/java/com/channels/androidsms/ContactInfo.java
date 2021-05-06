@@ -1,4 +1,4 @@
-package com.androidsms;
+package com.channels.androidsms;
 
 import java.util.Objects;
 
@@ -15,7 +15,7 @@ public class ContactInfo {
         this.lastMessage = lastMessage;
     }
 
-    public ContactInfo(){
+    public ContactInfo() {
 
     }
 
