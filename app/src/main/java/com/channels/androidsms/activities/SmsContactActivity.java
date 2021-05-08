@@ -65,7 +65,7 @@ public class SmsContactActivity extends AppCompatActivity {
                     SmsMessage messenger = new SmsMessage(this, smsContact.getPhNumber(),
                             ((EditText) findViewById(R.id.message)).getText().toString());
                     ((EditText) findViewById(R.id.message)).getText().clear();
-                    messenger.send();
+                    messenger.send(); // send
                 } else {
                     requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 1);
                 }
