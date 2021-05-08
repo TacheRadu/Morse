@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.R;
 import com.channels.androidsms.MessageInfo;
-import com.channels.androidsms.MyAdapterSendReceive;
+import com.channels.androidsms.MessagesAdapter;
 import com.channels.androidsms.SmsContact;
 import com.channels.androidsms.SmsMessage;
 
@@ -29,7 +29,7 @@ public class SmsContactActivity extends AppCompatActivity {
     ListView listView;
     SmsContact smsContact;
     int size;
-    private MyAdapterSendReceive adapter;
+    private MessagesAdapter adapter;
     List<String> nameList;
     List<String> messageList;
 
@@ -44,7 +44,7 @@ public class SmsContactActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         smsContact = new SmsContact(getApplicationContext(), bundle.getString("phoneNumber"), bundle.getString("name"));
         refreshMessageList();
-        adapter = new MyAdapterSendReceive(SmsContactActivity.this, nameList, messageList);
+        adapter = new MessagesAdapter(SmsContactActivity.this, nameList, messageList);
         listView.setAdapter(adapter);
 
 
@@ -91,7 +91,7 @@ public class SmsContactActivity extends AppCompatActivity {
             }
 
             if (size != nameList.size()) {
-                adapter = new MyAdapterSendReceive(SmsContactActivity.this, nameList, messageList);
+                adapter = new MessagesAdapter(SmsContactActivity.this, nameList, messageList);
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }

@@ -14,7 +14,7 @@ import com.channels.twitter.TwitterChannelLoginActivity;
 import com.morse.App;
 import com.morse.Channel;
 import com.morse.Constants;
-import com.morse.MyAdapter;
+import com.morse.ChannelsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class SelectChannelActivity extends AppCompatActivity {
     App mApp;
     ListView mListView;
     List<Channel> mChannelList;
-    MyAdapter mAdapter;
+    ChannelsAdapter mAdapter;
     private Button mButton;
 
     private void createAdapter() {
@@ -36,7 +36,7 @@ public class SelectChannelActivity extends AppCompatActivity {
             descriptions.add(channel.getDescription());
             images.add(channel.getImage());
         }
-        mAdapter = new MyAdapter(SelectChannelActivity.this, titles, descriptions, images);
+        mAdapter = new ChannelsAdapter(SelectChannelActivity.this, titles, descriptions, images);
     }
 
     @Override

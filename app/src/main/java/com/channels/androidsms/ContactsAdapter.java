@@ -13,12 +13,12 @@ import com.R;
 
 import java.util.List;
 
-public class MyCustomAdapter extends ArrayAdapter {
+public class ContactsAdapter extends ArrayAdapter {
 
     private List contactsInfoList;
     private Context context;
 
-    public MyCustomAdapter(@NonNull Context context, int resource, @NonNull List objects) {
+    public ContactsAdapter(@NonNull Context context, int resource, @NonNull List objects) {
         super(context, resource, objects);
         this.contactsInfoList = objects;
         this.context = context;

@@ -12,18 +12,17 @@ import androidx.core.app.ActivityCompat;
 
 import com.R;
 import com.channels.androidsms.ContactInfo;
-import com.channels.androidsms.MyCustomAdapter;
+import com.channels.androidsms.ContactsAdapter;
 import com.channels.androidsms.SmsChannel;
-import com.channels.androidsms.SmsContact;
 
 import java.util.List;
 
 import static com.channels.androidsms.SmsChannel.PERMISSIONS_REQUEST_READ_SMS;
 
 public class SmsChannelActivity extends AppCompatActivity {
-    private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS};
+    private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS};
     private SmsChannel smsChannel;
-    MyCustomAdapter dataAdapter = null;
+    ContactsAdapter dataAdapter = null;
     ListView listView;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class SmsChannelActivity extends AppCompatActivity {
 
     private void getContacts(){
         List<ContactInfo> contactInfoList = smsChannel.getContacts();
-        dataAdapter = new MyCustomAdapter(this, R.layout.contact_info, contactInfoList);
+        dataAdapter = new ContactsAdapter(this, R.layout.contact_info, contactInfoList);
         listView.setAdapter(dataAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(this, SmsContactActivity.class);
