@@ -15,13 +15,13 @@ import com.R;
 import java.util.List;
 
 
-class MyAdapterSendReceive extends ArrayAdapter<String> {
+public class MessagesAdapter extends ArrayAdapter<String> {
 
     Context context;
     List<String> rTitle;
     List<String> rDescription;
 
-    MyAdapterSendReceive(Context c, List<String> title, List<String> description) {
+    public MessagesAdapter(Context c, List<String> title, List<String> description) {
         super(c, R.layout.content_scrolling_send_receive_message, R.id.textView1, title);
         this.context = c;
         this.rTitle = title;

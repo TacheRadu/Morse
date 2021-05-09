@@ -27,23 +27,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SmsContact extends AppCompatActivity implements Contact {
+public class SmsContact implements Contact {
 
-    ListView listView;
-    List<String> nameList;
-    List<String> messageList;
-    Button sendButton;
-    int size;
     private Context context;
     private String phNumber;
     private String name;
-    private MyAdapterSendReceive adapter;
 
     public SmsContact() {
 
     }
 
-    public SmsContact(Context context) {
+    public SmsContact(Context context, String phNumber, String name) {
+        this.context = context;
+        this.phNumber = phNumber;
+        this.name = name;
+    }
+    public SmsContact(Context context){
         this.context = context;
     }
 
@@ -55,32 +54,6 @@ public class SmsContact extends AppCompatActivity implements Contact {
         this.phNumber = phoneNumber;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void refreshMessageList() {
-        if (ContextCompat.checkSelfPermission(getBaseContext(), "android.permission.READ_SMS") != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(SmsContact.this, new String[]{"android.permission.READ_SMS"}, 123);
-        else {
-            List<MessageInfo> messages = getMessages(phNumber);
-            if (nameList != null)
-                size = nameList.size();
-
-            nameList = new ArrayList<>();
-            messageList = new ArrayList<>();
-
-            for (MessageInfo message : messages) {
-                nameList.add(message.getPerson());
-                messageList.add(message.getMessageText());
-            }
-
-            if (size != nameList.size()) {
-                adapter = new MyAdapterSendReceive(context, nameList, messageList);
-                listView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-
-        }
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -194,46 +167,6 @@ public class SmsContact extends AppCompatActivity implements Contact {
         return contactName;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sms_contact);
-        sendButton = findViewById(R.id.sendMessage);
 
-        listView = findViewById(R.id.listView);
-        context = getApplicationContext();
-        Bundle bundle = getIntent().getExtras();
-        phNumber = bundle.getString("phoneNumber");
-        name = bundle.getString("name");
-        refreshMessageList();
-        adapter = new MyAdapterSendReceive(context, nameList, messageList);
-        listView.setAdapter(adapter);
-
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                refreshMessageList();
-                handler.postDelayed(this, 1000);
-            }
-        }, 1000);
-
-        sendButton.setOnClickListener(v -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.SEND_SMS) ==
-                        PackageManager.PERMISSION_GRANTED) {
-                    SmsMessage messenger = new SmsMessage(this, phNumber,
-                            ((EditText) findViewById(R.id.message)).getText().toString());
-                    ((EditText) findViewById(R.id.message)).getText().clear();
-                    messenger.send();
-                } else {
-                    requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 1);
-                }
-            }
-        });
-    }
 
 }

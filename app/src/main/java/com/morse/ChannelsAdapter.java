@@ -16,13 +16,13 @@ import com.R;
 import java.util.List;
 
 
-class MyAdapter extends ArrayAdapter<String> {
+public class ChannelsAdapter extends ArrayAdapter<String> {
     Context context;
     List<String> rApplicationTitlesList;
     List<String> rApplicationDescriptionsList;
     List<Integer> rApplicationImagesList;
 
-    MyAdapter(Context c, List<String> title, List<String> description, List<Integer> imgs) {
+    public ChannelsAdapter(Context c, List<String> title, List<String> description, List<Integer> imgs) {
         super(c, R.layout.content_scrolling, R.id.textView1, title);
         this.context = c;
         this.rApplicationTitlesList = title;
