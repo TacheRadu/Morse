@@ -2,6 +2,8 @@
     <string name="app_name">Morse</string>
     <string name="facebook_app_id">292575252317805</string>
     <string name="phone_number">Phone number</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">dmSE6yKjQbPLiB5Kyx9BF484N</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">RKKodQ7VL2pEiJnVtwXGcfxbk3V15ykyLdfQcZFJ0TdZKmxOrU</string>
     <string name="type_message">Type Message</string>
     <string name="send">Send</string>
     <string name="login_button">Login</string>

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -27,7 +28,16 @@
         <activity android:name=".morse.LoginActivity" />
         <activity android:name=".channels.androidsms.activities.SmsChannelActivity" />
         <activity android:name=".channels.androidsms.activities.SmsContactActivity" />
-        <activity android:name=".channels.twitter.TwitterChannelLoginActivity" />
+        <activity android:name=".channels.twitter.TwitterChannelLoginActivity">
+        <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="oauth" android:host="t4jsample"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".channels.twitter.HomeActivity"/>
+
     </application>
 
 </manifest>
