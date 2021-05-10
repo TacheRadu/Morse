@@ -21,6 +21,17 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: Copy secrets
+      uses: DamianReeves/write-file-action@v1.0
+      with:
+        path: app/src/main/res/values/secrets.xml
+        contents: |
+          echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+                  <resources>
+                    <string name=\"com.twitter.sdk.android.CONSUMER_KEY\">dmSE6yKjQbPLiB5Kyx9BF484N</string>
+                    <string name=\"com.twitter.sdk.android.CONSUMER_SECRET\">RKKodQ7VL2pEiJnVtwXGcfxbk3V15ykyLdfQcZFJ0TdZKmxOrU</string>
+                  </resources>"
+        write-mode: append
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
