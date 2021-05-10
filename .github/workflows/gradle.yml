@@ -32,6 +32,8 @@ jobs:
                     <string name=\"com.twitter.sdk.android.CONSUMER_SECRET\">$TWITTER_CONSUMER_SECRET</string>
                   </resources>"
         write-mode: append
+    - name: Check contents of secrets.xml
+      run: cat app/src/main/res/values/secrets.xml
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
