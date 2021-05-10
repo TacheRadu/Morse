@@ -26,11 +26,7 @@ jobs:
       with:
         path: app/src/main/res/values/secrets.xml
         contents: |
-          echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>
-                  <resources>
-                    <string name=\"com.twitter.sdk.android.CONSUMER_KEY\">$TWITTER_CONSUMER_KEY</string>
-                    <string name=\"com.twitter.sdk.android.CONSUMER_SECRET\">$TWITTER_CONSUMER_SECRET</string>
-                  </resources>"
+          echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
         write-mode: append
     - name: Check contents of secrets.xml
       run: cat app/src/main/res/values/secrets.xml
