@@ -25,7 +25,7 @@ jobs:
       uses: DamianReeves/write-file-action@v1.0
       with:
         path: app/src/main/res/values/secrets.xml
-        contents: echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+        contents: | echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
         write-mode: append
     - name: Check contents of secrets.xml
       run: cat app/src/main/res/values/secrets.xml
