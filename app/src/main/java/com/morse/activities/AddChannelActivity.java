@@ -15,7 +15,7 @@ import com.channels.twitter.TwitterChannelLoginActivity;
 import com.morse.App;
 import com.morse.Channel;
 import com.morse.Constants;
-import com.morse.MyAdapter;
+import com.morse.ChannelsAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ import java.util.List;
 public class AddChannelActivity extends AppCompatActivity {
     ListView listView;
     App app;
-    MyAdapter adapter;
+    ChannelsAdapter adapter;
     List<String> mTitle = new ArrayList<>(Arrays.asList("SMS", "Reddit", "Twitter"));
     List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Reddit",
             "It's what's happening / Twitter"));
@@ -41,7 +41,7 @@ public class AddChannelActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         // now create an adapter class
         disableAlreadyExistent();
-        adapter = new MyAdapter(this, mTitle, mDescription, images);
+        adapter = new ChannelsAdapter(this, mTitle, mDescription, images);
         listView.setAdapter(adapter);
         // there is my mistake...
         // now again check this..
