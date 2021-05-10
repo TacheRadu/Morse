@@ -27,8 +27,6 @@ jobs:
                     <string name=\"com.twitter.sdk.android.CONSUMER_KEY\">${{secrets.TWITTER_CONSUMER_KEY}}</string>
                     <string name=\"com.twitter.sdk.android.CONSUMER_SECRET\">${{secrets.TWITTER_CONSUMER_SECRET}}</string>
                   </resources>" >> app/src/main/res/values/secrets.xml
-    - name: Check contents of secrets.xml
-      run: cat app/src/main/res/values/secrets.xml
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
