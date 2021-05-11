@@ -13,10 +13,12 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.GrantPermissionRule;
 
 import com.R;
+import com.channels.androidsms.SmsMessage;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,6 +68,17 @@ public class SelectContactsAndAccesConversationAndSendMessages {
                         && view.equals(((ViewGroup) parent).getChildAt(position));
             }
         };
+    }
+
+
+    @Before
+    public void sendSomeMessages() {
+        SmsMessage myMessage = new SmsMessage(null, "0000000000", "cheers");
+        myMessage.send();
+        SmsMessage myJapaneseMessage = new SmsMessage(null, "0000000001", "kanpai");
+        myJapaneseMessage.send();
+        SmsMessage someThirdMessage = new SmsMessage(null, "0000000002", "idk bro");
+        someThirdMessage.send();
     }
 
     @Test
