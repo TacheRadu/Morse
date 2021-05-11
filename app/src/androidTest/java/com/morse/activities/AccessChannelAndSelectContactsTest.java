@@ -1,9 +1,6 @@
 package com.morse.activities;
 
 
-import android.accounts.AccountManager;
-import android.content.ContentProviderOperation;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -22,12 +19,9 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;

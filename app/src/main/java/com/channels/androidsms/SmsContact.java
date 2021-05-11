@@ -147,7 +147,7 @@ public class SmsContact implements Contact {
         if (cursor.moveToFirst())
             contactName = cursor.getString(0);
 
-        if (cursor != null && !cursor.isClosed())
+        if (!cursor.isClosed())
             cursor.close();
 
         if (contactName.equals(""))

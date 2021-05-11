@@ -3,10 +3,8 @@ package com.channels.androidsms;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.telephony.SmsManager;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.morse.Message;
 
@@ -45,7 +43,7 @@ public class SmsMessage implements Message {
     @Override
     public void sendDelayed(long delayedMinutes) {
         long delayedMilliSeconds = delayedMinutes * 60 * 1000;
-        (new Handler()).postDelayed(this::send, delayedMilliSeconds);
+        (new Handler(Looper.getMainLooper())).postDelayed(this::send, delayedMilliSeconds);
     }
 
     /**
