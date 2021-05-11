@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.morse.Message;
 
-public class SmsMessage extends AppCompatActivity implements Message {
+public class SmsMessage implements Message {
     private final Context context;
     private final String phoneNumber;
     private final String messageText;
@@ -30,10 +30,10 @@ public class SmsMessage extends AppCompatActivity implements Message {
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNumber, null, messageText, null, null);
-            Toast.makeText(context, "Message sent", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Message sent", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "Unable to send SMS message.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Unable to send SMS message.", Toast.LENGTH_SHORT).show();
         }
     }
 
