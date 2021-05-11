@@ -7,10 +7,10 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.R;
 
@@ -36,11 +36,11 @@ import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4ClassRunner.class)
 public class SendDelayedMessagesTest {
 
     @Rule
-    public ActivityTestRule<SelectChannelActivity> mActivityTestRule = new ActivityTestRule<>(SelectChannelActivity.class);
+    public ActivityScenarioRule<SelectChannelActivity> mActivityTestRule = new ActivityScenarioRule<>(SelectChannelActivity.class);
 
     @Rule
     public GrantPermissionRule mGrantPermissionRule =

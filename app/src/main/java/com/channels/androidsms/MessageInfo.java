@@ -1,5 +1,7 @@
 package com.channels.androidsms;
 
+import androidx.annotation.NonNull;
+
 public class MessageInfo {
     private final Integer id;
 
@@ -26,6 +28,7 @@ public class MessageInfo {
         return id;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "MessageInfo{" +

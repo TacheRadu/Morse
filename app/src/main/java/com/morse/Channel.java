@@ -7,6 +7,7 @@ import java.util.List;
 /**
  *
  */
+@SuppressWarnings("EmptyMethod")
 public interface Channel {
     /**
      *

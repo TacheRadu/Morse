@@ -1,16 +1,10 @@
 package com.channels.androidsms;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.provider.Telephony;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.R;
 import com.channels.androidsms.activities.SmsChannelActivity;
@@ -46,7 +40,7 @@ public class SmsChannel implements Channel {
     }
 
     public int getImage() {
-        return R.drawable.sms;
+        return R.mipmap.sms;
     }
 
     public List<ContactInfo> getContacts() {
@@ -54,7 +48,7 @@ public class SmsChannel implements Channel {
         Cursor cursor = parentActivity.getContentResolver()
                 .query(Telephony.Sms.CONTENT_URI, null, null, null, null);
 
-        List<ContactInfo> contactInfoList = new ArrayList<ContactInfo>();
+        List<ContactInfo> contactInfoList = new ArrayList<>();
 
         SmsContact smsContact = new SmsContact(parentActivity);
 
@@ -92,10 +86,12 @@ public class SmsChannel implements Channel {
 
         ContactInfo lastContactInList = contactInfoList.get(contactInfoList.size() - 1);
 
-        Boolean contactExistsInList = false;
+        boolean contactExistsInList = false;
         for (ContactInfo contactInfo : contactInfoList)
-            if (currentContact.getDisplayName().equals(contactInfo.getDisplayName()))
+            if (currentContact.getDisplayName().equals(contactInfo.getDisplayName())) {
                 contactExistsInList = true;
+                break;
+            }
 
         if (!contactExistsInList)
             contactInfoList.add(currentContact);

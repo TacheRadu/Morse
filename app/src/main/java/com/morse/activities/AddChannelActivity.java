@@ -3,8 +3,6 @@ package com.morse.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +12,8 @@ import com.channels.androidsms.SmsChannel;
 import com.channels.twitter.TwitterChannelLoginActivity;
 import com.morse.App;
 import com.morse.Channel;
-import com.morse.Constants;
 import com.morse.ChannelsAdapter;
+import com.morse.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,11 +23,11 @@ public class AddChannelActivity extends AppCompatActivity {
     ListView listView;
     App app;
     ChannelsAdapter adapter;
-    List<String> mTitle = new ArrayList<>(Arrays.asList("SMS", "Reddit", "Twitter"));
-    List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Reddit",
+    final List<String> mTitle = new ArrayList<>(Arrays.asList("SMS", "Reddit", "Twitter"));
+    final List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Reddit",
             "It's what's happening / Twitter"));
-    List<Integer> images = new ArrayList<>(Arrays.asList(R.drawable.sms, R.drawable.reddit,
-            R.drawable.twitter));
+    final List<Integer> images = new ArrayList<>(Arrays.asList(R.mipmap.sms, R.mipmap.reddit,
+            R.mipmap.twitter));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +45,25 @@ public class AddChannelActivity extends AppCompatActivity {
         // now again check this..
 
         // now set item click on list view
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //we receive from this page a number so that we will know what to show back on our AddChannel page
-                Intent intent = new Intent();
-                if (adapter.getItem(position).equals("SMS"))
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            //we receive from this page a number so that we will know what to show back on our AddChannel page
+            Intent intent = new Intent();
+            switch (adapter.getItem(position)) {
+                case "SMS":
                     intent.putExtra(Constants.CHANNEL_TYPE, Constants.CHANNEL_ANDROID_SMS);
-                else if (adapter.getItem(position).equals("Reddit"))
+                    break;
+                case "Reddit":
                     intent.putExtra(Constants.CHANNEL_TYPE, Constants.CHANNEL_REDDIT);
-                else if (adapter.getItem(position).equals("Twitter"))
+                    break;
+                case "Twitter":
                     intent.putExtra(Constants.CHANNEL_TYPE, Constants.CHANNEL_TWITTER);
-
-                setResult(RESULT_OK, intent);
-                finish();
-                //Toast.makeText(SelectChannel.this, "You selected " +  mTitle[0] , Toast.LENGTH_SHORT).show();
-
+                    break;
             }
+
+            setResult(RESULT_OK, intent);
+            finish();
+            //Toast.makeText(SelectChannel.this, "You selected " +  mTitle[0] , Toast.LENGTH_SHORT).show();
+
         });
         // so item click is done now check list view
     }

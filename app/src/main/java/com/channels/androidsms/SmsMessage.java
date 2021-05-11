@@ -45,9 +45,7 @@ public class SmsMessage extends AppCompatActivity implements Message {
     @Override
     public void sendDelayed(long delayedMinutes) {
         long delayedMilliSeconds = delayedMinutes * 60 * 1000;
-        (new Handler()).postDelayed(() -> {
-            send();
-        }, delayedMilliSeconds);
+        (new Handler()).postDelayed(this::send, delayedMilliSeconds);
     }
 
     /**

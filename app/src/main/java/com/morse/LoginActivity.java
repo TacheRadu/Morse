@@ -2,7 +2,6 @@ package com.morse;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,8 +17,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText ePassword;
     private Button eLogin;
     private TextView eAttemptsInfo;
-    private String Username = "Admin";
-    private String Password = "1234";
+    private final String Username = "Admin";
+    private final String Password = "1234";
     private int counter = 3;
 
     @Override
@@ -30,34 +29,31 @@ public class LoginActivity extends AppCompatActivity {
         eName = findViewById(R.id.userCredential);
         ePassword = findViewById(R.id.userPassword);
         eLogin = findViewById(R.id.loginButton);
-        eAttemptsInfo = findViewById(R.id.remainingAttempsText);
+        eAttemptsInfo = findViewById(R.id.remainingAttemptsText);
 
-        eLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String inputName = eName.getText().toString();
-                String inputPassword = ePassword.getText().toString();
+        eLogin.setOnClickListener(v -> {
+            String inputName = eName.getText().toString();
+            String inputPassword = ePassword.getText().toString();
 
-                if (inputName.isEmpty() || inputPassword.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Please enter all the details correctly", Toast.LENGTH_SHORT).show();
-                } else {
+            if (inputName.isEmpty() || inputPassword.isEmpty()) {
+                Toast.makeText(LoginActivity.this, "Please enter all the details correctly", Toast.LENGTH_SHORT).show();
+            } else {
 
-                    isValid = validate(inputName, inputPassword);
-                    if (!isValid) {
-                        counter--;
-                        Toast.makeText(LoginActivity.this, "Incorrect Username or Password", Toast.LENGTH_SHORT).show();
+                isValid = validate(inputName, inputPassword);
+                if (!isValid) {
+                    counter--;
+                    Toast.makeText(LoginActivity.this, "Incorrect Username or Password", Toast.LENGTH_SHORT).show();
 
-                        eAttemptsInfo.setText("No. of attempts remaining: " + counter);
+                    eAttemptsInfo.setText(getString(R.string.attempts, counter));
 
-                        if (counter == 0) {
-                            eLogin.setEnabled(false);
-                        }
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        //the code to go to new activity
-                        Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-                        startActivity(intent);
+                    if (counter == 0) {
+                        eLogin.setEnabled(false);
                     }
+                } else {
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    //the code to go to new activity
+                    Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
             }
         });

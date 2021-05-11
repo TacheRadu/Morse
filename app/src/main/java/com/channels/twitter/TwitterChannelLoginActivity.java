@@ -2,18 +2,17 @@ package com.channels.twitter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
 import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
-
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
@@ -24,8 +23,6 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import java.util.List;
-
-import twitter4j.TwitterFactory;
 
 
 /**
@@ -41,8 +38,6 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
     private EditText userCredential;
     private EditText userPassword;
     private TextView remainingAttempts;
-    private boolean credentialsCheckPassed = false;
-    private int currentNumberOfAvailableRetries = 3;
     TwitterLoginButton loginButton;
 
     public TwitterChannelLoginActivity() {
@@ -129,7 +124,7 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
 
     @Override
     public int getImage() {
-        return R.drawable.twitter;
+        return R.mipmap.twitter;
     }
 
     @Override
@@ -137,6 +132,7 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
         /* TODO: Implement this! */
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "¯\\_(ツ)_/¯";
