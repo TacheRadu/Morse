@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         api-level: [29]
-        target: [default, google_apis]
+        target: [default]
         profile: [Nexus 6]
         
     steps:
