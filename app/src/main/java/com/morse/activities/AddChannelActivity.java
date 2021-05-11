@@ -20,14 +20,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AddChannelActivity extends AppCompatActivity {
-    ListView listView;
-    App app;
-    ChannelsAdapter adapter;
     final List<String> mTitle = new ArrayList<>(Arrays.asList("SMS", "Reddit", "Twitter"));
     final List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Reddit",
             "It's what's happening / Twitter"));
     final List<Integer> images = new ArrayList<>(Arrays.asList(R.mipmap.sms, R.mipmap.reddit,
             R.mipmap.twitter));
+    ListView listView;
+    App app;
+    ChannelsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

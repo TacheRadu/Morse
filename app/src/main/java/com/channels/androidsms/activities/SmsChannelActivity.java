@@ -22,9 +22,9 @@ import static com.channels.androidsms.SmsChannel.PERMISSIONS_REQUEST_READ_SMS;
 
 public class SmsChannelActivity extends AppCompatActivity {
     private final String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS};
-    private SmsChannel smsChannel;
     ContactsAdapter dataAdapter = null;
     ListView listView;
+    private SmsChannel smsChannel;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +36,7 @@ public class SmsChannelActivity extends AppCompatActivity {
         requestContactPermission();
     }
 
-    private void getContacts(){
+    private void getContacts() {
         List<ContactInfo> contactInfoList = smsChannel.getContacts();
         dataAdapter = new ContactsAdapter(this, R.layout.contact_info, contactInfoList);
         listView.setAdapter(dataAdapter);
@@ -54,7 +54,7 @@ public class SmsChannelActivity extends AppCompatActivity {
     public void requestContactPermission() {
         if (!hasPermissions()) {
             requestPermissions(PERMISSIONS, 1);
-        } else{
+        } else {
             getContacts();
         }
     }

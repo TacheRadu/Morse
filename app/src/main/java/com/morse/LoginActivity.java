@@ -12,13 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.R;
 
 public class LoginActivity extends AppCompatActivity {
+    private final String Username = "Admin";
+    private final String Password = "1234";
     boolean isValid = false;
     private EditText eName;
     private EditText ePassword;
     private Button eLogin;
     private TextView eAttemptsInfo;
-    private final String Username = "Admin";
-    private final String Password = "1234";
     private int counter = 3;
 
     @Override

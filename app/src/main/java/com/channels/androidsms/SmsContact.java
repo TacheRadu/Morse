@@ -31,7 +31,8 @@ public class SmsContact implements Contact {
         this.phNumber = phNumber;
         this.name = name;
     }
-    public SmsContact(Context context){
+
+    public SmsContact(Context context) {
         this.context = context;
     }
 
@@ -108,25 +109,25 @@ public class SmsContact implements Contact {
 
     public String getLastMessageText(String fromAddress) {
 
-            if (context == null)
-                throw new NullPointerException();
+        if (context == null)
+            throw new NullPointerException();
 
-            Cursor cursor = context.getContentResolver()
-                    .query(Telephony.Sms.CONTENT_URI,
-                            new String[]{
-                                    Telephony.Sms.ADDRESS,
-                                    Telephony.Sms.BODY},
-                            null, null, null);
+        Cursor cursor = context.getContentResolver()
+                .query(Telephony.Sms.CONTENT_URI,
+                        new String[]{
+                                Telephony.Sms.ADDRESS,
+                                Telephony.Sms.BODY},
+                        null, null, null);
 
-            if (cursor.moveToFirst()) {
-                do {
-                    String currentAddress = cursor.getString(0);
+        if (cursor.moveToFirst()) {
+            do {
+                String currentAddress = cursor.getString(0);
 
-                    if (currentAddress.equals(fromAddress)) {
-                        return cursor.getString(1);
-                    }
-                } while (cursor.moveToNext());
-            }
+                if (currentAddress.equals(fromAddress)) {
+                    return cursor.getString(1);
+                }
+            } while (cursor.moveToNext());
+        }
 
         cursor.close();
         return "";
@@ -154,7 +155,6 @@ public class SmsContact implements Contact {
 
         return contactName;
     }
-
 
 
 }

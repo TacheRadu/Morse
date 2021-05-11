@@ -29,9 +29,9 @@ public class SmsContactActivity extends AppCompatActivity {
     ListView listView;
     SmsContact smsContact;
     int size;
-    private MessagesAdapter adapter;
     List<String> nameList;
     List<String> messageList;
+    private MessagesAdapter adapter;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

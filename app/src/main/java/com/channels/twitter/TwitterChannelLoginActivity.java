@@ -34,11 +34,11 @@ import java.util.List;
  * @version 0.2.0
  */
 public class TwitterChannelLoginActivity extends AppCompatActivity implements Channel {
+    TwitterLoginButton loginButton;
     private AppCompatActivity parentActivity = this;
     private EditText userCredential;
     private EditText userPassword;
     private TextView remainingAttempts;
-    TwitterLoginButton loginButton;
 
     public TwitterChannelLoginActivity() {
     }
@@ -65,18 +65,19 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
 
             @Override
             public void failure(TwitterException exception) {
-                Toast.makeText(getApplicationContext(),"Login fail",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Login fail", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public void loginMethod(TwitterSession twitterSession){
+    public void loginMethod(TwitterSession twitterSession) {
         System.out.println("test");
-        String userName=twitterSession.getUserName();
-        Intent intent= new Intent(TwitterChannelLoginActivity.this, HomeActivity.class);
-        intent.putExtra("username",userName);
+        String userName = twitterSession.getUserName();
+        Intent intent = new Intent(TwitterChannelLoginActivity.this, HomeActivity.class);
+        intent.putExtra("username", userName);
         startActivity(intent);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.err.println("session");
