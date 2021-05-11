@@ -14,6 +14,7 @@ jobs:
       matrix:
         api-level: [23, 29]
         target: [default, google_apis]
+        profile: [Pixel, Pixel 3a]
         
     steps:
     - name: checkout
@@ -28,5 +29,5 @@ jobs:
         api-level: ${{ matrix.api-level }}
         target: ${{ matrix.target }}
         arch: x86_64
-        profile: Nexus 6
+        profile: ${{ matrix.profile }}
         script: ./gradlew connectedCheck
