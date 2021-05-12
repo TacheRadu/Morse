@@ -32,10 +32,6 @@ public class App extends AppCompatActivity {
 
     }
 
-    public void App() {
-        // TODO implement here
-    }
-
     /**
      * @param channelName
      * @param userName

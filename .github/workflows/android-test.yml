@@ -1,0 +1,33 @@
+name: Android Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    
+    strategy:
+      matrix:
+        api-level: [29]
+        target: [default]
+        profile: [Nexus 6]
+        
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: run tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: ${{ matrix.api-level }}
+        target: ${{ matrix.target }}
+        arch: x86_64
+        profile: ${{ matrix.profile }}
+        script: ./gradlew connectedCheck

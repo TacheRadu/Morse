@@ -1,26 +1,15 @@
 package com.channels.androidsms;
 
-import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import com.R;
 import com.morse.Contact;
 
 import java.util.ArrayList;
@@ -42,7 +31,8 @@ public class SmsContact implements Contact {
         this.phNumber = phNumber;
         this.name = name;
     }
-    public SmsContact(Context context){
+
+    public SmsContact(Context context) {
         this.context = context;
     }
 
@@ -134,13 +124,12 @@ public class SmsContact implements Contact {
                 String currentAddress = cursor.getString(0);
 
                 if (currentAddress.equals(fromAddress)) {
-                    String lastMessageText =
-                            cursor.getString(1);
-                    return lastMessageText;
+                    return cursor.getString(1);
                 }
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
         return "";
     }
 
@@ -158,7 +147,7 @@ public class SmsContact implements Contact {
         if (cursor.moveToFirst())
             contactName = cursor.getString(0);
 
-        if (cursor != null && !cursor.isClosed())
+        if (!cursor.isClosed())
             cursor.close();
 
         if (contactName.equals(""))
@@ -166,7 +155,6 @@ public class SmsContact implements Contact {
 
         return contactName;
     }
-
 
 
 }

@@ -13,12 +13,12 @@ import com.R;
 
 import java.util.List;
 
-public class ContactsAdapter extends ArrayAdapter {
+public class ContactsAdapter extends ArrayAdapter<ContactInfo> {
 
-    private List contactsInfoList;
-    private Context context;
+    private final List<ContactInfo> contactsInfoList;
+    private final Context context;
 
-    public ContactsAdapter(@NonNull Context context, int resource, @NonNull List objects) {
+    public ContactsAdapter(@NonNull Context context, int resource, @NonNull List<ContactInfo> objects) {
         super(context, resource, objects);
         this.contactsInfoList = objects;
         this.context = context;
@@ -27,7 +27,7 @@ public class ContactsAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder = null;
+        ViewHolder holder;
 
         if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -41,14 +41,14 @@ public class ContactsAdapter extends ArrayAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        ContactInfo contactInfo = (ContactInfo) contactsInfoList.get(position);
+        ContactInfo contactInfo = contactsInfoList.get(position);
         holder.displayName.setText(contactInfo.getDisplayName());
         holder.lastMessage.setText(contactInfo.getLastMessage());
 
         return convertView;
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         TextView displayName;
         TextView lastMessage;
     }

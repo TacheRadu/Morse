@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -29,9 +30,9 @@ public class SmsContactActivity extends AppCompatActivity {
     ListView listView;
     SmsContact smsContact;
     int size;
-    private MessagesAdapter adapter;
     List<String> nameList;
     List<String> messageList;
+    private MessagesAdapter adapter;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -48,7 +49,7 @@ public class SmsContactActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
-        Handler handler = new Handler();
+        Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

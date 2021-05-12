@@ -3,14 +3,12 @@ package com.channels.androidsms;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.telephony.SmsManager;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.morse.Message;
 
-public class SmsMessage extends AppCompatActivity implements Message {
+public class SmsMessage implements Message {
     private final Context context;
     private final String phoneNumber;
     private final String messageText;
@@ -30,10 +28,10 @@ public class SmsMessage extends AppCompatActivity implements Message {
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNumber, null, messageText, null, null);
-            Toast.makeText(context, "Message sent", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Message sent", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "Unable to send SMS message.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Unable to send SMS message.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -45,9 +43,7 @@ public class SmsMessage extends AppCompatActivity implements Message {
     @Override
     public void sendDelayed(long delayedMinutes) {
         long delayedMilliSeconds = delayedMinutes * 60 * 1000;
-        (new Handler()).postDelayed(() -> {
-            send();
-        }, delayedMilliSeconds);
+        (new Handler(Looper.getMainLooper())).postDelayed(this::send, delayedMilliSeconds);
     }
 
     /**

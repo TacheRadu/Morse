@@ -2,18 +2,17 @@ package com.channels.twitter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
 import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
-
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
@@ -25,8 +24,6 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import java.util.List;
 
-import twitter4j.TwitterFactory;
-
 
 /**
  * Class that handles the UI/UX for logging in to a Twitter account.
@@ -37,13 +34,11 @@ import twitter4j.TwitterFactory;
  * @version 0.2.0
  */
 public class TwitterChannelLoginActivity extends AppCompatActivity implements Channel {
+    TwitterLoginButton loginButton;
     private AppCompatActivity parentActivity = this;
     private EditText userCredential;
     private EditText userPassword;
     private TextView remainingAttempts;
-    private boolean credentialsCheckPassed = false;
-    private int currentNumberOfAvailableRetries = 3;
-    TwitterLoginButton loginButton;
 
     public TwitterChannelLoginActivity() {
     }
@@ -70,18 +65,19 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
 
             @Override
             public void failure(TwitterException exception) {
-                Toast.makeText(getApplicationContext(),"Login fail",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Login fail", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public void loginMethod(TwitterSession twitterSession){
+    public void loginMethod(TwitterSession twitterSession) {
         System.out.println("test");
-        String userName=twitterSession.getUserName();
-        Intent intent= new Intent(TwitterChannelLoginActivity.this, HomeActivity.class);
-        intent.putExtra("username",userName);
+        String userName = twitterSession.getUserName();
+        Intent intent = new Intent(TwitterChannelLoginActivity.this, HomeActivity.class);
+        intent.putExtra("username", userName);
         startActivity(intent);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.err.println("session");
@@ -129,7 +125,7 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
 
     @Override
     public int getImage() {
-        return R.drawable.twitter;
+        return R.mipmap.twitter;
     }
 
     @Override
@@ -137,6 +133,7 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
         /* TODO: Implement this! */
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "¯\\_(ツ)_/¯";
