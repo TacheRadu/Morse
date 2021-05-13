@@ -1,6 +1,7 @@
 package com.channels.twitter;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
 
+import com.twitter.sdk.android.core.AuthToken;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
@@ -43,6 +45,15 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
     private TextView remainingAttempts;
     private boolean credentialsCheckPassed = false;
     private int currentNumberOfAvailableRetries = 3;
+    TwitterSession session;
+
+    private static SharedPreferences mSharedPreferences;
+    static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
+    static final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
+    static final String PREF_KEY_TWITTER_LOGIN = "isTwitterLogedIn";
+    static final String PREF_USER = "username";
+
+
     TwitterLoginButton loginButton;
 
     public TwitterChannelLoginActivity() {
@@ -56,32 +67,43 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Twitter.initialize(this);
+        mSharedPreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
         setContentView(R.layout.twitter_login_activity);
         loginButton = findViewById(R.id.login_button);
-        loginButton.setCallback(new Callback<TwitterSession>() {
-            @Override
-            public void success(Result<TwitterSession> result) {
-                TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-                TwitterAuthToken authToken = session.getAuthToken();
+        if (!isLoggedIn()) {
+            loginButton.setCallback(new Callback<TwitterSession>() {
+                @Override
+                public void success(Result<TwitterSession> result) {
+                    session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+                    TwitterAuthToken authToken = session.getAuthToken();
 
+                    loginMethod(session, authToken);
+                }
 
-                loginMethod(session);
-            }
-
-            @Override
-            public void failure(TwitterException exception) {
-                Toast.makeText(getApplicationContext(),"Login fail",Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void failure(TwitterException exception) {
+                    Toast.makeText(getApplicationContext(), "Login fail", Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            Intent intent = new Intent(TwitterChannelLoginActivity.this, HomeActivity.class);
+            intent.putExtra("username", mSharedPreferences.getString(PREF_USER, ""));
+            startActivity(intent);
+        }
     }
 
-    public void loginMethod(TwitterSession twitterSession){
-        System.out.println("test");
-        String userName=twitterSession.getUserName();
-        Intent intent= new Intent(TwitterChannelLoginActivity.this, HomeActivity.class);
-        intent.putExtra("username",userName);
+    public void loginMethod(TwitterSession twitterSession, TwitterAuthToken token) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(PREF_KEY_OAUTH_SECRET, token.secret);
+        editor.putString(PREF_KEY_OAUTH_TOKEN, token.token);
+        editor.putBoolean(PREF_KEY_TWITTER_LOGIN, true);
+        editor.putString(PREF_USER, twitterSession.getUserName());
+        editor.apply();
+        Intent intent = new Intent(TwitterChannelLoginActivity.this, HomeActivity.class);
+        intent.putExtra("username", mSharedPreferences.getString(PREF_USER, ""));
         startActivity(intent);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.err.println("session");
@@ -90,6 +112,9 @@ public class TwitterChannelLoginActivity extends AppCompatActivity implements Ch
         loginButton.onActivityResult(requestCode, resultCode, data);
     }
 
+    private Boolean isLoggedIn() {
+        return mSharedPreferences.getBoolean(PREF_KEY_TWITTER_LOGIN, false);
+    }
 
     @Override
     public Intent getIntent() {
