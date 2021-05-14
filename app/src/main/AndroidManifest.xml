@@ -37,6 +37,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".channels.twitter.HomeActivity"/>
+        <activity android:name=".channels.twitter.FriendListActivity"/>
 
     </application>
 

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteStatement;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.channels.androidsms.SmsChannel;
+import com.channels.twitter.TwitterChannel;
 import com.channels.twitter.TwitterChannelLoginActivity;
 
 import java.sql.Connection;
@@ -111,7 +112,7 @@ public class App extends AppCompatActivity {
                     /* Does the same as the Twitter channel */
 //                    break;
                 case "twitter":
-                    channels.add(new TwitterChannelLoginActivity(parentActivity));
+                    channels.add(new TwitterChannel(parentActivity));
                     break;
             }
         }
