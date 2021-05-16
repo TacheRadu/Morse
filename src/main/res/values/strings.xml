@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">PostTweet</string>
+    <string name="tweet">Tweet</string>
+    <string name="submittweet">submitTweet</string>
+    <string name="exitbutton">exitButton</string>
+    <string name="avatar">Avatar</string>
+    <string name="write_tweet_here">Write tweet here…</string>
+    <string name="text">text</string>
+    <string name="powered_by"> Powered by</string>
+    <string name="morselogo">MorseLogo</string>
+    <string name="textbox">textbox</string>
+    <string name="welcome">Tweet posted</string>
+    <string name="insertpic">insertPic</string>
+    <string name="createpoll">createPoll</string>
+    <string name="setlocation">setLocation</string>
+    <string name="setvisibility">setVisibility</string>
+    <string name="etoptions">Everyone</string>
+    <string name="choose_visibility">Choose visibility</string>
+    <string name="everyone">everyone</string>
+    <string name="Everyone">Everyone</string>
+    <string name="fllwpeople">fllwpeople</string>
+    <string name="only_people_you_follow">Only people you follow</string>
+    <string name="mentionedpeople">mentionedpeople</string>
+    <string name="only_mentioned_people">Only mentioned people</string>
+</resources>
