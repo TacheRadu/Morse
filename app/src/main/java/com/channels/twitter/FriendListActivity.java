@@ -37,8 +37,8 @@ public class FriendListActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        AccessToken token = new AccessToken(TwitterChannelLoginActivity.sharedPreferences.getString(Constants.PREF_KEY_OAUTH_TOKEN, ""),
-                TwitterChannelLoginActivity.sharedPreferences.getString(Constants.PREF_KEY_OAUTH_SECRET,""));
+        AccessToken token = new AccessToken(HomeActivity.mSharedPreferences.getString(Constants.PREF_KEY_OAUTH_TOKEN, ""),
+                HomeActivity.mSharedPreferences.getString(Constants.PREF_KEY_OAUTH_SECRET,""));
         twitter = new TwitterFactory().getInstance();
         twitter.setOAuthConsumer(getResources().getString(R.string.com_twitter_sdk_android_CONSUMER_KEY),
                 getResources().getString(R.string.com_twitter_sdk_android_CONSUMER_SECRET));
@@ -50,10 +50,12 @@ public class FriendListActivity extends AppCompatActivity {
     private void getFriendsList(){
         IDs iDs;
         try {
-            iDs = twitter.getFollowersIDs(TwitterChannelLoginActivity.sharedPreferences.getLong(Constants.PREF_ID, 0), -1);
+            iDs = twitter.getFollowersIDs(HomeActivity.mSharedPreferences.getLong(Constants.PREF_ID, 0), -1);
             for(long id : iDs.getIDs()){
                 followersList.add(twitter.showUser(id).getName());
                 System.out.println(twitter.showUser(id).getName());
+                TwitterMessage message = new TwitterMessage(twitter, id, "fuck yeah, morse");
+                message.send();
             }
             } catch (TwitterException twitterException) {
             twitterException.printStackTrace();

@@ -13,7 +13,7 @@ import com.morse.Constants;
 public class HomeActivity extends AppCompatActivity {
     TextView name;
     String user;
-    private SharedPreferences mSharedPreferences;
+    static SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,8 @@ public class HomeActivity extends AppCompatActivity {
         name = (TextView) findViewById(R.id.nametextView);
         name.setText(mSharedPreferences.getString(Constants.PREF_USER, ""));
 
+        Intent intent = new Intent(this, FriendListActivity.class);
+        startActivity(intent);
     }
 
     @Override
