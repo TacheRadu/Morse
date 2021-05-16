@@ -54,9 +54,8 @@ public class FriendListActivity extends AppCompatActivity {
             for(long id : iDs.getIDs()){
                 followersList.add(twitter.showUser(id).getName());
                 System.out.println(twitter.showUser(id).getName());
-                TwitterMessage message = new TwitterMessage(twitter, id, "");
-                System.out.println(message.getMessages(id));
-
+                TwitterMessage message = new TwitterMessage(twitter);
+                System.out.println(message.delete(1394030900334272517L));
             }
             System.out.println("done");
         } catch (TwitterException twitterException) {

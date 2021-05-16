@@ -29,6 +29,12 @@ public class TwitterMessage implements Message {
         this.messageText = messageText;
     }
 
+    public TwitterMessage(Twitter twitter) {
+        this.twitter = twitter;
+        toUserId = null;
+        messageText = null;
+    }
+
     /**
      * Send a message with the properties: toUserId, messageText that were initialized via constructor
      * If the operation was done successfully, on the screen it will be printed the message:
@@ -93,7 +99,15 @@ public class TwitterMessage implements Message {
     }
 
     @Override
-    public Boolean delete(int id) {
+    public Boolean delete(long id) {
+        try {
+            twitter.destroyDirectMessage(id);
+            System.out.println("Successfully deleted message with id: " +id);
+            return true;
+        } catch (TwitterException te) {
+            te.printStackTrace();
+            System.out.println("Failed to delete message: " + te.getMessage());
+        }
         return false;
     }
 }
