@@ -42,6 +42,18 @@
         </activity>
         <activity android:name=".channels.twitter.HomeActivity" />
 
+        <activity android:name=".channels.reddit.RedditLoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="www.example.com"
+                    android:scheme="http"
+                    android:path="/my_redirect" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>
