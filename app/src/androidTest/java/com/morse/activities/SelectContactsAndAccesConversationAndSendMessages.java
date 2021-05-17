@@ -96,7 +96,7 @@ public class SelectContactsAndAccesConversationAndSendMessages {
         appCompatEditText.perform(replaceText("Salut"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -106,7 +106,7 @@ public class SelectContactsAndAccesConversationAndSendMessages {
         materialButton2.perform(click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -136,7 +136,7 @@ public class SelectContactsAndAccesConversationAndSendMessages {
         appCompatEditText2.perform(replaceText("hey man"), closeSoftKeyboard());
 
         ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -156,7 +156,7 @@ public class SelectContactsAndAccesConversationAndSendMessages {
         appCompatEditText3.perform(replaceText("ce faci"), closeSoftKeyboard());
 
         ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -196,7 +196,7 @@ public class SelectContactsAndAccesConversationAndSendMessages {
         appCompatEditText4.perform(replaceText("Salut!"), closeSoftKeyboard());
 
         ViewInteraction materialButton6 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -226,7 +226,7 @@ public class SelectContactsAndAccesConversationAndSendMessages {
         appCompatEditText5.perform(replaceText("Te salut din nou frate"), closeSoftKeyboard());
 
         ViewInteraction materialButton7 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),

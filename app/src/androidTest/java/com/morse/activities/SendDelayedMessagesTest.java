@@ -96,7 +96,7 @@ public class SendDelayedMessagesTest {
         appCompatEditText.perform(replaceText("hello man"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -106,7 +106,7 @@ public class SendDelayedMessagesTest {
         materialButton2.perform(click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -126,7 +126,7 @@ public class SendDelayedMessagesTest {
         appCompatEditText2.perform(replaceText("bft omule"), closeSoftKeyboard());
 
         ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -166,7 +166,7 @@ public class SendDelayedMessagesTest {
         appCompatEditText3.perform(replaceText("salut"), closeSoftKeyboard());
 
         ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -196,7 +196,7 @@ public class SendDelayedMessagesTest {
         appCompatEditText4.perform(replaceText("hello"), closeSoftKeyboard());
 
         ViewInteraction materialButton6 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
+                allOf(withId(R.id.sendDelayedMessage), withText("Send Message"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),

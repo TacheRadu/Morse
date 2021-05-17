@@ -38,7 +38,7 @@ public class SmsContactActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_contact);
-        sendButton = findViewById(R.id.sendMessage);
+        sendButton = findViewById(R.id.sendDelayedMessage);
 
         listView = findViewById(R.id.listView);
         Bundle bundle = getIntent().getExtras();
