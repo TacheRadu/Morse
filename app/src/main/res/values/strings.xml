@@ -4,6 +4,9 @@
     <string name="phone_number">Phone number</string>
     <string name="type_message">Type Message</string>
     <string name="send">Send</string>
+    <string name="send_message">Send Message</string>
+    <string name="tweet">Tweet</string>
+    <string name="hello_twitter">Hello %1$s</string>
     <string name="login_button">Login</string>
     <string name="attempts_remaining_text">Number of attempts remaining:</string>
     <string name="attempts_remaining">3</string>

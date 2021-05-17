@@ -18,6 +18,10 @@ public class TwitterMessageInfo {
 
     private final String messageText;
 
+    public String getMessageText() {
+        return messageText;
+    }
+
     public TwitterMessageInfo(DirectMessage message) {
         this.messageId = message.getId();
         this.senderId = message.getSenderId();

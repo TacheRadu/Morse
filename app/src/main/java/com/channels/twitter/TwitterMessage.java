@@ -35,6 +35,12 @@ public class TwitterMessage implements Message {
         messageText = null;
     }
 
+    public TwitterMessage(Twitter twitter, Long toUserId) {
+        this.twitter = twitter;
+        this.toUserId = toUserId;
+        this.messageText = null;
+    }
+
     /**
      * Send a message with the properties: toUserId, messageText that were initialized via constructor
      * If the operation was done successfully, on the screen it will be printed the message:
@@ -82,7 +88,7 @@ public class TwitterMessage implements Message {
                 currentMessages = cursor == null ? twitter.getDirectMessages(count)
                         : twitter.getDirectMessages(count, cursor);
                 for (DirectMessage message : currentMessages) {
-                    if (message.getRecipientId() == toUserId) {
+                    if (message.getRecipientId() == toUserId || message.getSenderId() == toUserId) {
                         messagesFromUserId.add(new TwitterMessageInfo(message));
                     }
                 }

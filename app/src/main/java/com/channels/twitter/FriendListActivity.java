@@ -1,7 +1,10 @@
 package com.channels.twitter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -12,7 +15,9 @@ import com.morse.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
+import twitter4j.DirectMessage;
 import twitter4j.IDs;
+import twitter4j.ResponseList;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -24,6 +29,7 @@ public class FriendListActivity extends AppCompatActivity {
     private ListView followers;
     private List<String> followersList;
     ArrayAdapter<String> adapter;
+    private List<Long> ids;
 
     @Override
     protected void onCreate(Bundle savedInstance){
@@ -45,19 +51,26 @@ public class FriendListActivity extends AppCompatActivity {
         twitter.setOAuthAccessToken(token);
         getFriendsList();
 
+        followers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(FriendListActivity.this, TwitterConversation.class);
+                intent.putExtra("id", ids.get(position));
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void getFriendsList(){
         IDs iDs;
+        ids = new ArrayList<>();
         try {
             iDs = twitter.getFollowersIDs(HomeActivity.mSharedPreferences.getLong(Constants.PREF_ID, 0), -1);
             for(long id : iDs.getIDs()){
                 followersList.add(twitter.showUser(id).getName());
-                System.out.println(twitter.showUser(id).getName());
-                TwitterMessage message = new TwitterMessage(twitter);
-                System.out.println(message.delete(1394030900334272517L));
+                ids.add(id);
             }
-            System.out.println("done");
         } catch (TwitterException twitterException) {
             twitterException.printStackTrace();
         }
