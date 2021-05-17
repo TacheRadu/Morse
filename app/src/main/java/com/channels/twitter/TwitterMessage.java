@@ -116,4 +116,8 @@ public class TwitterMessage implements Message {
         }
         return false;
     }
+
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
 }
