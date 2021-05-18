@@ -1,8 +1,10 @@
 package com.channels.twitter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -68,6 +70,17 @@ public class TwitterConversation extends AppCompatActivity {
 
             }
         });
+        messagesView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                adapterList.remove(position);
+                nameList.remove(position);
+                messages.delete(messagesList.get(position).getMessageId());
+                Toast.makeText(getApplicationContext(), "Message removed!", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
     }
 
     private void init(){
@@ -93,7 +106,6 @@ public class TwitterConversation extends AppCompatActivity {
     private void createList(){
         id = getIntent().getLongExtra("id", -1);
         messages = new TwitterMessage(twitter, id);
-
         adapterList = new ArrayList<>();
         nameList = new ArrayList<>();
         adapter = new MessagesAdapter(TwitterConversation.this, nameList, adapterList);
@@ -106,6 +118,11 @@ public class TwitterConversation extends AppCompatActivity {
         if(!switchCompat.isChecked()) {
             messages.send();
             adapterList.add(textBox.getText().toString());
+            try {
+                nameList.add(twitter.showUser(messagesList.get(messagesList.size()-1).getSenderId()).getName());
+            } catch (TwitterException e) {
+                e.printStackTrace();
+            }
             textBox.setText("");
             Toast.makeText(getApplicationContext(),
                     "Message sent!",
@@ -114,6 +131,11 @@ public class TwitterConversation extends AppCompatActivity {
         else{
             Toast.makeText(getApplicationContext(), "Delayed message will be sent", Toast.LENGTH_SHORT).show();
             messages.setAdapterList(this.adapterList);
+            try {
+                nameList.add(twitter.showUser(messagesList.get(messagesList.size()-1).getSenderId()).getName());
+            } catch (TwitterException e) {
+                e.printStackTrace();
+            }
             textBox.setText("");
             messages.sendDelayed(Integer.parseInt(delay.getText().toString()));
             Toast.makeText(getApplicationContext(), "Delayed message sent", Toast.LENGTH_SHORT).show();
@@ -123,12 +145,14 @@ public class TwitterConversation extends AppCompatActivity {
 
     private void getMessageList(){
         messagesList = messages.getMessages(id);
+        System.out.println(messagesList);
 
         for(TwitterMessageInfo message : messagesList){
             adapterList.add(message.getMessageText());
             try {
                 nameList.add(twitter.showUser(message.getSenderId()).getName());
             } catch (TwitterException e) {
+                Toast.makeText(getApplicationContext(), "Too many requests", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
         }

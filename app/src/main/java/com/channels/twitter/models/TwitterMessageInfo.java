@@ -10,6 +10,10 @@ import twitter4j.DirectMessage;
  * This Class is a model for a TwitterMessage
  */
 public class TwitterMessageInfo {
+    public long getMessageId() {
+        return messageId;
+    }
+
     private final long messageId;
 
     public long getSenderId() {
