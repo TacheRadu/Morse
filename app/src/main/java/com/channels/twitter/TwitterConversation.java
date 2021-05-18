@@ -1,14 +1,18 @@
 package com.channels.twitter;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.R;
 import com.channels.androidsms.MessagesAdapter;
@@ -32,8 +36,10 @@ public class TwitterConversation extends AppCompatActivity {
     private List<String> adapterList;
     private List<String> nameList;
     private List<TwitterMessageInfo> messagesList;
+    private SwitchCompat switchCompat;
     private MessagesAdapter adapter;
     private ListView messagesView;
+    private EditText delay;
     private Button send;
     private long id;
 
@@ -47,12 +53,31 @@ public class TwitterConversation extends AppCompatActivity {
         getMessageList();
         send.setOnClickListener(f -> sendMessage());
 
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    send.setText(getString(R.string.delayed));
+                    delay.setVisibility(View.VISIBLE);
+                }
+                else{
+                    send.setText(getString(R.string.type_message));
+                    delay.setVisibility(View.INVISIBLE);
+                }
+
+
+            }
+        });
     }
 
     private void init(){
         setContentView(R.layout.twitter_conversation_activity);
         messagesView = findViewById(R.id.conversationList);
         send = findViewById(R.id.sendMessage);
+        switchCompat = findViewById(R.id.switchCompat);
+        delay = findViewById(R.id.delay);
+        delay.setVisibility(View.INVISIBLE);
+
     }
 
     private void createSession(){
@@ -78,12 +103,22 @@ public class TwitterConversation extends AppCompatActivity {
     private void sendMessage(){
         EditText textBox = findViewById(R.id.message);
         messages.setMessageText(textBox.getText().toString());
-        messages.send();
-        adapterList.add(textBox.getText().toString());
-        textBox.setText("");
-        Toast.makeText(getApplicationContext(),
-                "Message sent!",
-                Toast.LENGTH_SHORT).show();
+        if(!switchCompat.isChecked()) {
+            messages.send();
+            adapterList.add(textBox.getText().toString());
+            textBox.setText("");
+            Toast.makeText(getApplicationContext(),
+                    "Message sent!",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Delayed message will be sent", Toast.LENGTH_SHORT).show();
+            messages.setAdapterList(this.adapterList);
+            textBox.setText("");
+            messages.sendDelayed(Integer.parseInt(delay.getText().toString()));
+            Toast.makeText(getApplicationContext(), "Delayed message sent", Toast.LENGTH_SHORT).show();
+        }
+        adapter.notifyDataSetChanged();
     }
 
     private void getMessageList(){

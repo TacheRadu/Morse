@@ -1,5 +1,10 @@
 package com.channels.twitter;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
+
 import com.channels.twitter.models.TwitterMessageInfo;
 import com.morse.Message;
 
@@ -20,7 +25,18 @@ public class TwitterMessage implements Message{
     private Twitter twitter;
     private Long toUserId;
     private String messageText;
+    private List<String> adapterList;
+
+    public void setAdapterList(List<String> adapterList) {
+        this.adapterList = adapterList;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     long delayedMilliSeconds;
+    Context context;
 
     public TwitterMessage(Twitter twitter, Long toUserId, String messageText) {
         this.twitter = twitter;
@@ -69,15 +85,15 @@ public class TwitterMessage implements Message{
         delayedMilliSeconds = delayedMinutes * 60 * 1000;
         new Thread(() -> {
             try {
-                System.out.println("Started sendDelayed method");
                 Thread.sleep(delayedMilliSeconds);
                 send();
-                System.out.println("Sent delayed message!");
+                adapterList.add(this.messageText);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
     }
+
 
     /**
      * List all message of a user specified by its id via params and will return them

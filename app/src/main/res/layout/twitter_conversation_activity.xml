@@ -21,6 +21,7 @@
     </ListView>
 
     <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchCompat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="301dp"
@@ -57,4 +58,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/delay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:hint="@string/delay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        android:autofillHints=""
+        android:inputType="number" />
 </androidx.constraintlayout.widget.ConstraintLayout>

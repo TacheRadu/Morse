@@ -68,7 +68,7 @@ public class FriendListActivity extends AppCompatActivity {
         IDs iDs;
         ids = new ArrayList<>();
         try {
-            iDs = twitter.getFollowersIDs(HomeActivity.mSharedPreferences.getLong(Constants.PREF_ID, 0), -1);
+            iDs = twitter.getFollowersIDs(mSharedPreferences.getLong(Constants.PREF_ID, 0), -1);
             for(long id : iDs.getIDs()){
                 followersList.add(twitter.showUser(id).getName());
                 ids.add(id);
