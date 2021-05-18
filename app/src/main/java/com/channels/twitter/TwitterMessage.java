@@ -1,7 +1,5 @@
 package com.channels.twitter;
 
-import android.os.Handler;
-
 import com.channels.twitter.models.TwitterMessageInfo;
 import com.morse.Message;
 
@@ -18,10 +16,11 @@ import twitter4j.TwitterException;
  *
  * This Class is responsible for message management: list, send, delete
  */
-public class TwitterMessage implements Message {
+public class TwitterMessage implements Message{
     private Twitter twitter;
     private Long toUserId;
     private String messageText;
+    long delayedMilliSeconds;
 
     public TwitterMessage(Twitter twitter, Long toUserId, String messageText) {
         this.twitter = twitter;
@@ -30,6 +29,7 @@ public class TwitterMessage implements Message {
     }
 
     public TwitterMessage(Twitter twitter) {
+        super();
         this.twitter = twitter;
         toUserId = null;
         messageText = null;
@@ -66,10 +66,17 @@ public class TwitterMessage implements Message {
      */
     @Override
     public void sendDelayed(long delayedMinutes) {
-        long delayedMilliSeconds = delayedMinutes * 60 * 1000;
-        (new Handler()).postDelayed(() -> {
-            send();
-        }, delayedMilliSeconds);
+        delayedMilliSeconds = delayedMinutes * 60 * 1000;
+        new Thread(() -> {
+            try {
+                System.out.println("Started sendDelayed method");
+                Thread.sleep(delayedMilliSeconds);
+                send();
+                System.out.println("Sent delayed message!");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     /**
@@ -120,4 +127,5 @@ public class TwitterMessage implements Message {
     public void setMessageText(String messageText) {
         this.messageText = messageText;
     }
+
 }

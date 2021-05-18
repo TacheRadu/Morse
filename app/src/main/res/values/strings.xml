@@ -10,6 +10,7 @@
     <string name="post_tweet">Tell your followers something</string>
     <string name="hint">What\'s Happening?</string>
     <string name="login_button">Login</string>
+    <string name="delayed">Send delayed message</string>
     <string name="attempts_remaining_text">Number of attempts remaining:</string>
     <string name="attempts_remaining">3</string>
     <string name="userPassword">Password</string>
