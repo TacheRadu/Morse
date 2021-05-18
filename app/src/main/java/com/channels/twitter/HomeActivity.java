@@ -21,21 +21,35 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSharedPreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
-        if (!mSharedPreferences.getBoolean(Constants.PREF_KEY_TWITTER_LOGIN, false))
-            startActivityForResult(new Intent(HomeActivity.this, TwitterChannelLoginActivity.class), 0);
-        setContentView(R.layout.activity_twitter_home);
+        createSharedPreferences();
+        init();
 
+        send.setOnClickListener(f -> openSendActivity());
+        tweet.setOnClickListener(f -> openTweetActivity());
+    }
+
+    private void init(){
+        setContentView(R.layout.activity_twitter_home);
         send = findViewById(R.id.send);
         tweet = findViewById(R.id.tweet);
         name = (TextView) findViewById(R.id.nametextView);
         name.setText(String.format(getResources().getString(R.string.hello_twitter), mSharedPreferences.getString(Constants.PREF_USER, "")));
+    }
 
-        send.setOnClickListener(f -> openSendActivity());
+    private void createSharedPreferences(){
+        mSharedPreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
+        if (!mSharedPreferences.getBoolean(Constants.PREF_KEY_TWITTER_LOGIN, false))
+            startActivityForResult(new Intent(HomeActivity.this, TwitterChannelLoginActivity.class), 0);
+
     }
 
     private void openSendActivity(){
         Intent intent = new Intent(this, FriendListActivity.class);
+        startActivity(intent);
+    }
+
+    private void openTweetActivity(){
+        Intent intent = new Intent(this, TweetActivity.class);
         startActivity(intent);
     }
 

@@ -12,6 +12,10 @@ import twitter4j.DirectMessage;
 public class TwitterMessageInfo {
     private final long messageId;
 
+    public long getSenderId() {
+        return senderId;
+    }
+
     private final long senderId;
 
     private final Date date;

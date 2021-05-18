@@ -39,6 +39,7 @@
         <activity android:name=".channels.twitter.HomeActivity"/>
         <activity android:name=".channels.twitter.FriendListActivity"/>
         <activity android:name=".channels.twitter.TwitterConversation"/>
+        <activity android:name=".channels.twitter.TweetActivity"/>
     </application>
 
 </manifest>

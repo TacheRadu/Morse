@@ -1,6 +1,7 @@
 package com.channels.twitter;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -30,6 +31,7 @@ public class FriendListActivity extends AppCompatActivity {
     private List<String> followersList;
     ArrayAdapter<String> adapter;
     private List<Long> ids;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstance){
@@ -42,9 +44,9 @@ public class FriendListActivity extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-        AccessToken token = new AccessToken(HomeActivity.mSharedPreferences.getString(Constants.PREF_KEY_OAUTH_TOKEN, ""),
-                HomeActivity.mSharedPreferences.getString(Constants.PREF_KEY_OAUTH_SECRET,""));
+        mSharedPreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
+        AccessToken token = new AccessToken(mSharedPreferences.getString(Constants.PREF_KEY_OAUTH_TOKEN, ""),
+                mSharedPreferences.getString(Constants.PREF_KEY_OAUTH_SECRET,""));
         twitter = new TwitterFactory().getInstance();
         twitter.setOAuthConsumer(getResources().getString(R.string.com_twitter_sdk_android_CONSUMER_KEY),
                 getResources().getString(R.string.com_twitter_sdk_android_CONSUMER_SECRET));
