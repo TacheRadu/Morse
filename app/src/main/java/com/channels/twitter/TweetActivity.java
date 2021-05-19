@@ -2,13 +2,18 @@ package com.channels.twitter;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.R;
 import com.morse.Constants;
@@ -23,6 +28,8 @@ public class TweetActivity extends AppCompatActivity {
     Twitter twitter;
     EditText status;
     Button postTweet;
+    SwitchCompat switchCompat;
+    EditText delay;
     StrictMode.ThreadPolicy policy;
 
 
@@ -31,7 +38,21 @@ public class TweetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         init();
         createSession();
-        postTweet.setOnClickListener(f -> updateStatus());
+        postTweet.setOnClickListener(f -> postNowOrLater());
+
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    postTweet.setText(getString(R.string.delayed_tweet));
+                    delay.setVisibility(View.VISIBLE);
+                }
+                else{
+                    postTweet.setText(getString(R.string.tweet));
+                    delay.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
     }
 
@@ -49,7 +70,9 @@ public class TweetActivity extends AppCompatActivity {
         setContentView(R.layout.twitter_tweet_activity);
         status = findViewById(R.id.tweetText);
         postTweet = findViewById(R.id.button);
-
+        switchCompat = findViewById(R.id.switchCompat);
+        delay = findViewById(R.id.delay);
+        delay.setVisibility(View.INVISIBLE);
         policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     }
@@ -58,10 +81,33 @@ public class TweetActivity extends AppCompatActivity {
         try {
             twitter.updateStatus(status.getText().toString());
             Toast.makeText(getApplicationContext(),
-                    "Tweet Posted!", Toast.LENGTH_SHORT)
+                    "Tweet posted!", Toast.LENGTH_SHORT)
                     .show();
         } catch (TwitterException e) {
             e.printStackTrace();
         }
+    }
+
+    private void postNowOrLater(){
+        if(!switchCompat.isChecked())
+            updateStatus();
+        else{
+            long delayTime = Integer.parseInt(delay.getText().toString()) * 50 * 1000;
+            Toast.makeText(getApplicationContext(),
+                    "Delayed Tweet will be posted!", Toast.LENGTH_SHORT)
+                    .show();
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(delayTime);
+                        updateStatus();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        status.setText("");
     }
 }

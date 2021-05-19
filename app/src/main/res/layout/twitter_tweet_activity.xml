@@ -5,32 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchCompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delayed_tweet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/tweetText"
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="116dp"
         android:layout_marginBottom="315dp"
-        android:hint="@string/hint"
-        android:gravity="start"
-        android:inputType="textMultiLine"
+        android:autofillHints=""
         android:background="@drawable/stroke"
+        android:gravity="start"
+        android:hint="@string/hint"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="120dp"
         android:text="@string/tweet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,5 +47,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tweetText" />
 
+    <EditText
+        android:id="@+id/delay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/delay"
+        android:inputType="number"
+        android:layout_marginEnd="10dp"
+        android:windowSoftInputMode="adjustResize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/switchCompat"
+        tools:layout_editor_absoluteX="140dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
