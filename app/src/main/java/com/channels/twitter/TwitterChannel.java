@@ -56,7 +56,7 @@ public class TwitterChannel implements Channel {
 
     @Override
     public int getImage() {
-        return R.drawable.twitter;
+        return R.mipmap.twitter;
     }
 
     @Override

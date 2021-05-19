@@ -19,4 +19,15 @@
     <string name="userPassword">Password</string>
     <string name="user_credential">Phone, email or username</string>
     <string name="twitter_logo_image">Twitter logo image</string>
+    <string name="enter_name">Enter name:</string>
+    <string name="enter_password">Enter Password:</string>
+    <string name="login">Login</string>
+    <string name="no_of_attempts_remaining_3">No. of attempts remaining: 3</string>
+    <string name="morse">Morse</string>
+    <string name="contacts">Contacts</string>
+    <string name="main_title">Main Title</string>
+    <string name="sub_title">Sub Title</string>
+    <string name="name_contact">Name Contact</string>
+    <string name="message">Message</string>
+    <string name="attempts">No. of attempts remaining: %1$d</string>
 </resources>
