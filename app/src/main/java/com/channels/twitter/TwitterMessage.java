@@ -25,18 +25,14 @@ public class TwitterMessage implements Message{
     private Twitter twitter;
     private Long toUserId;
     private String messageText;
-    private List<String> adapterList;
-
-    public void setAdapterList(List<String> adapterList) {
-        this.adapterList = adapterList;
-    }
+    long delayedMilliSeconds;
+    private Context context;
+    static Handler mHandler;
 
     public void setContext(Context context) {
         this.context = context;
     }
 
-    long delayedMilliSeconds;
-    Context context;
 
     public TwitterMessage(Twitter twitter, Long toUserId, String messageText) {
         this.twitter = twitter;
@@ -65,12 +61,22 @@ public class TwitterMessage implements Message{
     @Override
     public void send() {
         try {
-            System.out.println("send message to: " + twitter.showUser(toUserId).getName());
             DirectMessage message = twitter.sendDirectMessage(twitter.showUser(toUserId).getScreenName(), messageText);
-            System.out.println("Direct message successfully sent to " + message.getId());
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, "Message was sent!", Toast.LENGTH_LONG).show();
+                }
+            });
+
         } catch (TwitterException te) {
             te.printStackTrace();
-            System.out.println("Failed to send a direct message: " + te.getMessage());
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, "Failed to send message", Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
@@ -87,7 +93,6 @@ public class TwitterMessage implements Message{
             try {
                 Thread.sleep(delayedMilliSeconds);
                 send();
-                adapterList.add(this.messageText);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -100,6 +105,7 @@ public class TwitterMessage implements Message{
      * @param fromUserId
      * @return messagesFromUserId
      */
+    @Deprecated
     public List<TwitterMessageInfo> getMessages(Long fromUserId){
         try {
             String cursor = null;
@@ -127,6 +133,7 @@ public class TwitterMessage implements Message{
         return null;
     }
 
+    @Deprecated
     @Override
     public Boolean delete(long id) {
         try {

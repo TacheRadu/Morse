@@ -5,68 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/conversationList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="40dp"
-        android:stackFromBottom="true"
-        android:transcriptMode="normal"
-        app:layout_constraintBottom_toTopOf="@+id/message"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </ListView>
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchCompat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="301dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginBottom="9dp"
         android:text="@string/delayed"
-        app:layout_constraintBottom_toTopOf="@+id/conversationList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.095" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mesaj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="184dp"
+        android:layout_marginEnd="131dp"
+        android:text="@string/send_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/sendMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/send_message"
+        android:windowSoftInputMode="stateVisible|adjustResize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.469" />
 
     <EditText
         android:id="@+id/message"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:autofillHints=""
         android:gravity="bottom"
         android:hint="@string/type_message"
         android:inputType="textLongMessage"
-        android:windowSoftInputMode="stateVisible|adjustResize"
-        app:layout_constraintBottom_toTopOf="@+id/sendMessage"
+        app:layout_constraintBottom_toTopOf="@id/sendMessage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <EditText
         android:id="@+id/delay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:hint="@string/delay"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message"
         android:autofillHints=""
-        android:inputType="number" />
+        android:hint="@string/delay"
+        android:windowSoftInputMode="adjustResize"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@
     <string name="send_message">Send Message</string>
     <string name="tweet">Tweet</string>
     <string name="hello_twitter">Hello, %1$s</string>
+    <string name="send_text">Send a message to %1$s</string>
     <string name="post_tweet">Tell your followers something</string>
     <string name="hint">What\'s Happening?</string>
     <string name="login_button">Login</string>
