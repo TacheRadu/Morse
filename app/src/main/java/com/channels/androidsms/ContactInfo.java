@@ -1,5 +1,7 @@
 package com.channels.androidsms;
 
+import androidx.annotation.NonNull;
+
 import java.util.Objects;
 
 public class ContactInfo {
@@ -32,6 +34,7 @@ public class ContactInfo {
         return Objects.hash(contactId, displayName, phoneNumber);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ContactInfo{" +

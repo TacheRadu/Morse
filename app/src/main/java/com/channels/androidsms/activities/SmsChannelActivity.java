@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -20,10 +21,10 @@ import java.util.List;
 import static com.channels.androidsms.SmsChannel.PERMISSIONS_REQUEST_READ_SMS;
 
 public class SmsChannelActivity extends AppCompatActivity {
-    private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS};
-    private SmsChannel smsChannel;
+    private final String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS};
     ContactsAdapter dataAdapter = null;
     ListView listView;
+    private SmsChannel smsChannel;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,7 @@ public class SmsChannelActivity extends AppCompatActivity {
         requestContactPermission();
     }
 
-    private void getContacts(){
+    private void getContacts() {
         List<ContactInfo> contactInfoList = smsChannel.getContacts();
         dataAdapter = new ContactsAdapter(this, R.layout.contact_info, contactInfoList);
         listView.setAdapter(dataAdapter);
@@ -53,7 +54,7 @@ public class SmsChannelActivity extends AppCompatActivity {
     public void requestContactPermission() {
         if (!hasPermissions()) {
             requestPermissions(PERMISSIONS, 1);
-        } else{
+        } else {
             getContacts();
         }
     }
@@ -69,16 +70,13 @@ public class SmsChannelActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_READ_SMS: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getContacts();
-                } else {
-                    Toast.makeText(this, "You have disabled a contacts permission", Toast.LENGTH_LONG).show();
-                }
-                return;
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_READ_SMS) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getContacts();
+            } else {
+                Toast.makeText(this, "You have disabled a contacts permission", Toast.LENGTH_LONG).show();
             }
         }
     }

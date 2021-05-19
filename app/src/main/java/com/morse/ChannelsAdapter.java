@@ -17,10 +17,10 @@ import java.util.List;
 
 
 public class ChannelsAdapter extends ArrayAdapter<String> {
-    Context context;
-    List<String> rApplicationTitlesList;
-    List<String> rApplicationDescriptionsList;
-    List<Integer> rApplicationImagesList;
+    final Context context;
+    final List<String> rApplicationTitlesList;
+    final List<String> rApplicationDescriptionsList;
+    final List<Integer> rApplicationImagesList;
 
     public ChannelsAdapter(Context c, List<String> title, List<String> description, List<Integer> imgs) {
         super(c, R.layout.content_scrolling, R.id.textView1, title);
@@ -52,7 +52,6 @@ public class ChannelsAdapter extends ArrayAdapter<String> {
         ImageView images = row.findViewById(R.id.image);
         TextView myTitle = row.findViewById(R.id.textView1);
         TextView myDescription = row.findViewById(R.id.textView2);
-
         // now set our resources on views
         images.setImageResource(rApplicationImagesList.get(position));
         myTitle.setText(rApplicationTitlesList.get(position));

@@ -17,9 +17,9 @@ import java.util.List;
 
 public class MessagesAdapter extends ArrayAdapter<String> {
 
-    Context context;
-    List<String> rTitle;
-    List<String> rDescription;
+    final Context context;
+    final List<String> rTitle;
+    final List<String> rDescription;
 
     public MessagesAdapter(Context c, List<String> title, List<String> description) {
         super(c, R.layout.content_scrolling_send_receive_message, R.id.textView1, title);

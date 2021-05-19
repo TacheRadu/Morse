@@ -14,8 +14,8 @@ import com.channels.twitter.TwitterChannel;
 import com.channels.twitter.TwitterChannelLoginActivity;
 import com.morse.App;
 import com.morse.Channel;
-import com.morse.Constants;
 import com.morse.ChannelsAdapter;
+import com.morse.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
