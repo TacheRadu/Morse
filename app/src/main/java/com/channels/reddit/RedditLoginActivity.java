@@ -1,24 +1,30 @@
 package com.channels.reddit;
 
-import com.R;
-import okhttp3.Call;
-import android.net.Uri;
-import okhttp3.Request;
-import okhttp3.Response;
-import android.util.Log;
-import okhttp3.Callback;
-import android.os.Bundle;
-import android.view.View;
-import okhttp3.MediaType;
-import android.util.Base64;
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
-import java.io.IOException;
-import okhttp3.RequestBody;
-import okhttp3.OkHttpClient;
 import android.content.Intent;
-import org.json.JSONException;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Base64;
+import android.util.Log;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.R;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 /**
@@ -41,6 +47,9 @@ public class RedditLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HomeActivity.post();
         setContentView(R.layout.reddit_login_activity);
         clientId = getString(R.string.com_reddit_sdk_android_CLIENT_ID);
     }
@@ -104,6 +113,7 @@ public class RedditLoginActivity extends AppCompatActivity {
 
                     Log.d(TAG, "Access Token = " + accessToken);
                     Log.d(TAG, "Refresh Token = " + refreshToken);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
