@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import okhttp3.MediaType;
 import android.util.Base64;
-
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -97,7 +96,7 @@ public class RedditLoginActivity extends AppCompatActivity {
                 assert response.body() != null;
                 String json = response.body().string();
 
-                JSONObject data = null;
+                JSONObject data;
                 try {
                     data = new JSONObject(json);
                     String accessToken = data.optString("access_token");
