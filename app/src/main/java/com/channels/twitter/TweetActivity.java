@@ -43,11 +43,10 @@ public class TweetActivity extends AppCompatActivity {
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     postTweet.setText(getString(R.string.delayed_tweet));
                     delay.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     postTweet.setText(getString(R.string.tweet));
                     delay.setVisibility(View.INVISIBLE);
                 }
@@ -80,34 +79,36 @@ public class TweetActivity extends AppCompatActivity {
     private void updateStatus() {
         try {
             twitter.updateStatus(status.getText().toString());
-            Toast.makeText(getApplicationContext(),
-                    "Tweet posted!", Toast.LENGTH_SHORT)
-                    .show();
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(),
+                            "Tweet posted!", Toast.LENGTH_LONG).show();
+                }
+            });
         } catch (TwitterException e) {
             e.printStackTrace();
         }
     }
 
-    private void postNowOrLater(){
-        if(!switchCompat.isChecked())
+    private void postNowOrLater() {
+        if (!switchCompat.isChecked()) {
             updateStatus();
-        else{
-            long delayTime = Integer.parseInt(delay.getText().toString()) * 50 * 1000;
+            status.setText("");
+        } else {
+            long delayTime = Integer.parseInt(delay.getText().toString()) * 60 * 1000;
             Toast.makeText(getApplicationContext(),
                     "Delayed Tweet will be posted!", Toast.LENGTH_SHORT)
                     .show();
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(delayTime);
-                        updateStatus();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            new Thread(() -> {
+                try {
+                    Thread.sleep(delayTime);
+                    updateStatus();
+                    status.setText("");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            });
+            }).start();
         }
-        status.setText("");
     }
 }
