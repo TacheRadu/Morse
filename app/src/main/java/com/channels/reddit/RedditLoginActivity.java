@@ -48,7 +48,6 @@ public class RedditLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reddit_login_activity);
         clientId = getString(R.string.com_reddit_sdk_android_CLIENT_ID);
-
     }
 
     public void startSignIn(View view) {
