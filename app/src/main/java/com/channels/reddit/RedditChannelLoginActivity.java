@@ -1,6 +1,8 @@
 package com.channels.reddit;
 
 import com.R;
+import com.channels.reddit.activities.RedditGetSubredditsActivity;
+
 import okhttp3.Call;
 import android.net.Uri;
 import okhttp3.Request;
@@ -28,7 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * @author  Ionuț Roșca
  * @version 0.1.2
  */
-public class RedditLoginActivity extends AppCompatActivity {
+public class RedditChannelLoginActivity extends AppCompatActivity {
     private static String clientId;
     private static final String TAG = "RedditLoginActivity";
     private static final String STATE = "MY_RANDOM_STRING_1";
@@ -65,6 +67,9 @@ public class RedditLoginActivity extends AppCompatActivity {
                 if (state.equals(STATE)) {
                     String code = uri.getQueryParameter("code");
                     getAccessToken(code);
+
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    startActivity(intent);
                 }
             }
         }

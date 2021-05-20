@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morse">
 
-        <activity android:name=".channels.reddit.RedditLoginActivity">
+        <activity android:name=".channels.reddit.RedditChannelLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -48,7 +48,9 @@
         <activity android:name=".channels.twitter.TwitterConversation"/>
         <activity android:name=".channels.twitter.TweetActivity"/>
 
-    <!-- Reddit Activities -->
-<!--        <activity android:name=".channels.reddit.RedditLoginActivity" />-->
+        <!-- Reddit Activities -->
+        <!--        <activity android:name=".channels.reddit.RedditLoginActivity" />-->
+        <activity android:name=".channels.reddit.activities.RedditGetSubredditsActivity" />
+        <activity android:name=".channels.reddit.HomeActivity" />
     </application>
     </manifest>

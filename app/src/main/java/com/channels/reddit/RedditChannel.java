@@ -4,19 +4,13 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.R;
 import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
 
-import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.UserAgent;
 
 import java.util.List;
-
-import twitter4j.User;
-
-import static android.os.Build.VERSION_CODES.R;
 
 public class RedditChannel implements Channel {
 
@@ -71,6 +65,6 @@ public class RedditChannel implements Channel {
 
     @Override
     public Intent getIntent() {
-        return new Intent(parentActivity, RedditLoginActivity.class);
+        return new Intent(parentActivity, RedditChannelLoginActivity.class);
     }
 }

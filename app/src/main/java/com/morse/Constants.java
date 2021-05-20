@@ -35,4 +35,7 @@ public class Constants {
 
     /*Defines the string for the id of a user*/
     public static final String PREF_ID = "id";
+
+    /* Defines the symbol string in order to check whether the Reddit user is logged in or not */
+    public static final String PREF_KEY_REDDIT_USER_LOGGED_IN = "isRedditUserLoggedIn";
 }
