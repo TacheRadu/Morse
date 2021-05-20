@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
 import com.channels.androidsms.SmsChannel;
+import com.channels.reddit.RedditChannel;
+import com.channels.twitter.TwitterChannel;
 import com.channels.twitter.TwitterChannelLoginActivity;
 import com.morse.App;
 import com.morse.Channel;
@@ -76,7 +78,11 @@ public class AddChannelActivity extends AppCompatActivity {
                     mTitle.remove(index);
                     mDescription.remove(index);
                     images.remove(index);
-                } else if (channel instanceof TwitterChannelLoginActivity && mTitle.get(index).equals("Twitter")) {
+                } else if (channel instanceof RedditChannel && mTitle.get(index).equals("Reddit")) {
+                    mTitle.remove(index);
+                    mDescription.remove(index);
+                    images.remove(index);
+                } else if (channel instanceof TwitterChannel && mTitle.get(index).equals("Twitter")) {
                     mTitle.remove(index);
                     mDescription.remove(index);
                     images.remove(index);

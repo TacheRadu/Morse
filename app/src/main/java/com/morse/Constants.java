@@ -1,5 +1,7 @@
 package com.morse;
 
+import android.content.SharedPreferences;
+
 /**
  * Class which defines general-purpose constants to be used throughout the Application's code.
  *
@@ -18,4 +20,18 @@ public class Constants {
 
     /* Defines the integer selector constant for Twitter Channel. */
     public static final int CHANNEL_TWITTER = 2;
+    /*Defines the string for twitter OAUTH token*/
+    public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
+
+    /*Defines the string for twitter OAUTH secret*/
+    public static final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
+
+    /*Defines the string to check whether the user is logged in or not*/
+    public static final String PREF_KEY_TWITTER_LOGIN = "isTwitterLogedIn";
+
+    /*Defines the string for the username */
+    public static final String PREF_USER = "username";
+
+    /*Defines the string for the id of a user*/
+    public static final String PREF_ID = "id";
 }

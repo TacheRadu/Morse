@@ -1,6 +1,7 @@
-package com.channels.reddit;
+package com.channels.twitter;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,25 +10,24 @@ import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
 
-import net.dean.jraw.http.UserAgent;
-
 import java.util.List;
 
-import twitter4j.User;
-
-import static android.os.Build.VERSION_CODES.R;
-
-public class RedditChannel implements Channel {
-
+public class TwitterChannel implements Channel {
     private AppCompatActivity parentActivity;
-    public RedditChannel(AppCompatActivity parentActivity) {
+    public TwitterChannel(AppCompatActivity parentActivity) {
         this.parentActivity = parentActivity;
+    }
+
+    public TwitterChannel() {
+
     }
 
     @Override
     public void login() {
-        UserAgent userAgent = new UserAgent("Morse","com.reddit", "v0.1", "user");
+
+
     }
+
 
     @Override
     public void refreshChannel() {
@@ -46,17 +46,17 @@ public class RedditChannel implements Channel {
 
     @Override
     public String getName() {
-        return "Reddit";
+        return "Twitter";
     }
 
     @Override
     public String getDescription() {
-        return "The front page of the internet";
+        return "It's what's happening / Twitter";
     }
 
     @Override
     public int getImage() {
-        return com.R.mipmap.reddit;
+        return R.mipmap.twitter;
     }
 
     @Override
@@ -66,6 +66,6 @@ public class RedditChannel implements Channel {
 
     @Override
     public Intent getIntent() {
-        return new Intent(parentActivity, RedditLoginActivity.class);
+        return new Intent(parentActivity, HomeActivity.class);
     }
 }

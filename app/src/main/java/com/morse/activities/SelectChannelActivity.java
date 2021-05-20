@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
 import com.channels.androidsms.SmsChannel;
+import com.channels.reddit.RedditChannel;
+import com.channels.twitter.TwitterChannel;
 import com.channels.twitter.TwitterChannelLoginActivity;
 import com.morse.App;
 import com.morse.Channel;
@@ -56,26 +58,12 @@ public class SelectChannelActivity extends AppCompatActivity {
                 (parent, view, position, id) -> startActivity(mChannelList.get(position).getIntent())
         );
 
-        //tried to get the value from the SelectChannel button
-        //update : we receive the value from the SelectChannel but can't print the button on our AddChannel page
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            //in final_value we store what we receive back from SelectChannel
             int final_value = extras.getInt("Channel");
-            System.out.println(final_value);
-//            final_title[contor] = mTitle[final_value];
-//            final_description[contor] = mDescription[final_value];
-//            final_images[contor] = images[final_value];
-//            contor++;
-//
-//            listView = findViewById(R.id.listView);
-//            MyAdapter adapter = new MyAdapter(this, final_title, final_description, final_images);
-//            listView.setAdapter(adapter);
 
-            //The key argument here must match that used in the other activity
         }
 
-        //this button will redirect you to the SelectChannel Page
         mButton = findViewById(R.id.addchannelbtn);
         mButton.setOnClickListener(v -> openAddChannel());
     }
@@ -97,13 +85,12 @@ public class SelectChannelActivity extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged();
                     mApp.insertIntoChannels("sms");
                 } else if (code == Constants.CHANNEL_REDDIT) {
-                    /* Here should be reddit, but we're adding Twitter and say it's Reddit */
-                    mChannelList.add(new TwitterChannelLoginActivity(SelectChannelActivity.this));
+                    mChannelList.add(new RedditChannel(SelectChannelActivity.this));
                     mAdapter.add(mChannelList.get(mChannelList.size() - 1));
                     mAdapter.notifyDataSetChanged();
                     mApp.insertIntoChannels("reddit");
                 } else if (code == Constants.CHANNEL_TWITTER) {
-                    mChannelList.add(new TwitterChannelLoginActivity(this));
+                    mChannelList.add(new TwitterChannel(SelectChannelActivity.this));
                     mAdapter.add(mChannelList.get(mChannelList.size() - 1));
                     mAdapter.notifyDataSetChanged();
                     mApp.insertIntoChannels("twitter");

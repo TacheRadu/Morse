@@ -1,6 +1,23 @@
 <resources>
     <string name="app_name">Morse</string>
+    <string name="facebook_app_id">292575252317805</string>
+    <string name="phone_number">Phone number</string>
     <string name="type_message">Type Message</string>
+    <string name="send">Send</string>
+    <string name="send_message">Send Message</string>
+    <string name="tweet">Tweet</string>
+    <string name="delayed_tweet">Post delayed tweet</string>
+    <string name="hello_twitter">Hello, %1$s</string>
+    <string name="send_text">Send a message to %1$s</string>
+    <string name="post_tweet">Tell your followers something</string>
+    <string name="hint">What\'s Happening?</string>
+    <string name="login_button">Login</string>
+    <string name="delay">delay</string>
+    <string name="delayed">Send delayed message</string>
+    <string name="attempts_remaining_text">Number of attempts remaining:</string>
+    <string name="attempts_remaining">3</string>
+    <string name="userPassword">Password</string>
+    <string name="user_credential">Phone, email or username</string>
     <string name="twitter_logo_image">Twitter logo image</string>
     <string name="enter_name">Enter name:</string>
     <string name="enter_password">Enter Password:</string>
