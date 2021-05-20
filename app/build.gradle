@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'jacoco'
 }
 
 android {
@@ -21,10 +22,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        debug {
+            testCoverageEnabled = true
+        }
     }
 
     packagingOptions {
@@ -60,4 +60,6 @@ dependencies {
         exclude module: 'junit'
     }
     implementation 'org.twitter4j:twitter4j-core:4.0.7'
+
 }
+
