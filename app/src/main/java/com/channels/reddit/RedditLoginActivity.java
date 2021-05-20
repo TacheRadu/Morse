@@ -3,7 +3,6 @@ package com.channels.reddit;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -47,9 +46,6 @@ public class RedditLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        HomeActivity.post();
         setContentView(R.layout.reddit_login_activity);
         clientId = getString(R.string.com_reddit_sdk_android_CLIENT_ID);
     }
