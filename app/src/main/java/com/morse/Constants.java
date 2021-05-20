@@ -20,6 +20,7 @@ public class Constants {
 
     /* Defines the integer selector constant for Twitter Channel. */
     public static final int CHANNEL_TWITTER = 2;
+
     /*Defines the string for twitter OAUTH token*/
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
 

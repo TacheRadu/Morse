@@ -9,6 +9,7 @@ import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
 
+import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.UserAgent;
 
 import java.util.List;
@@ -26,7 +27,11 @@ public class RedditChannel implements Channel {
 
     @Override
     public void login() {
+        final String username = "morse_boss_user";
+        final String password = "dajsndajdbsad232";
+
         UserAgent userAgent = new UserAgent("Morse","com.reddit", "v0.1", "user");
+//        RedditClient redditClient = new RedditClient(userAgent);
     }
 
     @Override

@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import okhttp3.MediaType;
 import android.util.Base64;
+
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import java.io.IOException;
 import okhttp3.RequestBody;
@@ -23,8 +25,9 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * The activity that the user first see when interacting with Reddit.
  *
- * @author  Ionuț Roșca et al.
- * @version 0.1.1
+ * @author  Ionuț Hristea
+ * @author  Ionuț Roșca
+ * @version 0.1.2
  */
 public class RedditLoginActivity extends AppCompatActivity {
     private static String clientId;
@@ -53,14 +56,14 @@ public class RedditLoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(getIntent() != null && getIntent().getAction().equals(Intent.ACTION_VIEW)) {
+        if (getIntent() != null && getIntent().getAction().equals(Intent.ACTION_VIEW)) {
             Uri uri = getIntent().getData();
             if(uri.getQueryParameter("error") != null) {
                 String error = uri.getQueryParameter("error");
                 Log.e(TAG, "An error has occurred : " + error);
             } else {
                 String state = uri.getQueryParameter("state");
-                if(state.equals(STATE)) {
+                if (state.equals(STATE)) {
                     String code = uri.getQueryParameter("code");
                     getAccessToken(code);
                 }
@@ -71,25 +74,27 @@ public class RedditLoginActivity extends AppCompatActivity {
     private void getAccessToken(String code) {
         OkHttpClient client = new OkHttpClient();
         String authString = clientId + ":";
-        String encodedAuthString = Base64.encodeToString(authString.getBytes(),
-                Base64.NO_WRAP);
+        String encodedAuthString = Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
+
         Request request = new Request.Builder()
-                .addHeader("User-Agent", "Sample App")
+                .addHeader("User-Agent", "Morse/v0.1")
                 .addHeader("Authorization", "Basic " + encodedAuthString)
                 .url(ACCESS_TOKEN_URL)
                 .post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"),
-                        "grant_type=authorization_code&code=" + code +
-                                "&redirect_uri=" + REDIRECT_URI))
+                        "grant_type=authorization_code&code=" + code + "&redirect_uri=" +
+                                REDIRECT_URI))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 Log.e(TAG, "ERROR: " + e);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NotNull Call call, @NotNull Response response)
+                    throws IOException {
+                assert response.body() != null;
                 String json = response.body().string();
 
                 JSONObject data = null;
