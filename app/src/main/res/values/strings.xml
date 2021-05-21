@@ -31,4 +31,5 @@
     <string name="message">Message</string>
     <string name="attempts">No. of attempts remaining: %1$d</string>
     <string name="sign_in_with_reddit">Sign In With Reddit</string>
+    <string name="your_subreddits">Your Subreddits:</string>
 </resources>

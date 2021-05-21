@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createSharedPreferences();
+//        createSharedPreferences();
         initializeActivity();
 
         /* Add listeners for different buttons of the activity */
@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 0){
-            name = (TextView) findViewById(R.id.nametextView);
+            name = findViewById(R.id.nametextView);
             name.setText(mSharedPreferences.getString(Constants.PREF_USER, ""));
         }
     }

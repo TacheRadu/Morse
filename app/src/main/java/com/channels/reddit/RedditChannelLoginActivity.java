@@ -31,7 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
  * @version 0.1.2
  */
 public class RedditChannelLoginActivity extends AppCompatActivity {
-    private static String clientId;
+    private static String sRedditRegisteredAppClientId;
+
     private static final String TAG = "RedditLoginActivity";
     private static final String STATE = "MY_RANDOM_STRING_1";
     private static final String REDIRECT_URI = "http://www.example.com/my_redirect";
@@ -44,11 +45,11 @@ public class RedditChannelLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reddit_login_activity);
-        clientId = getString(R.string.com_reddit_sdk_android_CLIENT_ID);
+        sRedditRegisteredAppClientId = getString(R.string.com_reddit_sdk_android_REDDIT_APP_CLIENT_ID);
     }
 
     public void startSignIn(View view) {
-        String url = String.format(AUTH_URL, clientId, STATE, REDIRECT_URI);
+        String url = String.format(AUTH_URL, sRedditRegisteredAppClientId, STATE, REDIRECT_URI);
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
     }
@@ -77,7 +78,7 @@ public class RedditChannelLoginActivity extends AppCompatActivity {
 
     private void getAccessToken(String code) {
         OkHttpClient client = new OkHttpClient();
-        String authString = clientId + ":";
+        String authString = sRedditRegisteredAppClientId + ":";
         String encodedAuthString = Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
 
         Request request = new Request.Builder()

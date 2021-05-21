@@ -19,8 +19,10 @@
         android:id="@+id/get_subreddits"
         android:layout_width="164dp"
         android:layout_height="57dp"
+        android:layout_marginBottom="150dp"
         android:text="Get Subreddits"
-        tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="533dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
