@@ -18,6 +18,6 @@ public interface Message {
     /**
      *
      */
-    Boolean delete(int id);
+    Boolean delete(long id);
 
 }
