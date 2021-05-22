@@ -6,7 +6,10 @@
     <string name="send">Send</string>
     <string name="send_message">Send Message</string>
     <string name="tweet">Tweet</string>
+    <string name="post_reddit">Enter some text</string>
+    <string name="post_title">Title</string>
     <string name="delayed_tweet">Post delayed tweet</string>
+    <string name="reddit_post">Post</string>
     <string name="hello_twitter">Hello, %1$s</string>
     <string name="send_text">Send a message to %1$s</string>
     <string name="post_tweet">Tell your followers something</string>
