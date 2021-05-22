@@ -46,7 +46,7 @@
         </activity>
         <activity android:name=".morse.activities.AddChannelActivity" />
         <activity android:name=".channels.reddit.NewUserActivity" />
-        <activity android:name=".channels.reddit.UserOverviewActivity" />
+        <activity android:name=".channels.reddit.PostActivity" />
         <activity android:name=".morse.LoginActivity" />
         <activity android:name=".channels.androidsms.activities.SmsChannelActivity" />
         <activity android:name=".channels.androidsms.activities.SmsContactActivity" />

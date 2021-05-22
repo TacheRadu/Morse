@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This Adapter pulls its data from a TokenStore
      */
-    private static class SubredditDataAdapter extends RecyclerView.Adapter<SubredditsViewHolder> {
+    private class SubredditDataAdapter extends RecyclerView.Adapter<SubredditsViewHolder> {
         private final WeakReference<MainActivity> activity;
         private List<Subreddit> subreddits;
         private RecyclerView recyclerView;
@@ -116,6 +116,13 @@ public class MainActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             ));
+
+            view.setOnClickListener(v -> {
+                int id = recyclerView.getChildAdapterPosition(v);
+                Intent postIntent = new Intent(MainActivity.this.getApplicationContext(), PostActivity.class);
+                postIntent.putExtra("subreddit", subreddits.get(id));
+                startActivity(postIntent);
+            });
 
             // Listen for the view being clicked
             new ReauthenticationTask(activity).execute(redditClient.me().getUsername());
