@@ -1,12 +1,15 @@
 package com.channels.reddit;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
@@ -15,11 +18,20 @@ import com.morse.App;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Account;
 import net.dean.jraw.models.PersistedAuthData;
+import net.dean.jraw.models.Submission;
+import net.dean.jraw.models.SubmissionKind;
+import net.dean.jraw.models.Subreddit;
+import net.dean.jraw.models.SubredditSearchResult;
 import net.dean.jraw.oauth.DeferredPersistentTokenStore;
+import net.dean.jraw.pagination.BarebonesPaginator;
+import net.dean.jraw.pagination.Paginator;
+import net.dean.jraw.references.SubredditReference;
 
 import java.lang.ref.WeakReference;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,13 +41,28 @@ import java.util.concurrent.TimeUnit;
  */
 public class UserOverviewActivity extends AppCompatActivity {
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         setContentView(R.layout.activity_user_overview);
 
         // Fetch the user's account information
         new GetUserInfoTask(this).execute(App.getAccountHelper().getReddit());
+        RedditClient redditClient = App.getAccountHelper().getReddit();
+        List<SubredditSearchResult> results =  redditClient.searchSubredditsByName("MorseTestCommunity");
+        List<Subreddit> subreddits = new ArrayList<>();
+        BarebonesPaginator<Subreddit>subredditBarebonesPaginator = redditClient.me().subreddits("subscriber").limit(Paginator.RECOMMENDED_MAX_LIMIT).build();
+        for(List<Subreddit> subreddit : subredditBarebonesPaginator){
+            subreddits.addAll(subreddit);
+        }
+        System.out.println(subreddits.size());
+        SubredditReference subreddit = redditClient.subreddit("MorseTestCommunity");
+        subreddit.submit(SubmissionKind.SELF, "myPost", "this is my post", true);
     }
 
     @Override

@@ -21,10 +21,9 @@ public class RedditChannel implements Channel {
 
     @Override
     public void login() {
-        final String username = "morse_boss_user";
-        final String password = "dajsndajdbsad232";
 
-        UserAgent userAgent = new UserAgent("Morse","com.reddit", "v0.1", "user");
+
+        UserAgent userAgent = new UserAgent("Morse","com.reddit", "v0.1", "Morse6969");
 //        RedditClient redditClient = new RedditClient(userAgent);
     }
 

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Morse.iml" filepath="$PROJECT_DIR$/.idea/modules/Morse.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Morse.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Morse.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Project.Morse.iml" filepath="$PROJECT_DIR$/.idea/modules/Project.Morse.iml" />
     </modules>
   </component>
 </project>

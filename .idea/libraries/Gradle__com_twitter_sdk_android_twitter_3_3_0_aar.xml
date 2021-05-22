@@ -3,8 +3,9 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/455993c9dffed53fa75558eebeff6d82/jetified-twitter-3.3.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0c148803b1984153e60a617db1bb7df0/jetified-twitter-3.3.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0c148803b1984153e60a617db1bb7df0/jetified-twitter-3.3.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0c148803b1984153e60a617db1bb7df0/jetified-twitter-3.3.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/89eea9d9b531db0aeb5b23e3ecc88e25/jetified-twitter-3.3.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/89eea9d9b531db0aeb5b23e3ecc88e25/jetified-twitter-3.3.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/89eea9d9b531db0aeb5b23e3ecc88e25/jetified-twitter-3.3.0/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.twitter.sdk.android/twitter/3.3.0/2b9204c72297034ebbdb8f33d7b0d152020e1def/twitter-3.3.0-javadoc.jar!/" />
