@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.channels.androidsms.SmsChannel;
+import com.channels.reddit.RedditChannel;
 import com.channels.twitter.TwitterChannel;
 
 import net.dean.jraw.RedditClient;
@@ -60,6 +61,9 @@ public final class App extends Application {
 
         // An AccountHelper manages switching between accounts and into/out of userless mode.
         accountHelper = AndroidHelper.accountHelper(provider, deviceUuid, tokenStore);
+
+        if(tokenStore.size() != 0)
+            accountHelper.switchToUser(tokenStore.getUsernames().get(0));
 
         // Every time we use the AccountHelper to switch between accounts (from one account to
         // another, or into/out of userless mode), call this function
@@ -156,9 +160,8 @@ public final class App extends Application {
                     channels.add(new SmsChannel(context));
                     break;
                 case "reddit":
-                    // TODO
-                    /* Does the same as the Twitter channel */
-//                    break;
+                    channels.add(new RedditChannel(context));
+                    break;
                 case "twitter":
                     channels.add(new TwitterChannel(context));
                     break;

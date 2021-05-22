@@ -1,11 +1,15 @@
 package com.channels.reddit;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,8 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.R;
 import com.morse.App;
 
+import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.PersistedAuthData;
+import net.dean.jraw.models.Subreddit;
 import net.dean.jraw.oauth.DeferredPersistentTokenStore;
+import net.dean.jraw.pagination.BarebonesPaginator;
+import net.dean.jraw.pagination.Paginator;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -27,7 +37,7 @@ import java.util.TreeMap;
  * that user. If we have an unexpired access token, we use that. If we only have a refresh token,
  * we use that and request a fresh access token on the next normal request. After we authenticate,
  * the UserOverviewActivity is started.
- *
+ * <p>
  * This activity has a FAB in the bottom right-hand corner for authenticating new users. When
  * pressed, the NewUserActivity is started. See that class' documentation for what it does.
  */
@@ -35,11 +45,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQ_CODE_LOGIN = 0;
 
     private RecyclerView storedDataList;
-    private AuthDataAdapter adapter;
+    private SubredditDataAdapter adapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        if (App.getTokenStore().size() == 0)
+            startActivity(new Intent(this, NewUserActivity.class));
+
         setContentView(R.layout.activity_main);
 
         // Create the RecyclerView's LayoutManager and Adapter
@@ -48,70 +64,52 @@ public class MainActivity extends AppCompatActivity {
 
         storedDataList.setLayoutManager(layoutManager);
         // Configure the RecyclerView
-        this.adapter = new AuthDataAdapter(this, storedDataList, App.getTokenStore());
+        this.adapter = new SubredditDataAdapter(this, storedDataList);
         storedDataList.setAdapter(adapter);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        // The data in the TokenStore might have changed, let's update the RecyclerView
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         adapter.update();
-
-        // Show the RecyclerView if there's data, otherwise show a message
-        boolean hasData = App.getTokenStore().size() == 0;
-        storedDataList.setVisibility(hasData ? View.GONE : View.VISIBLE);
-        findViewById(R.id.noDataMessage).setVisibility(hasData ? View.VISIBLE : View.GONE);
-    }
-
-    // Called when the FAB is clicked
-    public void onNewUserRequested(View view) {
-        startActivityForResult(new Intent(this, NewUserActivity.class), REQ_CODE_LOGIN);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // The user could have pressed the back button before authorizing our app, make sure we have
-        // an authenticated user before starting the UserOverviewActivity.
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQ_CODE_LOGIN && resultCode == RESULT_OK) {
-            startActivity(new Intent(this, UserOverviewActivity.class));
-        }
     }
 
     /**
      * This Adapter pulls its data from a TokenStore
      */
-    private static class AuthDataAdapter extends RecyclerView.Adapter<AuthDataViewHolder> {
+    private static class SubredditDataAdapter extends RecyclerView.Adapter<SubredditsViewHolder> {
         private final WeakReference<MainActivity> activity;
-        private final DeferredPersistentTokenStore tokenStore;
-        private List<String> usernames;
-        private TreeMap<String, PersistedAuthData> data;
+        private List<Subreddit> subreddits;
         private RecyclerView recyclerView;
+        private RedditClient redditClient;
 
-        private AuthDataAdapter(MainActivity mainActivity, RecyclerView recyclerView, DeferredPersistentTokenStore tokenStore) {
+        private SubredditDataAdapter(MainActivity mainActivity, RecyclerView recyclerView) {
             this.activity = new WeakReference<>(mainActivity);
             this.recyclerView = recyclerView;
-            this.tokenStore = tokenStore;
-            update();
+            subreddits = new ArrayList<>();
+            if (App.getTokenStore().size() != 0)
+                update();
+
         }
 
 
-
         private void update() {
-            this.data = new TreeMap<>(tokenStore.data());
+            redditClient = App.getAccountHelper().getReddit();
+            subreddits = new ArrayList<>();
+            BarebonesPaginator<Subreddit> subredditBarebonesPaginator = redditClient.me().subreddits("subscriber").limit(Paginator.RECOMMENDED_MAX_LIMIT).build();
+            for (List<Subreddit> subreddit : subredditBarebonesPaginator) {
+                subreddits.addAll(subreddit);
+            }
 
             // Prefer this instead of tokenStore.getUsernames() because this.data.keySet() is sorted
-            this.usernames = new ArrayList<>(this.data.keySet());
             notifyDataSetChanged();
         }
 
         @Override
-        public AuthDataViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public SubredditsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            SubredditsView view = new SubredditsView(parent.getContext());
             // Create a new TokenStoreUserView when requested
-            TokenStoreUserView view = new TokenStoreUserView(parent.getContext());
 
             // Give the view max width and minimum height
             view.setLayoutParams(new RecyclerView.LayoutParams(
@@ -120,37 +118,31 @@ public class MainActivity extends AppCompatActivity {
             ));
 
             // Listen for the view being clicked
-            view.setOnClickListener(clickedView -> {
-                int itemPos = recyclerView.getChildLayoutPosition(clickedView);
+            new ReauthenticationTask(activity).execute(redditClient.me().getUsername());
 
-                // Potential bug: Clicking on two different items in a very short period of time
-                // could cause this task to be executed twice
-                new ReauthenticationTask(activity).execute(usernames.get(itemPos));
-            });
-
-            return new AuthDataViewHolder(view);
+            return new SubredditsViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(AuthDataViewHolder holder, int position) {
+        public void onBindViewHolder(SubredditsViewHolder holder, int position) {
             // Tell the TokenStoreUserView to change the data it's showing when the view holder gets
             // recycled
-            String username = this.usernames.get(position);
-            holder.view.display(username, data.get(username));
+            holder.view.display(subreddits.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return data.size();
+            return subreddits.size();
         }
     }
 
-    private static class AuthDataViewHolder extends RecyclerView.ViewHolder {
-        private TokenStoreUserView view;
+    private static class SubredditsViewHolder extends RecyclerView.ViewHolder {
 
-        private AuthDataViewHolder(TokenStoreUserView itemView) {
+        public SubredditsView view;
+
+        public SubredditsViewHolder(@NonNull @NotNull SubredditsView itemView) {
             super(itemView);
-            this.view = itemView;
+            view = itemView;
         }
     }
 
@@ -165,15 +157,6 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(String... usernames) {
             App.getAccountHelper().switchToUser(usernames[0]);
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            Activity activity = this.activity.get();
-
-            if (activity != null) {
-                activity.startActivity(new Intent(activity, UserOverviewActivity.class));
-            }
         }
     }
 }

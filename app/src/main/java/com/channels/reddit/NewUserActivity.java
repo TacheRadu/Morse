@@ -21,6 +21,7 @@ import net.dean.jraw.oauth.OAuthException;
 import net.dean.jraw.oauth.StatefulAuthHelper;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 /**
  * This activity is dedicated to a WebView to guide the user through the authentication process.
@@ -114,6 +115,7 @@ public class NewUserActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             // Finish the activity if it's still running
+            App.getAccountHelper().switchToUser(App.getTokenStore().getUsernames().get(0));
             Activity host = this.context.get();
             if (host != null) {
                 host.setResult(success ? Activity.RESULT_OK : Activity.RESULT_CANCELED, new Intent());

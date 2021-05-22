@@ -1,5 +1,6 @@
 package com.channels.reddit;
 
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,9 +15,9 @@ import java.util.List;
 
 public class RedditChannel implements Channel {
 
-    private AppCompatActivity parentActivity;
-    public RedditChannel(AppCompatActivity parentActivity) {
-        this.parentActivity = parentActivity;
+    private Context parentContext;
+    public RedditChannel(Context parentContext) {
+        this.parentContext = parentContext;
     }
 
     @Override
@@ -64,6 +65,6 @@ public class RedditChannel implements Channel {
 
     @Override
     public Intent getIntent() {
-        return new Intent(parentActivity, MainActivity.class);
+        return new Intent(parentContext, MainActivity.class);
     }
 }
