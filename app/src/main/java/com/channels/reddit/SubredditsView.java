@@ -34,7 +34,7 @@ public class SubredditsView extends ConstraintLayout {
     }
 
     public void display(Subreddit subreddit) {
-        textView(R.id.subreddit).setText(subreddit.getName());
+        textView(R.id.subreddit).setText("/r/" + subreddit.getName());
     }
 
     private TextView textView(@IdRes int id) {
