@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com">
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -11,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".channels.reddit.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,7 +18,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morse">
 
-        <activity android:name=".channels.reddit.RedditChannelLoginActivity">
+        <meta-data
+            android:name="net.dean.jraw.android.REDDIT_USERNAME"
+            android:value="Morse6969" />
+        <meta-data
+            android:name="net.dean.jraw.android.CLIENT_ID"
+            android:value="a7oiOKNVGbw_VA" />
+        <meta-data
+            android:name="net.dean.jraw.android.REDIRECT_URL"
+            android:value="http://www.example.com/my_redirect" />
+
+
+        <activity android:name=".channels.reddit.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,6 +43,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".morse.activities.AddChannelActivity" />
+        <activity android:name=".channels.reddit.NewUserActivity" />
+        <activity android:name=".channels.reddit.UserOverviewActivity" />
         <activity android:name=".morse.LoginActivity" />
         <activity android:name=".channels.androidsms.activities.SmsChannelActivity" />
         <activity android:name=".channels.androidsms.activities.SmsContactActivity" />
@@ -50,7 +63,5 @@
 
         <!-- Reddit Activities -->
         <!--        <activity android:name=".channels.reddit.RedditLoginActivity" />-->
-        <activity android:name=".channels.reddit.activities.RedditGetSubredditsActivity" />
-        <activity android:name=".channels.reddit.HomeActivity" />
     </application>
     </manifest>

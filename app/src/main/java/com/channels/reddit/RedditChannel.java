@@ -65,6 +65,6 @@ public class RedditChannel implements Channel {
 
     @Override
     public Intent getIntent() {
-        return new Intent(parentActivity, RedditChannelLoginActivity.class);
+        return new Intent(parentActivity, MainActivity.class);
     }
 }
