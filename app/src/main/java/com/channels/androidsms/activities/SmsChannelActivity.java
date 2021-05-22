@@ -28,8 +28,6 @@ public class SmsChannelActivity extends AppCompatActivity {
     private SmsChannel smsChannel;
     final Handler handler = new Handler();
 
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         smsChannel = new SmsChannel(this);

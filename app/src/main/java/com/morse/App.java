@@ -1,13 +1,25 @@
 package com.morse;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 
 import com.channels.androidsms.SmsChannel;
+import com.channels.reddit.RedditChannel;
 import com.channels.twitter.TwitterChannel;
-import com.channels.twitter.TwitterChannelLoginActivity;
+
+import net.dean.jraw.RedditClient;
+import net.dean.jraw.android.AndroidHelper;
+import net.dean.jraw.android.AppInfoProvider;
+import net.dean.jraw.android.ManifestAppInfoProvider;
+import net.dean.jraw.android.SharedPreferencesTokenStore;
+import net.dean.jraw.android.SimpleAndroidLogAdapter;
+import net.dean.jraw.http.LogAdapter;
+import net.dean.jraw.http.SimpleHttpLogger;
+import net.dean.jraw.oauth.AccountHelper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,22 +28,66 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
-/**
- * <Daca tot incepi sa pui comentariile pentru javadoc, mai si scrie ceva in el.>
- */
-public class App extends AppCompatActivity {
-    private final Database database;
-    private final AppCompatActivity parentActivity;
+public final class App extends Application {
+    private static AccountHelper accountHelper;
+    private static SharedPreferencesTokenStore tokenStore;
+    private static Database database;
+    private static Context context;
     public List<Channel> channels;
     public Sender sender;
 
-    public App(AppCompatActivity activity) {
-        this.parentActivity = activity;
-        database = new Database(activity.getApplicationContext());
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        context = getApplicationContext();
+        database = new Database(getApplicationContext());
+        // Get UserAgent and OAuth2 data from AndroidManifest.xml
+        AppInfoProvider provider = new ManifestAppInfoProvider(getApplicationContext());
 
+        // Ideally, this should be unique to every device
+        UUID deviceUuid = UUID.randomUUID();
+
+        // Store our access tokens and refresh tokens in shared preferences
+        tokenStore = new SharedPreferencesTokenStore(getApplicationContext());
+        // Load stored tokens into memory
+        tokenStore.load();
+        // Automatically save new tokens as they arrive
+        tokenStore.setAutoPersist(true);
+
+        // An AccountHelper manages switching between accounts and into/out of userless mode.
+        accountHelper = AndroidHelper.accountHelper(provider, deviceUuid, tokenStore);
+
+        if(tokenStore.size() != 0)
+            accountHelper.switchToUser(tokenStore.getUsernames().get(0));
+
+        // Every time we use the AccountHelper to switch between accounts (from one account to
+        // another, or into/out of userless mode), call this function
+        accountHelper.onSwitch(redditClient -> {
+            // By default, JRAW logs HTTP activity to System.out. We're going to use Log.i()
+            // instead.
+            LogAdapter logAdapter = new SimpleAndroidLogAdapter(Log.INFO);
+
+            // We're going to use the LogAdapter to write down the summaries produced by
+            // SimpleHttpLogger
+            redditClient.setLogger(
+                    new SimpleHttpLogger(SimpleHttpLogger.DEFAULT_LINE_LENGTH, logAdapter));
+
+            // If you want to disable logging, use a NoopHttpLogger instead:
+            // redditClient.setLogger(new NoopHttpLogger());
+
+            return null;
+        });
     }
+
+    public static AccountHelper getAccountHelper() { return accountHelper; }
+    public static SharedPreferencesTokenStore getTokenStore() { return tokenStore; }
+
+
 
     /**
      * @param channelName
@@ -49,7 +105,7 @@ public class App extends AppCompatActivity {
         // TODO implement here
     }
 
-    public void insertIntoChannels(String name) {
+    public static void insertIntoChannels(String name) {
         String insert = "INSERT INTO channels (name) VALUES(?);";
         SQLiteStatement statement = database.getWritableDatabase().compileStatement(insert);
         statement.bindString(1, name);
@@ -93,7 +149,7 @@ public class App extends AppCompatActivity {
         return userData;
     }
 
-    public List<Channel> getChannels() {
+    public static List<Channel> getChannels() {
         String select = "SELECT * from channels;";
         List<Channel> channels = new ArrayList<>();
         Cursor cursor = database.getReadableDatabase().rawQuery(select, null);
@@ -101,14 +157,13 @@ public class App extends AppCompatActivity {
             String name = cursor.getString(1);
             switch (name) {
                 case "sms":
-                    channels.add(new SmsChannel(parentActivity));
+                    channels.add(new SmsChannel(context));
                     break;
                 case "reddit":
-                    // TODO
-                    /* Does the same as the Twitter channel */
-//                    break;
+                    channels.add(new RedditChannel(context));
+                    break;
                 case "twitter":
-                    channels.add(new TwitterChannel(parentActivity));
+                    channels.add(new TwitterChannel(context));
                     break;
             }
         }

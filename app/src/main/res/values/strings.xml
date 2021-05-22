@@ -6,7 +6,10 @@
     <string name="send">Send</string>
     <string name="send_message">Send Message</string>
     <string name="tweet">Tweet</string>
+    <string name="post_reddit">Enter some text</string>
+    <string name="post_title">Title</string>
     <string name="delayed_tweet">Post delayed tweet</string>
+    <string name="reddit_post">Post</string>
     <string name="hello_twitter">Hello, %1$s</string>
     <string name="send_text">Send a message to %1$s</string>
     <string name="post_tweet">Tell your followers something</string>
@@ -30,4 +33,17 @@
     <string name="name_contact">Name Contact</string>
     <string name="message">Message</string>
     <string name="attempts">No. of attempts remaining: %1$d</string>
+    <string name="sign_in_with_reddit">Sign In With Reddit</string>
+    <string name="your_subreddits">Your Subreddits:</string>
+    <string name="title_activity_main">Choose an account</string>
+    <string name="comment_karma">%s comment karma</string>
+    <string name="link_karma">%s link karma</string>
+    <string name="access_token_status">Access token expires in %d minutes</string>
+    <string name="access_token_status_short">Expires in %d minutes</string>
+    <string name="no_refresh_token">No refresh token on hand</string>
+    <string name="refresh_token">Refresh token on hand</string>
+    <string name="logout">Logout</string>
+    <string name="no_stored_data">There\'s nothing here ¯\\_(ツ)_/¯</string>
+    <string name="new_user">New user</string>
+    <string name="access_token_expired">Access token expired</string>
 </resources>

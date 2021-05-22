@@ -1,5 +1,6 @@
 package com.channels.androidsms;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.provider.Telephony;
@@ -19,11 +20,11 @@ public class SmsChannel implements Channel {
 
     public static final int PERMISSIONS_REQUEST_READ_SMS = 1;
     public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
-    AppCompatActivity parentActivity;
+    Context parentContext;
 
 
-    public SmsChannel(AppCompatActivity activity) {
-        parentActivity = activity;
+    public SmsChannel(Context context) {
+        parentContext = context;
     }
 
     public SmsChannel() {
@@ -45,19 +46,19 @@ public class SmsChannel implements Channel {
 
     public List<ContactInfo> getContacts() {
 
-        Cursor cursor = parentActivity.getContentResolver()
+        Cursor cursor = parentContext.getContentResolver()
                 .query(Telephony.Sms.CONTENT_URI, null, null, null, null);
 
         List<ContactInfo> contactInfoList = new ArrayList<>();
 
-        SmsContact smsContact = new SmsContact(parentActivity);
+        SmsContact smsContact = new SmsContact(parentContext);
 
         if (cursor.moveToFirst()) {
             do {
 
                 String contactId = cursor.getString(cursor.getColumnIndexOrThrow("thread_id"));
                 String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
-                String displayName = smsContact.getContactName(parentActivity, address);
+                String displayName = smsContact.getContactName(parentContext, address);
                 String lastMessageText = smsContact.getLastMessageText(address);
 
                 if (displayName == null)
@@ -105,7 +106,7 @@ public class SmsChannel implements Channel {
 
     @Override
     public Intent getIntent() {
-        return new Intent(parentActivity, SmsChannelActivity.class);
+        return new Intent(parentContext, SmsChannelActivity.class);
     }
 
     @Override

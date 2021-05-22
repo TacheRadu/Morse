@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
 import com.channels.androidsms.SmsChannel;
+import com.channels.reddit.RedditChannel;
 import com.channels.twitter.TwitterChannel;
 import com.channels.twitter.TwitterChannelLoginActivity;
 import com.morse.App;
@@ -27,13 +28,11 @@ public class AddChannelActivity extends AppCompatActivity {
     final List<Integer> images = new ArrayList<>(Arrays.asList(R.mipmap.sms, R.mipmap.reddit,
             R.mipmap.twitter));
     ListView listView;
-    App app;
     ChannelsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        app = new App(this);
 
         setContentView(R.layout.activity_add_channel);
 
@@ -70,10 +69,14 @@ public class AddChannelActivity extends AppCompatActivity {
     }
 
     private void disableAlreadyExistent() {
-        List<Channel> channels = app.getChannels();
+        List<Channel> channels = App.getChannels();
         for (Channel channel : channels) {
             for (int index = 0; index < mTitle.size(); index++) {
                 if (channel instanceof SmsChannel && mTitle.get(index).equals("SMS")) {
+                    mTitle.remove(index);
+                    mDescription.remove(index);
+                    images.remove(index);
+                } else if (channel instanceof RedditChannel && mTitle.get(index).equals("Reddit")) {
                     mTitle.remove(index);
                     mDescription.remove(index);
                     images.remove(index);
