@@ -17,6 +17,7 @@ import com.channels.androidsms.ContactsAdapter;
 import com.channels.androidsms.SmsChannel;
 
 import java.util.List;
+import android.os.Handler;
 
 import static com.channels.androidsms.SmsChannel.PERMISSIONS_REQUEST_READ_SMS;
 
@@ -25,13 +26,14 @@ public class SmsChannelActivity extends AppCompatActivity {
     ContactsAdapter dataAdapter = null;
     ListView listView;
     private SmsChannel smsChannel;
+    final Handler handler = new Handler();
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         smsChannel = new SmsChannel(this);
         setContentView(R.layout.contacts_activity_main);
-
-
         listView = (ListView) findViewById(R.id.lstContacts);
         requestContactPermission();
     }
@@ -40,7 +42,21 @@ public class SmsChannelActivity extends AppCompatActivity {
         List<ContactInfo> contactInfoList = smsChannel.getContacts();
         dataAdapter = new ContactsAdapter(this, R.layout.contact_info, contactInfoList);
         listView.setAdapter(dataAdapter);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Write whatever to want to do after delay specified (1 sec)
+                getContacts();
+            }
+        }, 500);
+
         listView.setOnItemClickListener((parent, view, position, id) -> {
+
+            //This helps to refresh message when you enter the conversation.
+            finish();
+            startActivity(getIntent());
+
             Intent intent = new Intent(this, SmsContactActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("phoneNumber", contactInfoList.get(position).getPhoneNumber());
