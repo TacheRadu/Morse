@@ -1,5 +1,6 @@
 package com.channels.twitter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -13,9 +14,9 @@ import com.morse.Message;
 import java.util.List;
 
 public class TwitterChannel implements Channel {
-    private AppCompatActivity parentActivity;
-    public TwitterChannel(AppCompatActivity parentActivity) {
-        this.parentActivity = parentActivity;
+    private Context parentContext;
+    public TwitterChannel(Context parentContext) {
+        this.parentContext = parentContext;
     }
 
     public TwitterChannel() {
@@ -66,6 +67,6 @@ public class TwitterChannel implements Channel {
 
     @Override
     public Intent getIntent() {
-        return new Intent(parentActivity, HomeActivity.class);
+        return new Intent(parentContext, HomeActivity.class);
     }
 }

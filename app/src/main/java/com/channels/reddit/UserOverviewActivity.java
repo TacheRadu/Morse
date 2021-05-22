@@ -10,6 +10,7 @@ import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
+import com.morse.App;
 
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Account;

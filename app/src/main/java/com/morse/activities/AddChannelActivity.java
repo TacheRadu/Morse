@@ -28,13 +28,11 @@ public class AddChannelActivity extends AppCompatActivity {
     final List<Integer> images = new ArrayList<>(Arrays.asList(R.mipmap.sms, R.mipmap.reddit,
             R.mipmap.twitter));
     ListView listView;
-    App app;
     ChannelsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        app = new App(this);
 
         setContentView(R.layout.activity_add_channel);
 
@@ -71,7 +69,7 @@ public class AddChannelActivity extends AppCompatActivity {
     }
 
     private void disableAlreadyExistent() {
-        List<Channel> channels = app.getChannels();
+        List<Channel> channels = App.getChannels();
         for (Channel channel : channels) {
             for (int index = 0; index < mTitle.size(); index++) {
                 if (channel instanceof SmsChannel && mTitle.get(index).equals("SMS")) {

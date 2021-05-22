@@ -7,16 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.R;
+import com.morse.App;
 
-import net.dean.jraw.android.SharedPreferencesTokenStore;
 import net.dean.jraw.models.PersistedAuthData;
 import net.dean.jraw.oauth.DeferredPersistentTokenStore;
-import net.dean.jraw.oauth.TokenStore;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
