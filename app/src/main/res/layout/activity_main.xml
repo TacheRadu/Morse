@@ -26,15 +26,4 @@
             android:text="@string/no_stored_data" />
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:tint="@android:color/white"
-        android:onClick="onNewUserRequested"
-        app:srcCompat="@drawable/ic_plus"
-        app:layout_anchor="@id/container"
-        app:layout_anchorGravity="bottom|right|end"/>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
