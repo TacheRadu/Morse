@@ -1,20 +1,23 @@
 package com.channels.reddit;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.R;
 import com.morse.App;
-
-import net.dean.jraw.models.SubmissionKind;
+import android.os.Bundle;
+import android.widget.Toast;
+import android.widget.Button;
+import android.content.Intent;
+import android.widget.EditText;
 import net.dean.jraw.models.Subreddit;
+import net.dean.jraw.models.SubmissionKind;
+import androidx.appcompat.app.AppCompatActivity;
 import net.dean.jraw.references.SubredditReference;
 
+
+/**
+ * Class that handles the process of posting to a subreddit.
+ *
+ * @version 0.1.1
+ */
 public class PostActivity extends AppCompatActivity {
     Button post;
     EditText postContent;
@@ -38,10 +41,12 @@ public class PostActivity extends AppCompatActivity {
         postContent.setText("");
         title.setText("");
 
-        SubredditReference subredditReference = subreddit.toReference(App.getAccountHelper().getReddit());
-        System.out.println(subredditReference.randomSubmission());
+        SubredditReference subredditReference = subreddit.toReference(
+                App.getAccountHelper().getReddit());
+
         subredditReference.submit(SubmissionKind.SELF, titleString, text, true);
-        Toast.makeText(this.getApplicationContext(), "Submission posted!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getApplicationContext(), "Submission posted!",
+                Toast.LENGTH_SHORT).show();
     }
 
     private void init(){

@@ -1,46 +1,51 @@
 package com.channels.reddit;
 
-import android.content.Context;
-import android.content.Intent;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import java.util.List;
 import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
+import android.content.Intent;
+import android.content.Context;
 
-import net.dean.jraw.http.UserAgent;
 
-import java.util.List;
-
+/**
+ * Helper class for providing information and resources regarding the Reddit channel.
+ *
+ * @version 0.1.1
+ */
 public class RedditChannel implements Channel {
+    private final Context parentContext;
 
-    private Context parentContext;
     public RedditChannel(Context parentContext) {
         this.parentContext = parentContext;
     }
 
     @Override
     public void login() {
-
-
-        UserAgent userAgent = new UserAgent("Morse","com.reddit", "v0.1", "Morse6969");
-//        RedditClient redditClient = new RedditClient(userAgent);
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
     @Override
     public void refreshChannel() {
-
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
     @Override
     public void getContacts(int contactNumber) {
-
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
     @Override
     public void checkCredentials() {
-
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
     @Override
@@ -60,7 +65,9 @@ public class RedditChannel implements Channel {
 
     @Override
     public void sendDelayedMessage(Message message, List<Contact> contact) {
-
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
     @Override
