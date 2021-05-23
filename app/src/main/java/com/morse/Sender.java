@@ -2,41 +2,20 @@ package com.morse;
 
 import java.util.PriorityQueue;
 
+
 /**
+ * Helper class that provides methods that sending messages.
  *
+ * @version 0.1.1
  */
 public class Sender {
-
-    /**
-     *
-     */
     public PriorityQueue<Message> messages;
 
-    /**
-     * Default constructor
-     */
-    public Sender() {
-    }
+    public Sender() {}
 
-    /**
-     * @param channel
-     */
-    public void Listener(Channel channel) {
-        // TODO implement here
-    }
+    public void Listener(Channel channel) {}
 
-    /**
-     *
-     */
-    public void peek() {
-        // TODO implement here
-    }
+    public void peek() {}
 
-    /**
-     *
-     */
-    public void send() {
-        // TODO implement here
-    }
-
+    public void send() {}
 }

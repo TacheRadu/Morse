@@ -1,46 +1,25 @@
 package com.morse;
 
+import java.util.List;
 import android.content.Intent;
 
-import java.util.List;
 
 /**
+ * Interface that provides a "protocol" that must be followed by all channels that Morse provides.
  *
+ * @version 0.1.1
  */
 @SuppressWarnings("EmptyMethod")
 public interface Channel {
-    /**
-     *
-     */
     void login();
-
-    /**
-     *
-     */
     void refreshChannel();
-
-    /**
-     * @param contactNumber
-     */
-    void getContacts(int contactNumber);
-
-    /**
-     *
-     */
     void checkCredentials();
 
-    String getName();
-
-    String getDescription();
-
     int getImage();
-
-    /**
-     * @param message
-     * @param contact
-     */
-    void sendDelayedMessage(Message message, List<Contact> contact);
-
+    String getName();
     Intent getIntent();
+    String getDescription();
+    void getContacts(int contactNumber);
 
+    void sendDelayedMessage(Message message, List<Contact> contact);
 }

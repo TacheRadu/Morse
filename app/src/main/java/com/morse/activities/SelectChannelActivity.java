@@ -1,32 +1,33 @@
 package com.morse.activities;
 
-import android.app.Activity;
-import android.content.Intent;
+import com.R;
+import com.morse.App;
+import java.util.List;
+import com.morse.Channel;
 import android.os.Bundle;
+import com.morse.Constants;
+import java.util.ArrayList;
+import android.app.Activity;
 import android.widget.Button;
+import android.content.Intent;
 import android.widget.ListView;
-
+import com.morse.ChannelsAdapter;
+import com.channels.reddit.RedditChannel;
+import com.channels.androidsms.SmsChannel;
+import com.channels.twitter.TwitterChannel;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.R;
-import com.channels.androidsms.SmsChannel;
-import com.channels.reddit.RedditChannel;
-import com.channels.twitter.TwitterChannel;
-import com.channels.twitter.TwitterChannelLoginActivity;
-import com.morse.App;
-import com.morse.Channel;
-import com.morse.ChannelsAdapter;
-import com.morse.Constants;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
+/**
+ * Class responsible for correctly selecting a channel chosen by the user and creating a new
+ * activity for the channel selected.
+ *
+ * @version 0.1.1
+ */
 public class SelectChannelActivity extends AppCompatActivity {
     ListView mListView;
     List<Channel> mChannelList;
     ChannelsAdapter mAdapter;
-    private Button mButton;
 
     private void createAdapter() {
         List<String> titles = new ArrayList<>();
@@ -37,6 +38,7 @@ public class SelectChannelActivity extends AppCompatActivity {
             descriptions.add(channel.getDescription());
             images.add(channel.getImage());
         }
+
         mAdapter = new ChannelsAdapter(SelectChannelActivity.this, titles, descriptions, images);
     }
 
@@ -56,14 +58,8 @@ public class SelectChannelActivity extends AppCompatActivity {
                 (parent, view, position, id) -> startActivity(mChannelList.get(position).getIntent())
         );
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            int final_value = extras.getInt("Channel");
-
-        }
-
-        mButton = findViewById(R.id.addchannelbtn);
-        mButton.setOnClickListener(v -> openAddChannel());
+        Button button = findViewById(R.id.addchannelbtn);
+        button.setOnClickListener(v -> openAddChannel());
     }
 
     public void openAddChannel() {

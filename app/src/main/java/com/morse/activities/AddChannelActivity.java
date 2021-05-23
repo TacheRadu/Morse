@@ -1,54 +1,55 @@
 package com.morse.activities;
 
 
-import android.content.Intent;
+import com.R;
+import com.morse.App;
+import java.util.List;
+import java.util.Arrays;
+import com.morse.Channel;
 import android.os.Bundle;
+import com.morse.Constants;
+import java.util.ArrayList;
+import android.content.Intent;
 import android.widget.ListView;
-
+import com.morse.ChannelsAdapter;
+import com.channels.reddit.RedditChannel;
+import com.channels.androidsms.SmsChannel;
+import com.channels.twitter.TwitterChannel;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.R;
-import com.channels.androidsms.SmsChannel;
-import com.channels.reddit.RedditChannel;
-import com.channels.twitter.TwitterChannel;
-import com.channels.twitter.TwitterChannelLoginActivity;
-import com.morse.App;
-import com.morse.Channel;
-import com.morse.ChannelsAdapter;
-import com.morse.Constants;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Class that handles the process of adding a new channel.
+ *
+ * @version 0.1.1
+ */
 public class AddChannelActivity extends AppCompatActivity {
     final List<String> mTitle = new ArrayList<>(Arrays.asList("SMS", "Reddit", "Twitter"));
     final List<String> mDescription = new ArrayList<>(Arrays.asList("Direct SMS", "Reddit",
             "It's what's happening / Twitter"));
-    final List<Integer> images = new ArrayList<>(Arrays.asList(R.mipmap.sms, R.mipmap.reddit,
+    final List<Integer> mImages = new ArrayList<>(Arrays.asList(R.mipmap.sms, R.mipmap.reddit,
             R.mipmap.twitter));
-    ListView listView;
-    ChannelsAdapter adapter;
+    ListView mListview;
+    ChannelsAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_channel);
+        mListview = findViewById(R.id.listView);
 
-        listView = findViewById(R.id.listView);
         // now create an adapter class
         disableAlreadyExistent();
-        adapter = new ChannelsAdapter(this, mTitle, mDescription, images);
-        listView.setAdapter(adapter);
-        // there is my mistake...
-        // now again check this..
+        mAdapter = new ChannelsAdapter(this, mTitle, mDescription, mImages);
+        mListview.setAdapter(mAdapter);
 
         // now set item click on list view
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            //we receive from this page a number so that we will know what to show back on our AddChannel page
+        mListview.setOnItemClickListener((parent, view, position, id) -> {
+            // we receive from this page a number so that we will know what to show back on our
+            // AddChannel page
             Intent intent = new Intent();
-            switch (adapter.getItem(position)) {
+            switch (mAdapter.getItem(position)) {
                 case "SMS":
                     intent.putExtra(Constants.CHANNEL_TYPE, Constants.CHANNEL_ANDROID_SMS);
                     break;
@@ -62,10 +63,8 @@ public class AddChannelActivity extends AppCompatActivity {
 
             setResult(RESULT_OK, intent);
             finish();
-            //Toast.makeText(SelectChannel.this, "You selected " +  mTitle[0] , Toast.LENGTH_SHORT).show();
 
         });
-        // so item click is done now check list view
     }
 
     private void disableAlreadyExistent() {
@@ -75,15 +74,15 @@ public class AddChannelActivity extends AppCompatActivity {
                 if (channel instanceof SmsChannel && mTitle.get(index).equals("SMS")) {
                     mTitle.remove(index);
                     mDescription.remove(index);
-                    images.remove(index);
+                    mImages.remove(index);
                 } else if (channel instanceof RedditChannel && mTitle.get(index).equals("Reddit")) {
                     mTitle.remove(index);
                     mDescription.remove(index);
-                    images.remove(index);
+                    mImages.remove(index);
                 } else if (channel instanceof TwitterChannel && mTitle.get(index).equals("Twitter")) {
                     mTitle.remove(index);
                     mDescription.remove(index);
-                    images.remove(index);
+                    mImages.remove(index);
                 }
             }
         }
