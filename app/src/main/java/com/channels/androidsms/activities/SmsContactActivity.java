@@ -1,72 +1,76 @@
 package com.channels.androidsms.activities;
 
+import com.R;
+import java.util.List;
 import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
+import android.os.Handler;
+import java.util.ArrayList;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import com.R;
-import com.channels.androidsms.MessageInfo;
-import com.channels.androidsms.MessagesAdapter;
+import android.content.pm.PackageManager;
 import com.channels.androidsms.SmsContact;
 import com.channels.androidsms.SmsMessage;
+import androidx.core.content.ContextCompat;
+import com.channels.androidsms.MessageInfo;
+import com.channels.androidsms.MessagesAdapter;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Class responsible with handling (send, display) the message exchange between two users.
+ *
+ * @version 0.1.1
+ */
 public class SmsContactActivity extends AppCompatActivity {
-
-    Button sendButton;
-    ListView listView;
-    SmsContact smsContact;
-    int size;
-    List<String> nameList;
-    List<String> messageList;
-    private MessagesAdapter adapter;
+    int mSize;
+    Button mSendButton;
+    ListView mListView;
+    SmsContact mSmsContact;
+    List<String> mNameList;
+    List<String> mMessageList;
+    private MessagesAdapter mAdapter;
+    private static final int DELAY_MS = 1000;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_contact);
-        sendButton = findViewById(R.id.sendMessage);
 
-        listView = findViewById(R.id.listView);
+        mSendButton = findViewById(R.id.sendMessage);
+        mListView = findViewById(R.id.listView);
+
         Bundle bundle = getIntent().getExtras();
-        smsContact = new SmsContact(getApplicationContext(), bundle.getString("phoneNumber"), bundle.getString("name"));
+        mSmsContact = new SmsContact(getApplicationContext(), bundle.getString("phoneNumber"),
+                bundle.getString("name"));
         refreshMessageList();
-        adapter = new MessagesAdapter(SmsContactActivity.this, nameList, messageList);
-        listView.setAdapter(adapter);
 
+        mAdapter = new MessagesAdapter(SmsContactActivity.this, mNameList, mMessageList);
+        mListView.setAdapter(mAdapter);
 
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 refreshMessageList();
                 handler.postDelayed(this, 1000);
             }
-        }, 1000);
+        }, DELAY_MS);
 
-        sendButton.setOnClickListener(v -> {
+        mSendButton.setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkSelfPermission(Manifest.permission.SEND_SMS) ==
                         PackageManager.PERMISSION_GRANTED) {
-                    SmsMessage messenger = new SmsMessage(this, smsContact.getPhNumber(),
+                    SmsMessage messenger = new SmsMessage(this, mSmsContact.getPhoneNumber(),
                             ((EditText) findViewById(R.id.message)).getText().toString());
                     ((EditText) findViewById(R.id.message)).getText().clear();
-                    messenger.send(); // send
+                    messenger.send();
                 } else {
                     requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 1);
                 }
@@ -76,28 +80,28 @@ public class SmsContactActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void refreshMessageList() {
-        if (ContextCompat.checkSelfPermission(getBaseContext(), "android.permission.READ_SMS") != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(SmsContactActivity.this, new String[]{"android.permission.READ_SMS"}, 123);
-        else {
-            List<MessageInfo> messages = smsContact.getMessages(smsContact.getPhNumber());
-            if (nameList != null)
-                size = nameList.size();
+        if (ContextCompat.checkSelfPermission(getBaseContext(),
+                "android.permission.READ_SMS") != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(SmsContactActivity.this,
+                    new String[]{"android.permission.READ_SMS"}, 123);
+        } else {
+            List<MessageInfo> messages = mSmsContact.getMessages(mSmsContact.getPhoneNumber());
+            if (mNameList != null)
+                mSize = mNameList.size();
 
-            nameList = new ArrayList<>();
-            messageList = new ArrayList<>();
+            mNameList = new ArrayList<>();
+            mMessageList = new ArrayList<>();
 
             for (MessageInfo message : messages) {
-                nameList.add(message.getPerson());
-                messageList.add(message.getMessageText());
+                mNameList.add(message.getPerson());
+                mMessageList.add(message.getMessageText());
             }
 
-            if (size != nameList.size()) {
-                adapter = new MessagesAdapter(SmsContactActivity.this, nameList, messageList);
-                listView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+            if (mSize != mNameList.size()) {
+                mAdapter = new MessagesAdapter(SmsContactActivity.this, mNameList, mMessageList);
+                mListView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
             }
-
         }
     }
-
 }

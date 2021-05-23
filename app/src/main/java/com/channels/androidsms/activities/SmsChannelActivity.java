@@ -1,57 +1,59 @@
 package com.channels.androidsms.activities;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import com.R;
+import java.util.List;
+import android.Manifest;
+import android.os.Bundle;
+import android.os.Handler;
+import android.content.Intent;
+import android.widget.Toast;
+import android.widget.ListView;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import android.content.pm.PackageManager;
+import com.channels.androidsms.SmsChannel;
 import com.channels.androidsms.ContactInfo;
 import com.channels.androidsms.ContactsAdapter;
-import com.channels.androidsms.SmsChannel;
-
-import java.util.List;
-import android.os.Handler;
-
+import androidx.appcompat.app.AppCompatActivity;
 import static com.channels.androidsms.SmsChannel.PERMISSIONS_REQUEST_READ_SMS;
 
+
+/**
+ * Class that handles user actions regarding the the main SMS Channel activity.
+ *
+ * @version 0.1.1
+ */
 public class SmsChannelActivity extends AppCompatActivity {
-    private final String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS};
-    ContactsAdapter dataAdapter = null;
-    ListView listView;
-    private SmsChannel smsChannel;
-    final Handler handler = new Handler();
+    private static final int DELAY_MS = 1000;
+    private static final String[] PERMISSIONS = {
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.READ_SMS,
+            Manifest.permission.SEND_SMS
+    };
+
+    ContactsAdapter mDataAdapter = null;
+    ListView mListView;
+    private SmsChannel mSmsChannel;
+    final Handler mHandler = new Handler();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        smsChannel = new SmsChannel(this);
+        mSmsChannel = new SmsChannel(this);
         setContentView(R.layout.contacts_activity_main);
-        listView = (ListView) findViewById(R.id.lstContacts);
+        mListView = (ListView) findViewById(R.id.lstContacts);
         requestContactPermission();
     }
 
     private void getContacts() {
-        List<ContactInfo> contactInfoList = smsChannel.getContacts();
-        dataAdapter = new ContactsAdapter(this, R.layout.contact_info, contactInfoList);
-        listView.setAdapter(dataAdapter);
+        List<ContactInfo> contactInfoList = mSmsChannel.getContacts();
+        mDataAdapter = new ContactsAdapter(this, R.layout.contact_info, contactInfoList);
+        mListView.setAdapter(mDataAdapter);
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Write whatever to want to do after delay specified (1 sec)
-                getContacts();
-            }
-        }, 500);
+        // Write whatever to want to do after delay specified (1 sec)
+        mHandler.postDelayed(this::getContacts, DELAY_MS);
 
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-
-            //This helps to refresh message when you enter the conversation.
+        mListView.setOnItemClickListener((parent, view, position, id) -> {
+            // This helps to refresh message when you enter the conversation.
             finish();
             startActivity(getIntent());
 
@@ -75,7 +77,8 @@ public class SmsChannelActivity extends AppCompatActivity {
 
     private boolean hasPermissions() {
         for (String permission : PERMISSIONS) {
-            if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, permission) !=
+                    PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
         }
@@ -83,17 +86,17 @@ public class SmsChannelActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSIONS_REQUEST_READ_SMS) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getContacts();
             } else {
-                Toast.makeText(this, "You have disabled a contacts permission", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "You have disabled a contacts permission",
+                        Toast.LENGTH_LONG).show();
             }
         }
     }
-
-
 }

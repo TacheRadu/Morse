@@ -2,62 +2,63 @@ package com.channels.androidsms;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Helper class for handling the message metadata.
+ *
+ * @version 0.1.1
+ */
 public class MessageInfo {
-    private final Integer id;
+    private final Integer mId;
+    private final String mSeen;
+    private final String mDate;
+    private final String mPerson;
+    private final String mPhoneNumber;
+    private final String mMessageText;
 
-    private final String person;
-
-    private final String phoneNumber;
-
-    private final String messageText;
-
-    private final String date;
-
-    private final String seen;
-
-    public MessageInfo(Integer id, String person, String phoneNumber, String messageText, String date, String seen) {
-        this.person = person;
-        this.phoneNumber = phoneNumber;
-        this.messageText = messageText;
-        this.date = date;
-        this.seen = seen;
-        this.id = id;
+    public MessageInfo(Integer id, String person, String phoneNumber, String messageText,
+                       String date, String seen) {
+        this.mPerson = person;
+        this.mPhoneNumber = phoneNumber;
+        this.mMessageText = messageText;
+        this.mDate = date;
+        this.mSeen = seen;
+        this.mId = id;
     }
 
     public Integer getId() {
-        return id;
+        return mId;
     }
 
     @NonNull
     @Override
     public String toString() {
         return "MessageInfo{" +
-                "person='" + person + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", messageText='" + messageText + '\'' +
-                ", date='" + date + '\'' +
-                ", seen='" + seen + '\'' +
-                ", id=" + id +
+                "person='" + mPerson + '\'' +
+                ", phoneNumber='" + mPhoneNumber + '\'' +
+                ", messageText='" + mMessageText + '\'' +
+                ", date='" + mDate + '\'' +
+                ", seen='" + mSeen + '\'' +
+                ", id=" + mId +
                 '}';
     }
 
     public String getPerson() {
-        return person;
+        return mPerson;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return mPhoneNumber;
     }
 
     public String getMessageText() {
-        return messageText;
+        return mMessageText;
     }
 
     public String getDate() {
-        return date;
+        return mDate;
     }
 
     public String getSeen() {
-        return seen;
+        return mSeen;
     }
 }

@@ -1,75 +1,85 @@
 package com.channels.androidsms;
 
+import java.util.Objects;
 import androidx.annotation.NonNull;
 
-import java.util.Objects;
 
+/**
+ * Helper class for setting/getting the metadata of a particular contact of the user.
+ *
+ * @version 0.1.1
+ */
 public class ContactInfo {
-    private String contactId;
-    private String displayName;
-    private String phoneNumber;
-    private String lastMessage;
+    private String mContactId;
+    private String mDisplayName;
+    private String mPhoneNumber;
+    private String mLastMessage;
 
-    public ContactInfo(String contactId, String displayName, String phoneNumber, String lastMessage) {
-        this.contactId = contactId;
-        this.displayName = displayName;
-        this.phoneNumber = phoneNumber;
-        this.lastMessage = lastMessage;
-    }
+    public ContactInfo() {}
 
-    public ContactInfo() {
-
+    public ContactInfo(String contactId, String displayName, String phoneNumber,
+                       String lastMessage) {
+        this.mContactId = contactId;
+        this.mDisplayName = displayName;
+        this.mPhoneNumber = phoneNumber;
+        this.mLastMessage = lastMessage;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
         ContactInfo that = (ContactInfo) o;
-        return displayName.equals(that.displayName);
+        return mDisplayName.equals(that.mDisplayName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(contactId, displayName, phoneNumber);
+        return Objects.hash(mContactId, mDisplayName, mPhoneNumber);
     }
 
     @NonNull
     @Override
     public String toString() {
         return "ContactInfo{" +
-                "contactId='" + contactId + '\'' +
-                ", displayName='" + displayName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", lastMessage='" + lastMessage + '\'' +
+                "contactId='" + mContactId + '\'' +
+                ", displayName='" + mDisplayName + '\'' +
+                ", phoneNumber='" + mPhoneNumber + '\'' +
+                ", lastMessage='" + mLastMessage + '\'' +
                 '}';
     }
 
     public String getContactId() {
-        return contactId;
+        return mContactId;
     }
 
     public void setContactId(String contactId) {
-        this.contactId = contactId;
+        this.mContactId = contactId;
     }
 
     public String getDisplayName() {
-        return displayName;
+        return mDisplayName;
     }
 
     public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+        this.mDisplayName = displayName;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return mPhoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.mPhoneNumber = phoneNumber;
     }
 
     public String getLastMessage() {
-        return lastMessage;
+        return mLastMessage;
     }
 }
