@@ -15,7 +15,7 @@ import java.util.List;
 
 public class RedditChannel implements Channel {
 
-    private Context parentContext;
+    private final Context parentContext;
     public RedditChannel(Context parentContext) {
         this.parentContext = parentContext;
     }

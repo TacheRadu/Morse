@@ -95,14 +95,12 @@ public final class App extends Application {
      * @param password
      */
     public void addChannel(String channelName, String userName, String password) {
-        // TODO implement here
     }
 
     /**
      * @param channel
      */
     public void checkCredentials(Channel channel) {
-        // TODO implement here
     }
 
     public static void insertIntoChannels(String name) {
@@ -114,7 +112,6 @@ public final class App extends Application {
 
     private void insertIntoUsers(int id, String userName, String hashedPassword) {
         String insert = "INSERT INTO users(channel_id, username, password) VALUES(?, ?, ?);";
-        //TODO
     }
 
     private void removeUser(String username) {

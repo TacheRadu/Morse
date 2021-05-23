@@ -22,8 +22,8 @@ import twitter4j.TwitterException;
  * This Class is responsible for message management: list, send, delete
  */
 public class TwitterMessage implements Message{
-    private Twitter twitter;
-    private Long toUserId;
+    private final Twitter twitter;
+    private final Long toUserId;
     private String messageText;
     long delayedMilliSeconds;
     private Context context;

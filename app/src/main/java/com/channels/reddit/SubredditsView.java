@@ -14,7 +14,7 @@ import com.R;
 import net.dean.jraw.models.Subreddit;
 
 public class SubredditsView extends ConstraintLayout {
-    private Context context;
+    private final Context context;
     public SubredditsView(Context context) {
         super(context);
         this.context = context;

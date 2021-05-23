@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private class SubredditDataAdapter extends RecyclerView.Adapter<SubredditsViewHolder> {
         private final WeakReference<MainActivity> activity;
         private List<Subreddit> subreddits;
-        private RecyclerView recyclerView;
+        private final RecyclerView recyclerView;
         private RedditClient redditClient;
 
         private SubredditDataAdapter(MainActivity mainActivity, RecyclerView recyclerView) {

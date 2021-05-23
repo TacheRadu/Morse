@@ -34,8 +34,8 @@ public class ContactsAdapter extends ArrayAdapter<ContactInfo> {
             convertView = vi.inflate(R.layout.contact_info, null);
 
             holder = new ViewHolder();
-            holder.displayName = (TextView) convertView.findViewById(R.id.displayName);
-            holder.lastMessage = (TextView) convertView.findViewById(R.id.lastMessage);
+            holder.displayName = convertView.findViewById(R.id.displayName);
+            holder.lastMessage = convertView.findViewById(R.id.lastMessage);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

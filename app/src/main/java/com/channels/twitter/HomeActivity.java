@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_twitter_home);
         send = findViewById(R.id.send);
         tweet = findViewById(R.id.tweet);
-        name = (TextView) findViewById(R.id.nametextView);
+        name = findViewById(R.id.nametextView);
         name.setText(String.format(getResources().getString(R.string.hello_twitter), mSharedPreferences.getString(Constants.PREF_USER, "")));
     }
 
@@ -41,6 +41,13 @@ public class HomeActivity extends AppCompatActivity {
         if (!mSharedPreferences.getBoolean(Constants.PREF_KEY_TWITTER_LOGIN, false))
             startActivityForResult(new Intent(HomeActivity.this, TwitterChannelLoginActivity.class), 0);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!mSharedPreferences.getBoolean(Constants.PREF_KEY_TWITTER_LOGIN, false))
+            finish();
     }
 
     private void openSendActivity(){
@@ -57,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 0){
-            name = (TextView) findViewById(R.id.nametextView);
+            name = findViewById(R.id.nametextView);
             name.setText(mSharedPreferences.getString(Constants.PREF_USER, ""));
         }
     }
