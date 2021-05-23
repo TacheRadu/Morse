@@ -1,22 +1,20 @@
 package com.channels.twitter;
 
+import com.R;
+import android.os.Bundle;
+import com.morse.Constants;
+import android.widget.Toast;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import com.R;
-import com.morse.Constants;
-import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.Callback;
+import androidx.appcompat.app.AppCompatActivity;
 import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-
-import java.util.List;
 
 
 /**
@@ -25,43 +23,41 @@ import java.util.List;
  *
  * @author Ionuț Roșca
  * @author Ionuț Hristea
- * @version 0.2.0
+ * @version 0.2.1
  */
 public class TwitterChannelLoginActivity extends AppCompatActivity {
-    static TwitterSession session;
-
-    static SharedPreferences sharedPreferences;
-
-    TwitterLoginButton loginButton;
-
+    static TwitterSession sTwitterSession;
+    static SharedPreferences sSharedPreferences;
+    TwitterLoginButton mTwitterLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Twitter.initialize(this);
-        sharedPreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
+        sSharedPreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
         setContentView(R.layout.twitter_login_activity);
-        loginButton = findViewById(R.id.login_button);
+        mTwitterLoginButton = findViewById(R.id.login_button);
         if (!isLoggedIn()) {
-            loginButton.setCallback(new Callback<TwitterSession>() {
+            mTwitterLoginButton.setCallback(new Callback<TwitterSession>() {
                 @Override
                 public void success(Result<TwitterSession> result) {
-                    session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-                    TwitterAuthToken authToken = session.getAuthToken();
+                    sTwitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+                    TwitterAuthToken authToken = sTwitterSession.getAuthToken();
 
-                    loginMethod(session, authToken);
+                    loginMethod(sTwitterSession, authToken);
                 }
 
                 @Override
                 public void failure(TwitterException exception) {
-                    Toast.makeText(getApplicationContext(), "Login fail", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Login fail",
+                            Toast.LENGTH_LONG).show();
                 }
             });
         }
     }
 
     public void loginMethod(TwitterSession twitterSession, TwitterAuthToken token) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = sSharedPreferences.edit();
         editor.putString(Constants.PREF_KEY_OAUTH_SECRET, token.secret);
         editor.putString(Constants.PREF_KEY_OAUTH_TOKEN, token.token);
         editor.putBoolean(Constants.PREF_KEY_TWITTER_LOGIN, true);
@@ -76,11 +72,11 @@ public class TwitterChannelLoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        loginButton.onActivityResult(requestCode, resultCode, data);
+        mTwitterLoginButton.onActivityResult(requestCode, resultCode, data);
     }
 
     private Boolean isLoggedIn() {
-        return sharedPreferences.getBoolean(Constants.PREF_KEY_TWITTER_LOGIN, false);
+        return sSharedPreferences.getBoolean(Constants.PREF_KEY_TWITTER_LOGIN, false);
     }
 
 }
