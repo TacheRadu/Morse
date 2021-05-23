@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.telephony.SmsManager;
+import android.widget.Toast;
 
 import com.morse.Message;
 
@@ -29,8 +30,14 @@ public class SmsMessage implements Message {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(mPhoneNumber, null, mMessageText, null,
                     null);
+            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(mContext,
+                    "Message was sent!", Toast.LENGTH_LONG).show());
+
         } catch (Exception e) {
             e.printStackTrace();
+            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(mContext,
+                    "Failed to send message", Toast.LENGTH_LONG).show());
+
         }
     }
 
@@ -43,7 +50,15 @@ public class SmsMessage implements Message {
     @Override
     public void sendDelayed(long delayedMinutes) {
         long delayedMilliSeconds = delayedMinutes * 60 * 1000;
-        (new Handler(Looper.getMainLooper())).postDelayed(this::send, delayedMilliSeconds);
+        new Thread(() ->{
+            try {
+                Thread.sleep(delayedMilliSeconds);
+                send();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        //(new Handler(Looper.getMainLooper())).postDelayed(this::send, delayedMilliSeconds);
     }
 
     /**
