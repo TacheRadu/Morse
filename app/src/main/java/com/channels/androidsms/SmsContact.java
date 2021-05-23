@@ -1,16 +1,19 @@
 package com.channels.androidsms;
 
-import java.util.List;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import com.morse.Contact;
-import java.util.ArrayList;
-import android.database.Cursor;
-import android.content.Context;
-import android.provider.Telephony;
-import androidx.annotation.RequiresApi;
-import android.content.ContentResolver;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
+
+import androidx.annotation.RequiresApi;
+
+import com.morse.Contact;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -120,13 +123,20 @@ public class SmsContact implements Contact {
                 String currentAddress = cursor.getString(0);
 
                 if (currentAddress.equals(fromAddress)) {
-                    return cursor.getString(1);
+                    return trimMessage(cursor.getString(1));
                 }
             } while (cursor.moveToNext());
         }
 
         cursor.close();
         return "";
+    }
+
+    private String trimMessage(String msgText) {
+        final int LAST_MESSAGE_MAX_LENGTH = 16;
+        if (msgText.length() > LAST_MESSAGE_MAX_LENGTH)
+            return msgText.substring(0,16) + "...";
+        return msgText;
     }
 
     public String getContactName(Context context, String phoneNumber) {
