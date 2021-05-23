@@ -1,27 +1,21 @@
 package com.channels.reddit;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.R;
 import com.morse.App;
-
+import android.os.Bundle;
+import android.view.View;
+import android.os.AsyncTask;
+import android.app.Activity;
+import android.webkit.WebView;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import java.lang.ref.WeakReference;
+import android.webkit.WebViewClient;
+import android.webkit.CookieManager;
 import net.dean.jraw.oauth.OAuthException;
 import net.dean.jraw.oauth.StatefulAuthHelper;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 /**
  * This activity is dedicated to a WebView to guide the user through the authentication process.
@@ -29,6 +23,8 @@ import java.util.ArrayList;
  * First, a StatefulAuthHelper is created by calling App.getAccountHelper().switchToNewUser(). We
  * pull data from/send data to this object during the authentication phase. When the user has been
  * authenticated or the user has denied our app access to their account, the activity finishes.
+ *
+ * @version 0.1.1
  */
 public class NewUserActivity extends AppCompatActivity {
 
@@ -45,18 +41,8 @@ public class NewUserActivity extends AppCompatActivity {
         webView.clearHistory();
 
         // Stolen from https://github.com/ccrama/Slide/blob/a2184269/app/src/main/java/me/ccrama/redditslide/Activities/Login.java#L92
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            CookieManager.getInstance().removeAllCookies(null);
-            CookieManager.getInstance().flush();
-        } else {
-            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(this);
-            cookieSyncMngr.startSync();
-            CookieManager cookieManager = CookieManager.getInstance();
-            cookieManager.removeAllCookie();
-            cookieManager.removeSessionCookie();
-            cookieSyncMngr.stopSync();
-            cookieSyncMngr.sync();
-        }
+        CookieManager.getInstance().removeAllCookies(null);
+        CookieManager.getInstance().flush();
 
         // Get a StatefulAuthHelper instance to manage interactive authentication
         final StatefulAuthHelper helper = App.getAccountHelper().switchToNewUser();
@@ -77,10 +63,8 @@ public class NewUserActivity extends AppCompatActivity {
         });
 
         // Generate an authentication URL
-        boolean requestRefreshToken = true;
-        boolean useMobileSite = true;
         String[] scopes = new String[]{ "read", "submit", "mysubreddits",  "identity" };
-        String authUrl = helper.getAuthorizationUrl(requestRefreshToken, useMobileSite, scopes);
+        String authUrl = helper.getAuthorizationUrl(true, true, scopes);
 
         // Finally, show the authorization URL to the user
         webView.loadUrl(authUrl);
@@ -118,7 +102,8 @@ public class NewUserActivity extends AppCompatActivity {
             App.getAccountHelper().switchToUser(App.getTokenStore().getUsernames().get(0));
             Activity host = this.context.get();
             if (host != null) {
-                host.setResult(success ? Activity.RESULT_OK : Activity.RESULT_CANCELED, new Intent());
+                host.setResult(success ? Activity.RESULT_OK : Activity.RESULT_CANCELED,
+                        new Intent());
                 host.finish();
             }
         }

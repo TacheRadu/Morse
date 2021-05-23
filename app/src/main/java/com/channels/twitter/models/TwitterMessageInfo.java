@@ -1,49 +1,48 @@
 package com.channels.twitter.models;
 
 import java.util.Date;
-
 import twitter4j.DirectMessage;
+import org.jetbrains.annotations.NotNull;
+
 
 /**
- * @author Peiu Iulian
- *
  * This Class is a model for a TwitterMessage
+ *
+ * @author Peiu Iulian
  */
 public class TwitterMessageInfo {
-    public long getMessageId() {
-        return messageId;
-    }
-
-    private final long messageId;
-
-    public long getSenderId() {
-        return senderId;
-    }
-
-    private final long senderId;
-
-    private final Date date;
-
-    private final String messageText;
-
-    public String getMessageText() {
-        return messageText;
-    }
+    private final long mMessageId;
+    private final long mSenderId;
+    private final Date mDate;
+    private final String mMessageText;
 
     public TwitterMessageInfo(DirectMessage message) {
-        this.messageId = message.getId();
-        this.senderId = message.getSenderId();
-        this.messageText = message.getText();
-        this.date = message.getCreatedAt();
+        this.mMessageId = message.getId();
+        this.mSenderId = message.getSenderId();
+        this.mMessageText = message.getText();
+        this.mDate = message.getCreatedAt();
     }
 
+    public long getSenderId() {
+        return mSenderId;
+    }
+
+    public long getMessageId() {
+        return mMessageId;
+    }
+
+    public String getMessageText() {
+        return mMessageText;
+    }
+
+    @NotNull
     @Override
     public String toString() {
         return "TwitterMessageInfo{" +
-                "messageId=" + messageId +
-                ", senderId=" + senderId +
-                ", date=" + date +
-                ", messageText='" + messageText + '\'' +
+                "messageId=" + mMessageId +
+                ", senderId=" + mSenderId +
+                ", date=" + mDate +
+                ", messageText='" + mMessageText + '\'' +
                 '}';
     }
 }

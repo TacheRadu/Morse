@@ -1,26 +1,29 @@
 package com.channels.reddit;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.R;
 import com.morse.App;
-
-import net.dean.jraw.models.SubmissionKind;
+import android.os.Bundle;
+import android.widget.Toast;
+import android.widget.Button;
+import android.content.Intent;
+import android.widget.EditText;
 import net.dean.jraw.models.Subreddit;
+import net.dean.jraw.models.SubmissionKind;
+import androidx.appcompat.app.AppCompatActivity;
 import net.dean.jraw.references.SubredditReference;
 
+
+/**
+ * Class that handles the process of posting to a subreddit.
+ *
+ * @version 0.1.1
+ */
 public class PostActivity extends AppCompatActivity {
-    Button post;
-    EditText postContent;
-    EditText title;
-    Subreddit subreddit;
-    Intent intent;
+    Button mPost;
+    EditText mPostContent;
+    EditText mTitle;
+    Subreddit mSubreddit;
+    Intent mIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,28 +31,30 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.reddit_post_activity);
         init();
 
-        post.setOnClickListener(f -> postSubmission());
+        mPost.setOnClickListener(f -> postSubmission());
     }
 
     private void postSubmission(){
-        String text = postContent.getText().toString();
-        String titleString = title.getText().toString();
+        String text = mPostContent.getText().toString();
+        String titleString = mTitle.getText().toString();
 
-        postContent.setText("");
-        title.setText("");
+        mPostContent.setText("");
+        mTitle.setText("");
 
-        SubredditReference subredditReference = subreddit.toReference(App.getAccountHelper().getReddit());
-        System.out.println(subredditReference.randomSubmission());
+        SubredditReference subredditReference = mSubreddit.toReference(
+                App.getAccountHelper().getReddit());
+
         subredditReference.submit(SubmissionKind.SELF, titleString, text, true);
-        Toast.makeText(this.getApplicationContext(), "Submission posted!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getApplicationContext(), "Submission posted!",
+                Toast.LENGTH_SHORT).show();
     }
 
     private void init(){
-        post = findViewById(R.id.button);
-        postContent = findViewById(R.id.post);
-        title = findViewById(R.id.title);
-        intent = getIntent();
-        subreddit = (Subreddit) intent.getSerializableExtra("subreddit");
+        mPost = findViewById(R.id.button);
+        mPostContent = findViewById(R.id.post);
+        mTitle = findViewById(R.id.title);
+        mIntent = getIntent();
+        mSubreddit = (Subreddit) mIntent.getSerializableExtra("subreddit");
     }
 
 }

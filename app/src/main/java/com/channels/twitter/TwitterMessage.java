@@ -1,97 +1,87 @@
 package com.channels.twitter;
 
-import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.Toast;
-
-import com.channels.twitter.models.TwitterMessageInfo;
-import com.morse.Message;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import twitter4j.DirectMessage;
-import twitter4j.DirectMessageList;
 import twitter4j.Twitter;
+import android.os.Looper;
+import com.morse.Message;
+import android.os.Handler;
+import java.util.ArrayList;
+import android.widget.Toast;
+import android.content.Context;
+import twitter4j.DirectMessage;
 import twitter4j.TwitterException;
+import twitter4j.DirectMessageList;
+import com.channels.twitter.models.TwitterMessageInfo;
+
 
 /**
- * @author Peiu Iulian
+ * This Class is responsible for message management: list, send, delete.
  *
- * This Class is responsible for message management: list, send, delete
+ * @author Peiu Iulian
  */
 public class TwitterMessage implements Message{
-    private Twitter twitter;
-    private Long toUserId;
-    private String messageText;
-    long delayedMilliSeconds;
-    private Context context;
-    static Handler mHandler;
+    private final Twitter mTwitter;
+    private final Long mToUserId;
+    private String mMessageText;
+    long mDelayedMilliSeconds;
+    private Context mContext;
 
     public void setContext(Context context) {
-        this.context = context;
+        this.mContext = context;
     }
 
-
     public TwitterMessage(Twitter twitter, Long toUserId, String messageText) {
-        this.twitter = twitter;
-        this.toUserId = toUserId;
-        this.messageText = messageText;
+        this.mTwitter = twitter;
+        this.mToUserId = toUserId;
+        this.mMessageText = messageText;
     }
 
     public TwitterMessage(Twitter twitter) {
         super();
-        this.twitter = twitter;
-        toUserId = null;
-        messageText = null;
+        this.mTwitter = twitter;
+        mToUserId = null;
+        mMessageText = null;
     }
 
     public TwitterMessage(Twitter twitter, Long toUserId) {
-        this.twitter = twitter;
-        this.toUserId = toUserId;
-        this.messageText = null;
+        this.mTwitter = twitter;
+        this.mToUserId = toUserId;
+        this.mMessageText = null;
     }
 
     /**
-     * Send a message with the properties: toUserId, messageText that were initialized via constructor
-     * If the operation was done successfully, on the screen it will be printed the message:
+     * Send a message with the properties: toUserId, messageText that were initialized via
+     * constructor. If the operation was done successfully, on the screen it will be printed the
+     * message:
      * "Direct message successfully sent to ...", otherwise "Failed to send a direct message: [cause]"
      */
     @Override
     public void send() {
         try {
-            DirectMessage message = twitter.sendDirectMessage(twitter.showUser(toUserId).getScreenName(), messageText);
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, "Message was sent!", Toast.LENGTH_LONG).show();
-                }
-            });
-
+            DirectMessage message = mTwitter.sendDirectMessage(
+                    mTwitter.showUser(mToUserId).getScreenName(), mMessageText);
+            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(mContext,
+                    "Message was sent!", Toast.LENGTH_LONG).show());
         } catch (TwitterException te) {
             te.printStackTrace();
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, "Failed to send message", Toast.LENGTH_LONG).show();
-                }
-            });
+            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(mContext,
+                    "Failed to send message", Toast.LENGTH_LONG).show());
         }
     }
 
     /**
      * Sends a message after an amount of minutes specified in params, delayedMinutes by
      * making a delayed call to send() method.
-     * See ``TwitterMessage.send()``
-     * @param delayedMinutes
+     * See <code>TwitterMessage.send()</code
+     *
+     * @param delayedMinutes    the number of minutes for which the message sent will be delayed
      */
     @Override
     public void sendDelayed(long delayedMinutes) {
-        delayedMilliSeconds = delayedMinutes * 60 * 1000;
+        mDelayedMilliSeconds = delayedMinutes * 60 * 1000;
         new Thread(() -> {
             try {
-                Thread.sleep(delayedMilliSeconds);
+                Thread.sleep(mDelayedMilliSeconds);
                 send();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -99,11 +89,11 @@ public class TwitterMessage implements Message{
         }).start();
     }
 
-
     /**
-     * List all message of a user specified by its id via params and will return them
-     * @param fromUserId
-     * @return messagesFromUserId
+     * List all message of a user specified by its id via params and will return them.
+     *
+     * @param fromUserId    the user ID for whom the messages will be listed
+     * @return              messagesFromUserId
      */
     @Deprecated
     public List<TwitterMessageInfo> getMessages(Long fromUserId){
@@ -114,10 +104,10 @@ public class TwitterMessage implements Message{
             List<TwitterMessageInfo> messagesFromUserId = new ArrayList<>();
 
             do {
-                currentMessages = cursor == null ? twitter.getDirectMessages(count)
-                        : twitter.getDirectMessages(count, cursor);
+                currentMessages = cursor == null ? mTwitter.getDirectMessages(count)
+                        : mTwitter.getDirectMessages(count, cursor);
                 for (DirectMessage message : currentMessages) {
-                    if (message.getRecipientId() == toUserId || message.getSenderId() == toUserId) {
+                    if (message.getRecipientId() == mToUserId || message.getSenderId() == mToUserId) {
                         messagesFromUserId.add(new TwitterMessageInfo(message));
                     }
                 }
@@ -125,11 +115,11 @@ public class TwitterMessage implements Message{
             } while (currentMessages.size() > 0 && cursor != null);
 
             return messagesFromUserId;
-
         } catch (TwitterException te) {
             te.printStackTrace();
             System.out.println("Failed to get messages: " + te.getMessage());
         }
+
         return null;
     }
 
@@ -137,7 +127,7 @@ public class TwitterMessage implements Message{
     @Override
     public Boolean delete(long id) {
         try {
-            twitter.destroyDirectMessage(id);
+            mTwitter.destroyDirectMessage(id);
             System.out.println("Successfully deleted message with id: " +id);
             return true;
         } catch (TwitterException te) {
@@ -148,7 +138,6 @@ public class TwitterMessage implements Message{
     }
 
     public void setMessageText(String messageText) {
-        this.messageText = messageText;
+        this.mMessageText = messageText;
     }
-
 }

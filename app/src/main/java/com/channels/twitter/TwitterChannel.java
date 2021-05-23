@@ -1,48 +1,55 @@
 package com.channels.twitter;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.R;
+import java.util.List;
 import com.morse.Channel;
 import com.morse.Contact;
 import com.morse.Message;
+import android.content.Intent;
+import android.content.Context;
 
-import java.util.List;
 
+/**
+ * Helper class for providing information and resources regarding the Twitter channel.
+ *
+ * @version 0.1.1
+ */
 public class TwitterChannel implements Channel {
-    private Context parentContext;
+    private Context mParentContext;
+
     public TwitterChannel(Context parentContext) {
-        this.parentContext = parentContext;
+        this.mParentContext = parentContext;
     }
 
-    public TwitterChannel() {
-
-    }
+    public TwitterChannel() {}
 
     @Override
     public void login() {
-
-
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
 
     @Override
     public void refreshChannel() {
-
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
     @Override
     public void getContacts(int contactNumber) {
-
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
     @Override
     public void checkCredentials() {
-
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
     @Override
@@ -62,11 +69,13 @@ public class TwitterChannel implements Channel {
 
     @Override
     public void sendDelayedMessage(Message message, List<Contact> contact) {
-
+        /*
+         * Not needed to be implemented, but defined to comply with the interface
+         */
     }
 
     @Override
     public Intent getIntent() {
-        return new Intent(parentContext, HomeActivity.class);
+        return new Intent(mParentContext, HomeActivity.class);
     }
 }

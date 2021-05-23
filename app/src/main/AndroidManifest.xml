@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com">
+    <!-- Application required permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -12,32 +13,13 @@
     <application
         android:name=".morse.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Morse">
 
-        <meta-data
-            android:name="net.dean.jraw.android.REDDIT_USERNAME"
-            android:value="Morse6969" />
-        <meta-data
-            android:name="net.dean.jraw.android.CLIENT_ID"
-            android:value="grgc9SXVZOLhbA" />
-        <meta-data
-            android:name="net.dean.jraw.android.REDIRECT_URL"
-            android:value="http://www.example.com/my_redirect" />
-
-
-        <activity android:name=".channels.reddit.MainActivity">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="www.example.com"
-                    android:scheme="http"
-                    android:path="/my_redirect" />
-            </intent-filter>
-        </activity>
+        <!-- Main Application Activities -->
         <activity android:name=".morse.activities.SelectChannelActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,11 +27,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".morse.activities.AddChannelActivity" />
-        <activity android:name=".channels.reddit.NewUserActivity" />
-        <activity android:name=".channels.reddit.PostActivity" />
-        <activity android:name=".morse.LoginActivity" />
+
+        <!-- Android SMS Activities -->
         <activity android:name=".channels.androidsms.activities.SmsChannelActivity" />
         <activity android:name=".channels.androidsms.activities.SmsContactActivity" />
+
+        <!-- Twitter Activities -->
         <activity android:name=".channels.twitter.TwitterChannelLoginActivity">
         <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -59,11 +42,32 @@
             </intent-filter>
         </activity>
         <activity android:name=".channels.twitter.HomeActivity"/>
-        <activity android:name=".channels.twitter.FriendListActivity"/>
+        <activity android:name=".channels.twitter.FollowerListActivity"/>
         <activity android:name=".channels.twitter.TwitterConversation"/>
         <activity android:name=".channels.twitter.TweetActivity"/>
 
         <!-- Reddit Activities -->
-        <!--        <activity android:name=".channels.reddit.RedditLoginActivity" />-->
+        <activity android:name=".channels.reddit.MainActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="www.example.com"
+                    android:scheme="http"
+                    android:path="/my_redirect" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".channels.reddit.NewUserActivity" />
+        <activity android:name=".channels.reddit.PostActivity" />
+
+        <!-- Metadata -->
+        <meta-data
+            android:name="net.dean.jraw.android.REDDIT_USERNAME"
+            android:value="Morse6969" />
+        <meta-data
+            android:name="net.dean.jraw.android.CLIENT_ID"
+            android:value="grgc9SXVZOLhbA" />
+        <meta-data
+            android:name="net.dean.jraw.android.REDIRECT_URL"
+            android:value="http://www.example.com/my_redirect" />
     </application>
-    </manifest>
+</manifest>

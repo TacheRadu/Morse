@@ -5,18 +5,19 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.telephony.SmsManager;
+import android.widget.Toast;
 
 import com.morse.Message;
 
 public class SmsMessage implements Message {
-    private final Context context;
-    private final String phoneNumber;
-    private final String messageText;
+    private final Context mContext;
+    private final String mPhoneNumber;
+    private final String mMessageText;
 
     public SmsMessage(Context context, String phoneNumber, String messageText) {
-        this.context = context;
-        this.phoneNumber = phoneNumber;
-        this.messageText = messageText;
+        this.mContext = context;
+        this.mPhoneNumber = phoneNumber;
+        this.mMessageText = messageText;
     }
 
     /**
@@ -27,39 +28,53 @@ public class SmsMessage implements Message {
     public void send() {
         try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNumber, null, messageText, null, null);
-            //Toast.makeText(context, "Message sent", Toast.LENGTH_SHORT).show();
+            smsManager.sendTextMessage(mPhoneNumber, null, mMessageText, null,
+                    null);
+            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(mContext,
+                    "Message was sent!", Toast.LENGTH_LONG).show());
+
         } catch (Exception e) {
             e.printStackTrace();
-            //Toast.makeText(context, "Unable to send SMS message.", Toast.LENGTH_SHORT).show();
+            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(mContext,
+                    "Failed to send message", Toast.LENGTH_LONG).show());
+
         }
     }
 
     /**
-     * @author Peiu Iulian
      * Sends the smsMessage with delayedMinutes minutes by calling: ``this.send();`` after
      * the delayedMinutes minutes. See ``this.send()``
+     *
+     * @author Peiu Iulian
      */
     @Override
     public void sendDelayed(long delayedMinutes) {
         long delayedMilliSeconds = delayedMinutes * 60 * 1000;
-        (new Handler(Looper.getMainLooper())).postDelayed(this::send, delayedMilliSeconds);
+        new Thread(() ->{
+            try {
+                Thread.sleep(delayedMilliSeconds);
+                send();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        //(new Handler(Looper.getMainLooper())).postDelayed(this::send, delayedMilliSeconds);
     }
 
     /**
-     * @author Peiu Iulian
      * Delete a message from content://sms/{id}, where id is set from the 2 param constructor
+     *
+     * @author Peiu Iulian
      */
     @Override
     public Boolean delete(long id) {
-
         try {
-            context.getContentResolver().delete(
+            mContext.getContentResolver().delete(
                     Uri.parse("content://sms/" + id), null, null);
         } catch (Exception exp) {
             return false;
         }
+
         return true;
     }
-
 }

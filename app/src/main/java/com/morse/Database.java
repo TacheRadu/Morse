@@ -1,17 +1,22 @@
 package com.morse;
 
 import android.content.Context;
+import androidx.annotation.Nullable;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
 
+/**
+ * Class that provides interaction with the database.
+ *
+ * @version 0.1.1
+ */
 public class Database extends SQLiteOpenHelper {
-    final SQLiteDatabase database;
+    final SQLiteDatabase mSQLiteDatabase;
 
     public Database(@Nullable Context context) {
         super(context, "database.db", null, 1);
-        database = getWritableDatabase();
+        mSQLiteDatabase = getWritableDatabase();
     }
 
     @Override
@@ -27,11 +32,8 @@ public class Database extends SQLiteOpenHelper {
                 + " CONSTRAINT users_ct FOREIGN KEY(channel_id) \n"
                 + " REFERENCES channels(id) ON DELETE CASCADE ON UPDATE CASCADE"
                 + ");");
-        System.out.println("succesf");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 }
