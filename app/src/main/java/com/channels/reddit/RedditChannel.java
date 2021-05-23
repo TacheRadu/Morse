@@ -14,10 +14,10 @@ import android.content.Context;
  * @version 0.1.1
  */
 public class RedditChannel implements Channel {
-    private final Context parentContext;
+    private final Context mParentContext;
 
     public RedditChannel(Context parentContext) {
-        this.parentContext = parentContext;
+        this.mParentContext = parentContext;
     }
 
     @Override
@@ -72,6 +72,6 @@ public class RedditChannel implements Channel {
 
     @Override
     public Intent getIntent() {
-        return new Intent(parentContext, MainActivity.class);
+        return new Intent(mParentContext, MainActivity.class);
     }
 }

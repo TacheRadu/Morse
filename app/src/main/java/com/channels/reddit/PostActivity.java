@@ -19,11 +19,11 @@ import net.dean.jraw.references.SubredditReference;
  * @version 0.1.1
  */
 public class PostActivity extends AppCompatActivity {
-    Button post;
-    EditText postContent;
-    EditText title;
-    Subreddit subreddit;
-    Intent intent;
+    Button mPost;
+    EditText mPostContent;
+    EditText mTitle;
+    Subreddit mSubreddit;
+    Intent mIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +31,17 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.reddit_post_activity);
         init();
 
-        post.setOnClickListener(f -> postSubmission());
+        mPost.setOnClickListener(f -> postSubmission());
     }
 
     private void postSubmission(){
-        String text = postContent.getText().toString();
-        String titleString = title.getText().toString();
+        String text = mPostContent.getText().toString();
+        String titleString = mTitle.getText().toString();
 
-        postContent.setText("");
-        title.setText("");
+        mPostContent.setText("");
+        mTitle.setText("");
 
-        SubredditReference subredditReference = subreddit.toReference(
+        SubredditReference subredditReference = mSubreddit.toReference(
                 App.getAccountHelper().getReddit());
 
         subredditReference.submit(SubmissionKind.SELF, titleString, text, true);
@@ -50,11 +50,11 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void init(){
-        post = findViewById(R.id.button);
-        postContent = findViewById(R.id.post);
-        title = findViewById(R.id.title);
-        intent = getIntent();
-        subreddit = (Subreddit) intent.getSerializableExtra("subreddit");
+        mPost = findViewById(R.id.button);
+        mPostContent = findViewById(R.id.post);
+        mTitle = findViewById(R.id.title);
+        mIntent = getIntent();
+        mSubreddit = (Subreddit) mIntent.getSerializableExtra("subreddit");
     }
 
 }

@@ -16,23 +16,24 @@ import androidx.constraintlayout.widget.ConstraintLayout;
  * @version 0.1.1
  */
 public class SubredditsView extends ConstraintLayout {
-    private final Context context;
+    private final Context mContext;
 
     public SubredditsView(Context context) {
         super(context);
-        this.context = context;
+
+        this.mContext = context;
         init();
     }
 
     public SubredditsView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
+        this.mContext = context;
         init();
     }
 
     public SubredditsView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context = context;
+        this.mContext = context;
         init();
     }
 
