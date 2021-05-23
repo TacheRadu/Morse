@@ -25,13 +25,13 @@ public class ChannelsAdapter extends ArrayAdapter<String> {
     final List<Integer> rApplicationImagesList;
 
     public ChannelsAdapter(Context c, List<String> title, List<String> description,
-                           List<Integer> imgs) {
-        super(c, R.layout.content_scrolling, R.id.textView1, title);
+                           List<Integer> images) {
+        super(c, R.layout.activity_content_scrolling, R.id.textView1, title);
 
         this.context = c;
         this.rApplicationTitlesList = title;
         this.rApplicationDescriptionsList = description;
-        this.rApplicationImagesList = imgs;
+        this.rApplicationImagesList = images;
     }
 
     public void addAll(List<Channel> channels) {
@@ -53,7 +53,8 @@ public class ChannelsAdapter extends ArrayAdapter<String> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater)
                 context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = layoutInflater.inflate(R.layout.content_scrolling, parent, false);
+        View row = layoutInflater.inflate(R.layout.activity_content_scrolling, parent,
+                false);
         ImageView images = row.findViewById(R.id.image);
         TextView myTitle = row.findViewById(R.id.textView1);
         TextView myDescription = row.findViewById(R.id.textView2);

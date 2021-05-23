@@ -46,7 +46,7 @@ public class SmsChannelActivity extends AppCompatActivity {
 
     private void getContacts() {
         List<ContactInfo> contactInfoList = mSmsChannel.getContacts();
-        mDataAdapter = new ContactsAdapter(this, R.layout.contact_info, contactInfoList);
+        mDataAdapter = new ContactsAdapter(this, R.layout.activity_contact_info, contactInfoList);
         mListView.setAdapter(mDataAdapter);
 
         // Write whatever to want to do after delay specified (1 sec)

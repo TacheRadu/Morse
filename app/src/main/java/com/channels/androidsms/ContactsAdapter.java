@@ -33,7 +33,7 @@ public class ContactsAdapter extends ArrayAdapter<ContactInfo> {
 
         if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = vi.inflate(R.layout.contact_info, null);
+            convertView = vi.inflate(R.layout.activity_contact_info, null);
 
             holder = new ViewHolder();
             holder.displayName = (TextView) convertView.findViewById(R.id.displayName);
