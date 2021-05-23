@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.R;
 import com.morse.App;
+import com.morse.activities.SelectChannelActivity;
 
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.PersistedAuthData;
@@ -72,7 +73,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        adapter.update();
+
+        /* If the user doesn't log in but presses the back button,  */
+        if (App.getTokenStore().size() != 0) {
+            adapter.update();
+        } else {
+            finish();
+        }
     }
 
     /**
@@ -90,9 +97,7 @@ public class MainActivity extends AppCompatActivity {
             subreddits = new ArrayList<>();
             if (App.getTokenStore().size() != 0)
                 update();
-
         }
-
 
         private void update() {
             redditClient = App.getAccountHelper().getReddit();
