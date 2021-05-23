@@ -31,11 +31,19 @@ public class HomeActivity extends AppCompatActivity {
         mTweet.setOnClickListener(f -> openTweetActivity());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!sSharedPreferences.getBoolean(Constants.PREF_KEY_TWITTER_LOGIN, false)) {
+            finish();
+        }
+    }
+
     private void init(){
         setContentView(R.layout.activity_twitter_home);
         mButton = findViewById(R.id.send);
         mTweet = findViewById(R.id.tweet);
-        mName = (TextView) findViewById(R.id.nametextView);
+        mName = findViewById(R.id.nametextView);
         mName.setText(String.format(getResources().getString(R.string.hello_twitter),
                 sSharedPreferences.getString(Constants.PREF_USER, "")));
     }
@@ -61,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 0){
-            mName = (TextView) findViewById(R.id.nametextView);
+            mName = findViewById(R.id.nametextView);
             mName.setText(sSharedPreferences.getString(Constants.PREF_USER, ""));
         }
     }

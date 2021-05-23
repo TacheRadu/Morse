@@ -40,7 +40,7 @@ public class SmsChannelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mSmsChannel = new SmsChannel(this);
         setContentView(R.layout.contacts_activity_main);
-        mListView = (ListView) findViewById(R.id.lstContacts);
+        mListView = findViewById(R.id.lstContacts);
         requestContactPermission();
     }
 
