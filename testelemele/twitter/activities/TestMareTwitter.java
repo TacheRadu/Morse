@@ -7,14 +7,8 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
-<<<<<<< HEAD
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-=======
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.filters.LargeTest;
-import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
 import androidx.test.runner.AndroidJUnit4;
 
 import com.R;
@@ -31,17 +25,9 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-<<<<<<< HEAD
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-=======
-import static androidx.test.espresso.action.ViewActions.longClick;
-import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -49,83 +35,20 @@ import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
-<<<<<<< HEAD
 @RunWith(AndroidJUnit4.class)
-public class SelectChannelActivityTest {
+public class TestMareTwitter {
 
     @Rule
     public ActivityTestRule<SelectChannelActivity> mActivityTestRule = new ActivityTestRule<>(SelectChannelActivity.class);
 
     @Test
-    public void selectChannelActivityTest() {
+    public void testMareTwitter() {
         DataInteraction linearLayout3 = onData(anything())
-=======
-@RunWith(AndroidJUnit4ClassRunner.class)
-public class SelectChannelActivityTest {
-
-    @Rule
-    public ActivityScenarioRule<SelectChannelActivity> mActivityTestRule = new ActivityScenarioRule<>(SelectChannelActivity.class);
-
-    @Test
-    public void selectChannelActivityTest() {
-        ViewInteraction materialButton = onView(
-                allOf(withId(R.id.addchannelbtn), withText("Add New Channel"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        materialButton.perform(click());
-
-        DataInteraction linearLayout = onData(anything())
-                .inAdapterView(allOf(withId(R.id.listView),
-                        childAtPosition(
-                                withClassName(is("android.widget.LinearLayout")),
-                                0)))
-                .atPosition(2);
-        linearLayout.perform(click());
-
-        DataInteraction linearLayout2 = onData(anything())
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
                 .inAdapterView(allOf(withId(R.id.listView),
                         childAtPosition(
                                 withClassName(is("android.widget.LinearLayout")),
                                 0)))
                 .atPosition(0);
-<<<<<<< HEAD
-=======
-        linearLayout2.perform(click());
-
-        ViewInteraction twitterLoginButton = onView(
-                allOf(withId(R.id.login_button), withText("Log in with Twitter"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        twitterLoginButton.perform(click());
-
-        ViewInteraction webView = onView(
-                allOf(withId(R.id.tw__web_view),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        webView.perform(longClick());
-
-        ViewInteraction linearLayout3 = onView(
-                allOf(withContentDescription("Paste"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.RelativeLayout")),
-                                        1),
-                                0),
-                        isDisplayed()));
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
         linearLayout3.perform(click());
 
         ViewInteraction materialButton2 = onView(
@@ -143,11 +66,7 @@ public class SelectChannelActivityTest {
                         childAtPosition(
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)))
-<<<<<<< HEAD
-                .atPosition(0);
-=======
-                .atPosition(1);
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
+                .atPosition(11);
         materialTextView.perform(click());
 
         ViewInteraction appCompatEditText = onView(
@@ -158,11 +77,7 @@ public class SelectChannelActivityTest {
                                         0),
                                 3),
                         isDisplayed()));
-<<<<<<< HEAD
         appCompatEditText.perform(replaceText("hey"), closeSoftKeyboard());
-=======
-        appCompatEditText.perform(replaceText("espresso"), closeSoftKeyboard());
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
 
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.sendMessage), withText("Send Message"),
@@ -173,8 +88,6 @@ public class SelectChannelActivityTest {
                                 2),
                         isDisplayed()));
         materialButton3.perform(click());
-<<<<<<< HEAD
-=======
 
         ViewInteraction switchCompat = onView(
                 allOf(withId(R.id.switchCompat), withText("Send delayed message"),
@@ -204,7 +117,7 @@ public class SelectChannelActivityTest {
                                         0),
                                 3),
                         isDisplayed()));
-        appCompatEditText3.perform(replaceText("espresso delay"), closeSoftKeyboard());
+        appCompatEditText3.perform(replaceText("hey2"), closeSoftKeyboard());
 
         ViewInteraction materialButton4 = onView(
                 allOf(withId(R.id.sendMessage), withText("Send delayed message"),
@@ -238,17 +151,7 @@ public class SelectChannelActivityTest {
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatEditText4.perform(click());
-
-        ViewInteraction appCompatEditText5 = onView(
-                allOf(withId(R.id.tweetText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        appCompatEditText5.perform(replaceText("espresso tweet"), closeSoftKeyboard());
+        appCompatEditText4.perform(replaceText("salut"), closeSoftKeyboard());
 
         ViewInteraction materialButton6 = onView(
                 allOf(withId(R.id.button), withText("Tweet"),
@@ -260,6 +163,16 @@ public class SelectChannelActivityTest {
                         isDisplayed()));
         materialButton6.perform(click());
 
+        ViewInteraction appCompatEditText5 = onView(
+                allOf(withId(R.id.tweetText),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatEditText5.perform(click());
+
         ViewInteraction appCompatEditText6 = onView(
                 allOf(withId(R.id.tweetText),
                         childAtPosition(
@@ -268,27 +181,17 @@ public class SelectChannelActivityTest {
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatEditText6.perform(click());
+        appCompatEditText6.perform(replaceText("hey"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText7 = onView(
-                allOf(withId(R.id.tweetText),
+        ViewInteraction materialButton7 = onView(
+                allOf(withId(R.id.button), withText("Tweet"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                1),
+                                2),
                         isDisplayed()));
-        appCompatEditText7.perform(click());
-
-        ViewInteraction appCompatEditText8 = onView(
-                allOf(withId(R.id.tweetText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        appCompatEditText8.perform(replaceText("espresso twett delay"), closeSoftKeyboard());
+        materialButton7.perform(click());
 
         ViewInteraction switchCompat2 = onView(
                 allOf(withId(R.id.switchCompat), withText("Post delayed tweet"),
@@ -300,7 +203,7 @@ public class SelectChannelActivityTest {
                         isDisplayed()));
         switchCompat2.perform(click());
 
-        ViewInteraction appCompatEditText9 = onView(
+        ViewInteraction appCompatEditText7 = onView(
                 allOf(withId(R.id.delay),
                         childAtPosition(
                                 childAtPosition(
@@ -308,22 +211,20 @@ public class SelectChannelActivityTest {
                                         0),
                                 3),
                         isDisplayed()));
-        appCompatEditText9.perform(replaceText("1"), closeSoftKeyboard());
+        appCompatEditText7.perform(replaceText("1"), closeSoftKeyboard());
 
-        ViewInteraction materialButton7 = onView(
-                allOf(withId(R.id.button), withText("Post delayed tweet"),
+        ViewInteraction appCompatEditText8 = onView(
+                allOf(withId(R.id.tweetText),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                2),
+                                1),
                         isDisplayed()));
-        materialButton7.perform(click());
-
-        pressBack();
+        appCompatEditText8.perform(replaceText("salutx2"), closeSoftKeyboard());
 
         ViewInteraction materialButton8 = onView(
-                allOf(withId(R.id.send), withText("Send Message"),
+                allOf(withId(R.id.button), withText("Post delayed tweet"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -332,34 +233,9 @@ public class SelectChannelActivityTest {
                         isDisplayed()));
         materialButton8.perform(click());
 
-        DataInteraction materialTextView2 = onData(anything())
-                .inAdapterView(allOf(withId(R.id.followers),
-                        childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                0)))
-                .atPosition(1);
-        materialTextView2.perform(click());
+        pressBack();
 
-        ViewInteraction appCompatEditText10 = onView(
-                allOf(withId(R.id.message),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
-                        isDisplayed()));
-        appCompatEditText10.perform(replaceText("mesaj simplu"), closeSoftKeyboard());
-
-        ViewInteraction materialButton9 = onView(
-                allOf(withId(R.id.sendMessage), withText("Send Message"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        materialButton9.perform(click());
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
+        pressBack();
     }
 
     private static Matcher<View> childAtPosition(

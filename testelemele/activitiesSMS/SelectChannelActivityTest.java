@@ -7,14 +7,9 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
-<<<<<<< HEAD
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
-=======
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
 import androidx.test.runner.AndroidJUnit4;
 
 import com.R;
@@ -31,17 +26,11 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-<<<<<<< HEAD
-import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-=======
 import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -49,17 +38,6 @@ import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
-<<<<<<< HEAD
-@RunWith(AndroidJUnit4.class)
-public class SelectChannelActivityTest {
-
-    @Rule
-    public ActivityTestRule<SelectChannelActivity> mActivityTestRule = new ActivityTestRule<>(SelectChannelActivity.class);
-
-    @Test
-    public void selectChannelActivityTest() {
-        DataInteraction linearLayout3 = onData(anything())
-=======
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class SelectChannelActivityTest {
 
@@ -87,14 +65,11 @@ public class SelectChannelActivityTest {
         linearLayout.perform(click());
 
         DataInteraction linearLayout2 = onData(anything())
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
                 .inAdapterView(allOf(withId(R.id.listView),
                         childAtPosition(
                                 withClassName(is("android.widget.LinearLayout")),
                                 0)))
                 .atPosition(0);
-<<<<<<< HEAD
-=======
         linearLayout2.perform(click());
 
         ViewInteraction twitterLoginButton = onView(
@@ -125,7 +100,6 @@ public class SelectChannelActivityTest {
                                         1),
                                 0),
                         isDisplayed()));
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
         linearLayout3.perform(click());
 
         ViewInteraction materialButton2 = onView(
@@ -143,11 +117,7 @@ public class SelectChannelActivityTest {
                         childAtPosition(
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)))
-<<<<<<< HEAD
-                .atPosition(0);
-=======
                 .atPosition(1);
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
         materialTextView.perform(click());
 
         ViewInteraction appCompatEditText = onView(
@@ -158,11 +128,7 @@ public class SelectChannelActivityTest {
                                         0),
                                 3),
                         isDisplayed()));
-<<<<<<< HEAD
-        appCompatEditText.perform(replaceText("hey"), closeSoftKeyboard());
-=======
         appCompatEditText.perform(replaceText("espresso"), closeSoftKeyboard());
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
 
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.sendMessage), withText("Send Message"),
@@ -173,8 +139,6 @@ public class SelectChannelActivityTest {
                                 2),
                         isDisplayed()));
         materialButton3.perform(click());
-<<<<<<< HEAD
-=======
 
         ViewInteraction switchCompat = onView(
                 allOf(withId(R.id.switchCompat), withText("Send delayed message"),
@@ -359,7 +323,6 @@ public class SelectChannelActivityTest {
                                 2),
                         isDisplayed()));
         materialButton9.perform(click());
->>>>>>> 860e9e8417af73a440fbabc4b3708b168b12c462
     }
 
     private static Matcher<View> childAtPosition(

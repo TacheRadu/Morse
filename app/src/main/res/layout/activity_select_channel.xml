@@ -1,29 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="25px"
     tools:context="com.morse.activities.SelectChannelActivity"
     tools:ignore="HardcodedText">
 
     <ListView
-        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </ListView>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/listView"
+        tools:ignore="Suspicious0dp" />
 
     <Button
         android:id="@+id/addchannelbtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginStart="15dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/black"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="Add New Channel"
         android:textAllCaps="false"
         android:textColor="@color/white" />
+
 
 </LinearLayout>
